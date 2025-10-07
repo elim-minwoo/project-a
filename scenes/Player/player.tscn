@@ -1,0 +1,86 @@
+[gd_scene load_steps=9 format=3 uid="uid://ktg27xjj1v6m"]
+
+[ext_resource type="Texture2D" uid="uid://ddehg0weglup7" path="res://assets/sprites/knight.png" id="1_cyojo"]
+
+[sub_resource type="GDScript" id="GDScript_cyojo"]
+script/source = "extends CharacterBody2D
+
+
+const SPEED = 250.0
+const JUMP_VELOCITY = -300.0
+
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+
+
+func _physics_process(delta: float) -> void:
+	# Add the gravity.
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+
+	# Handle jump.
+	if Input.is_action_just_pressed(\"moveup\") and is_on_floor():
+		velocity.y = JUMP_VELOCITY
+
+	# Get the input direction and handle the movement/deceleration.
+	# As good practice, you should replace UI actions with custom gameplay actions.
+	var direction := Input.get_axis(\"moveleft\", \"moveright\")
+	if direction:
+		velocity.x = direction * SPEED
+		
+		sprite.flip_h = true if direction < 0 else false
+		
+	else:
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+
+	move_and_slide()
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1kbk7"]
+atlas = ExtResource("1_cyojo")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gqjuk"]
+atlas = ExtResource("1_cyojo")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c4h5g"]
+atlas = ExtResource("1_cyojo")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uiqp4"]
+atlas = ExtResource("1_cyojo")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hvfru"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1kbk7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gqjuk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c4h5g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uiqp4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cyojo"]
+radius = 5.0
+
+[node name="Player" type="CharacterBody2D"]
+script = SubResource("GDScript_cyojo")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_hvfru")
+frame_progress = 0.79224294
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 7)
+shape = SubResource("CircleShape2D_cyojo")
