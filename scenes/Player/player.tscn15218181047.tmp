@@ -1,0 +1,290 @@
+[gd_scene load_steps=29 format=3 uid="uid://ktg27xjj1v6m"]
+
+[ext_resource type="Texture2D" uid="uid://bpkv8x701iiw7" path="res://assets/sprites/spritesheet.png" id="1_cyojo"]
+
+[sub_resource type="GDScript" id="GDScript_cyojo"]
+script/source = "extends CharacterBody2D
+
+#region constants
+const COYOTE_TIME = 0.2
+const JUMP_BUFFER_TIME = 0.1
+#endregion
+
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+
+
+#region variables
+@export var SPEED: float = 250.0
+@export var JUMP_VELOCITY: float = -400.0
+
+var coyote_timer := 0.0
+var jump_buffer_timer := 0.0
+var is_jumping := false
+#endregion
+
+var gravity
+   
+func _physics_process(delta: float) -> void:
+	gravity = get_gravity()
+	@warning_ignore(\"unused_variable\")
+	var on_wall = is_on_wall() and not is_on_floor()
+	
+	if is_on_floor():
+		floor_process(delta)
+	#elif on_wall:
+		#wall_process(delta)
+	else:
+		air_process(delta)
+		
+	# jump
+	if jump_buffer_timer > 0 and (is_on_floor() or coyote_timer > 0):
+		velocity.y = JUMP_VELOCITY
+		is_jumping = true
+		jump_buffer_timer = 0.0
+		coyote_timer = 0.0
+		
+	# jump cut
+	if Input.is_action_just_released(\"moveup\") and is_jumping and velocity.y < 0:
+		velocity.y *= 0.3 # cuts jump velocity to -50%
+
+	# horizontal Movement
+	var direction = Input.get_axis(\"moveleft\", \"moveright\")
+	velocity.x = direction * SPEED
+	sprite.flip_h = direction
+	sprite.flip_h = true if direction < 0 else false
+	
+	play_animations()
+	move_and_slide()
+
+func floor_process(delta: float):
+	is_jumping = false
+	coyote_timer = COYOTE_TIME
+
+	if Input.is_action_just_pressed(\"moveup\"):
+		jump_buffer_timer = JUMP_BUFFER_TIME
+		
+	coyote_timer = max(coyote_timer - delta, 0)
+	jump_buffer_timer = max(jump_buffer_timer - delta, 0)
+
+func air_process(delta: float):
+	if velocity.y > 0:
+		velocity += gravity * 1.5 * delta
+	elif abs(velocity.y) < 50:
+		velocity += gravity * 0.5 * delta
+	else:
+		velocity += gravity * delta
+	velocity.y = clamp(velocity.y, -1000, 500)
+
+#func wall_process(delta: float):
+
+func play_animations(): 
+	if abs(velocity.x) > 0 and velocity.y == 0:
+		sprite.play(\"run\")
+	elif not is_on_floor() and velocity.y < 0:
+			sprite.play(\"jump\")
+	else:
+		sprite.play(\"idle\")
+"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cyojo"]
+atlas = ExtResource("1_cyojo")
+region = Rect2(0, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1kbk7"]
+atlas = ExtResource("1_cyojo")
+region = Rect2(48, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gqjuk"]
+atlas = ExtResource("1_cyojo")
+region = Rect2(96, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c4h5g"]
+atlas = ExtResource("1_cyojo")
+region = Rect2(144, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uiqp4"]
+atlas = ExtResource("1_cyojo")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hvfru"]
+atlas = ExtResource("1_cyojo")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a06cl"]
+atlas = ExtResource("1_cyojo")
+region = Rect2(288, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dl1wr"]
+atlas = ExtResource("1_cyojo")
+region = Rect2(336, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wwtew"]
+atlas = ExtResource("1_cyojo")
+region = Rect2(384, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uxo23"]
+atlas = ExtResource("1_cyojo")
+region = Rect2(432, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n7rn1"]
+atlas = ExtResource("1_cyojo")
+region = Rect2(0, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7tfl1"]
+atlas = ExtResource("1_cyojo")
+region = Rect2(48, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jxtnq"]
+atlas = ExtResource("1_cyojo")
+region = Rect2(96, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t6q27"]
+atlas = ExtResource("1_cyojo")
+region = Rect2(144, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wyey8"]
+atlas = ExtResource("1_cyojo")
+region = Rect2(192, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1bwnf"]
+atlas = ExtResource("1_cyojo")
+region = Rect2(240, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tayva"]
+atlas = ExtResource("1_cyojo")
+region = Rect2(0, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x8khf"]
+atlas = ExtResource("1_cyojo")
+region = Rect2(48, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aciub"]
+atlas = ExtResource("1_cyojo")
+region = Rect2(96, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hk2ix"]
+atlas = ExtResource("1_cyojo")
+region = Rect2(144, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_43ckd"]
+atlas = ExtResource("1_cyojo")
+region = Rect2(192, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cctgl"]
+atlas = ExtResource("1_cyojo")
+region = Rect2(240, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_an8q1"]
+atlas = ExtResource("1_cyojo")
+region = Rect2(288, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hxkm2"]
+atlas = ExtResource("1_cyojo")
+region = Rect2(336, 48, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hvfru"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cyojo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1kbk7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gqjuk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c4h5g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uiqp4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hvfru")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a06cl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dl1wr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wwtew")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uxo23")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n7rn1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7tfl1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jxtnq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t6q27")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wyey8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1bwnf")
+}],
+"loop": false,
+"name": &"jump",
+"speed": 13.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tayva")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x8khf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aciub")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hk2ix")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_43ckd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cctgl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_an8q1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hxkm2")
+}],
+"loop": true,
+"name": &"run",
+"speed": 12.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cyojo"]
+radius = 7.0
+height = 18.0
+
+[node name="Player" type="CharacterBody2D"]
+script = SubResource("GDScript_cyojo")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(2, 1)
+sprite_frames = SubResource("SpriteFrames_hvfru")
+animation = &"idle"
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(2, 9)
+shape = SubResource("CapsuleShape2D_cyojo")

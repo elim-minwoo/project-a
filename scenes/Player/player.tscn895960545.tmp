@@ -10,68 +10,51 @@ const JUMP_BUFFER_TIME = 0.1
 
 @export var move_speed: float = 200.0
 @export var jump_velocity: float = -400.0
-@onready var sprite: Sprite2D = $Sprite2D
+@export var gravity = 500.0
 
-var gravity
+@onready var sprite: Sprite2D = $Sprite2D
 
 var coyote_timer := 0.0
 var jump_buffer_timer := 0.0
 var is_jumping := false
 
+var movement = Vector2()
+
 func _physics_process(delta: float) -> void:
-	gravity = get_gravity().y
 	velocity.y += gravity * delta
-
+	gravity = get_gravity()
+	
 	var on_wall = is_on_wall() and not is_on_floor()
-
-	if is_on_floor():
-		floor_process(delta)
+	
+#	if is_on_floor():
+#		floor_process(delta)
 	# elif on_wall:
 		# wall_process(delta)
-	#	else:
-	#		air_process(delta)
+#	else:
+#		air_process(delta)
+	
+	horizontal_movement()
+	vertical_movement()
+	set_animations()
+	flip()
+	
+	move_and_slide()
 
-# horizontal movement
+func horizontal_movement():
 	var direction = Input.get_axis(\"moveleft\", \"moveright\")
 	velocity.x = direction * move_speed
-	
-	sprite.flip_h = direction < 0
+	sprite.flip_h = direction
+	sprite.flip_h = true if direction < 0 else false
 
-# vertical movement
+func vertical_movement():
 	if jump_buffer_timer > 0 and (is_on_floor() or coyote_timer > 0):
 		velocity.y = jump_velocity
 		is_jumping = true
 		jump_buffer_timer = 0.0
 		coyote_timer = 0.0
 		
-# jump cut
 	if Input.is_action_just_released(\"moveup\") and is_jumping and velocity.y < 0:
 		velocity.y *= 0.3
-		
-	set_animations()
-	move_and_slide()
-
-func floor_process(delta: float):
-	is_jumping = false
-	coyote_timer = COYOTE_TIME
-	
-	if Input.is_action_just_pressed(\"moveup\"):
-		jump_buffer_timer = JUMP_BUFFER_TIME
-		
-	coyote_timer = max(coyote_timer - delta, 0)
-	jump_buffer_timer = max(jump_buffer_timer - delta, 0)
-
-func air_process(delta: float):
-	if velocity.y > 0:
-		velocity.y += gravity * 1.5 * delta
-	elif abs(velocity.y) < 50:
-		velocity.y += gravity * 0.5 * delta
-	else:
-		velocity.y += gravity * delta
-		
-	velocity.y = clamp(velocity.y, -1000, 500)
-	
-#func wall_process(delta: float):
 
 func set_animations():
 	if velocity.x != 0:
