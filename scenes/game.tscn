@@ -1,6 +1,5 @@
-[gd_scene load_steps=6 format=3 uid="uid://ci80xotbgu18w"]
+[gd_scene load_steps=5 format=3 uid="uid://ci80xotbgu18w"]
 
-[ext_resource type="Script" uid="uid://6gho8dfwrn5p" path="res://assets/scripts/camera.gd" id="1_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://ktg27xjj1v6m" path="res://scenes/Player/player.tscn" id="1_uwrxv"]
 [ext_resource type="Texture2D" uid="uid://do6l0i2tom6w8" path="res://assets/sprites/world_tileset.png" id="2_yqjtg"]
 
@@ -178,15 +177,9 @@ sources/0 = SubResource("TileSetAtlasSource_lnu2h")
 [node name="Node2D" type="Node2D"]
 position = Vector2(7, 0)
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(3, -24)
-offset = Vector2(0, -16)
-zoom = Vector2(2, 2)
-position_smoothing_speed = 100.0
-script = ExtResource("1_lnu2h")
-
 [node name="Player" parent="." instance=ExtResource("1_uwrxv")]
 position = Vector2(4, 13)
+safe_margin = 0.14
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
