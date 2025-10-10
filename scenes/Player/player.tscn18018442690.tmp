@@ -5,14 +5,20 @@
 [sub_resource type="GDScript" id="GDScript_cyojo"]
 script/source = "extends CharacterBody2D
 
+const ACCEL: float = 22.5
+const FRICTION: float = 22.5
+
 # wall jump constants
 const GRAVITY_WALL: float = 8.5
 const WALL_JUMP_PUSH_FORCE: float = 100.0
 
 # velocity variables
-@export var move_speed: float = 300.0
-@export var jump_velocity: float = -500.0
-@export var wall_slide_speed: float = 100.0
+var x_input: float = Input.get_action_strength(\"ui_right\") - Input.get_action_strength(\"ui_left\")
+var velocity_weight_x: float = 1.0 - exp( -(ACCEL if x_input else FRICTION) * delta)
+
+@export var move_speed: float = 200.0
+@export var jump_velocity: float = -400.0
+@export var max_velocity: float = 500.0
 
 @onready var sprite_2d: AnimatedSprite2D = $Sprite2D
 @onready var player_anim = get_node(\"PlayerAnim\")
@@ -35,17 +41,10 @@ const WALL_CONTACT_COYOTE_TIME: float = 0.2
 var wall_jump_lock: float = 0.0
 const WALL_JUMP_LOCK_TIME: float = 0.05
 
-# direction
-var direction = Input.get_axis(\"moveleft\", \"moveright\")
+# direction facing when contact with wall
 var look_dir_x: int = 1
 
-func _process(delta: float) -> void:
-	if Input.is_action_just_pressed(\"debug_tp\"):
-		global_position = Vector2(0, 0)
-
-func _physics_process(delta: float) -> void: 
-	
-	direction = Input.get_axis(\"moveleft\", \"moveright\")
+func _physics_process(delta: float) -> void:
 	
 	# gravity
 	gravity = get_gravity().y
@@ -70,7 +69,8 @@ func _physics_process(delta: float) -> void:
 	#		air_process(delta)
 		
 	# horizontal movement
-	velocity.x = direction * move_speed
+	var direction = Input.get_axis(\"moveleft\", \"moveright\")
+	velocity.x = lerp(velocity.x, x_input * max_velocity, velocity_weight_x)
 
 # vertical movement
 	if jump_buffer_timer > 0 and (is_on_floor() or coyote_timer > 0):
@@ -95,13 +95,38 @@ func floor_process(delta: float):
 	
 func wall_process(delta: float):
 	
+	if wall_jump_lock > 0.0:
+		wall_jump_lock -= delta
+		velocity.x = lerp(velocity.x, x_input * max_velocity, velocity_weight_x * 0.5)
+		
+	
+	if is_on_floor() or wall_contact_coyote > 0.0:
+		if Input.is_action_just_pressed(\"moveup\"):
+			velocity.y = jump_velocity
+			if wall_contact_coyote > 0.0:
+				velocity.x = -look_dir_x * WALL_JUMP_PUSH_FORCE
+				wall_jump_lock = WALL_JUMP_LOCK_TIME
+	
+	if !is_on_floor() and velocity.y > 0 and is_on_wall() and velocity.x != 0:
+		look_dir_x = sign(velocity.x)
+		wall_contact_coyote = WALL_CONTACT_COYOTE_TIME
+		velocity.y = GRAVITY_WALL
+	else:
+		wall_contact_coyote -= delta
+		velocity.y +- gravity
+	
 	# wall slide
-	if is_on_wall_only() and not direction == 0:
-		velocity.y =  lerp(velocity.y, wall_slide_speed, 0.1)
+	if is_on_wall_only():
+		velocity.y = lerp(velocity.y, 150.0, 0.5)
+	
+	# wall slide
+	if is_on_wall_only():
+		velocity.y = lerp(velocity.y, 150.0, 0.5)
 
 # func air_process(delta: float):
 
 func manage_flip(direction):
+	
 	if direction == 0:
 		return
 	
@@ -117,7 +142,7 @@ func manage_flip(direction):
 func set_animations():
 	manage_flip(Input.get_axis(\"moveleft\", \"moveright\"))
 	
-	if is_on_wall_only() and direction != 0:
+	if is_on_wall_only():
 		player_anim.play(\"wall\")
 	
 	# jump anim
@@ -624,7 +649,9 @@ _data = {
 
 [node name="Player" type="CharacterBody2D"]
 script = SubResource("GDScript_cyojo")
-wall_slide_speed = 50.0
+move_speed = null
+jump_velocity = null
+max_velocity = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 3)
