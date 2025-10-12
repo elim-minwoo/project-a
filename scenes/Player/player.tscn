@@ -1,27 +1,42 @@
-[gd_scene load_steps=47 format=3 uid="uid://ktg27xjj1v6m"]
+[gd_scene load_steps=39 format=3 uid="uid://ktg27xjj1v6m"]
 
 [ext_resource type="Texture2D" uid="uid://bpkv8x701iiw7" path="res://assets/sprites/spritesheet.png" id="1_cyojo"]
+[ext_resource type="PackedScene" uid="uid://cf6b1oo7dd4dc" path="res://scenes/dash.tscn" id="2_1kbk7"]
 
 [sub_resource type="GDScript" id="GDScript_cyojo"]
 script/source = "extends CharacterBody2D
-
-# wall jump constants
-const GRAVITY_WALL: float = 8.5
-const WALL_JUMP_PUSH_FORCE: float = 100.0
-
-# velocity variables
-@export var move_speed: float = 300.0
-@export var jump_velocity: float = -500.0
-@export var wall_slide_speed: float = 30.0
-@export var fall_accel: float = 1.2
-@export var max_fall_speed: float = 100.0
 
 @onready var sprite_2d: AnimatedSprite2D = $Sprite2D
 @onready var player_anim = get_node(\"PlayerAnim\")
 @onready var debug_label: Label = $DebugLabel
 
+@export_category(\"Velocity Variables\")
+@export var player_speed: float = 330.0
+@export var move_speed: float = 330.0
+@export var jump_velocity: float = -500.0
+@export var fall_accel: float = 1.2
+@export var max_fall_speed: float = 1000.0
+
+@export_category(\"Wall Logic Variables\")
+@export var wall_x_force = 300.0
+@export var wall_y_force = -420.0
+@export var wall_slide_speed: float = 30.0
+
+@export_category(\"Dash Variables\")
+@onready var dash: Node2D = $Dash
+@export var dash_speed = 550.0
+@export var dash_duration = 0.4
+var bullet_time = true
+var can_dash = true
+
 var gravity
 var is_jumping := false
+var is_sliding := false
+var is_wall_jumping := false
+
+# direction
+var direction = Input.get_axis(\"moveleft\", \"moveright\")
+var look_dir_x: int = 1
 
 # coyote and jump buffer timers
 var coyote_timer := 0.0
@@ -30,36 +45,34 @@ const COYOTE_TIME = 0.2
 var jump_buffer_timer := 0.0
 const JUMP_BUFFER_TIME = 0.1
 
-var wall_contact_coyote: float = 0.0
-const WALL_CONTACT_COYOTE_TIME: float = 0.2
-
-# time left to lock horizontal movement
-var wall_jump_lock: float = 0.0
-const WALL_JUMP_LOCK_TIME: float = 0.05
-
-# direction
-var direction = Input.get_axis(\"moveleft\", \"moveright\")
-var look_dir_x: int = 1
-
 func _process(delta: float) -> void:
+	
 	if Input.is_action_just_pressed(\"debug_tp\"):
 		global_position = Vector2(0, 0)
+	
+	
+	
+	# dash
+	if Input.is_action_just_pressed(\"dash\") && dash.can_dash && !dash.is_dashing():
+		dash.start_dash(dash_duration)
+		
+	player_speed = dash_speed if dash.is_dashing() else move_speed
 
 func _physics_process(delta: float) -> void: 
 	
 	direction = Input.get_axis(\"moveleft\", \"moveright\")
 	
-# gravity
+	# gravity
 	gravity = get_gravity().y
 	velocity.y += gravity * delta
 	
-	var on_wall = is_on_wall() and not is_on_floor()
+	var on_wall = is_on_wall_only() and not direction == 0
 	
-# input buffer timer
+	# input buffer timer
 	coyote_timer = max(coyote_timer - delta, 0)
 	jump_buffer_timer = max(jump_buffer_timer - delta, 0)
 	
-# jump buffer
+	# jump buffer
 	if Input.is_action_just_pressed(\"moveup\"):
 		jump_buffer_timer = JUMP_BUFFER_TIME
 		
@@ -70,50 +83,90 @@ func _physics_process(delta: float) -> void:
 		wall_process(delta)
 	#	else:
 	#		air_process(delta)
-		
-# horizontal movement
-	velocity.x = direction * move_speed
+	
+	
+	
+	# horizontal movement
+	velocity.x = direction * player_speed
 
-# vertical movement
+	# vertical movement
 	if jump_buffer_timer > 0 and (is_on_floor() or coyote_timer > 0):
 		velocity.y = jump_velocity
 		is_jumping = true
 		jump_buffer_timer = 0.0
 		coyote_timer = 0.0
-		
-# jump cut
+	
+	
+	
+	# jump cut
 	if Input.is_action_just_released(\"moveup\") and is_jumping and velocity.y < 0:
 		velocity.y *= 0.3
-		
-# detect if falling and accerlerate
+	
+	#region fall accel and clamp
+	# detect if falling and accerlerate
 	elif velocity.y > 0 and not is_on_floor():
 		velocity.y += gravity * fall_accel * delta
-# set max falling speed
+
+	# set max falling speed
 	velocity.y = clamp(velocity.y, float(-INF), max_fall_speed)
-		
+	#endregion
+	
+	manage_abilities(delta)
 	set_animations()
 	move_and_slide()
-	debug_label.text = str(velocity.y)
+	debug_label.text = str(velocity.x)
 
+
+
+#region manage process when on floor, wall, and air
 func floor_process(delta: float):
 	is_jumping = false
 	
 	if Input.is_action_just_pressed(\"moveup\"):
 		jump_buffer_timer = JUMP_BUFFER_TIME
-	
+
 func wall_process(delta: float):
-	
-# wall slide
-	if is_on_wall_only() and not direction == 0:
-		velocity.y =  lerp(velocity.y, wall_slide_speed, 0.1)
+
+	# wall slide
+	velocity.y =  lerp(velocity.y, wall_slide_speed, 0.2)
+
+	# wall jump
+	if Input.is_action_just_pressed(\"moveup\"):
+		is_jumping = true
+		var wall_dir = get_wall_normal().x
+		
+		velocity.x = wall_dir * -wall_x_force
+		
+		return
 
 # func air_process(delta: float):
+#endregion
+
+
+
+func manage_abilities(delta: float) -> void:
+	# bullet time ability
+	if Input.is_action_pressed(\"timeslow\"):
+		Engine.time_scale = 0.3
+		bullet_time = true
+	else:
+		Engine.time_scale = 1.0
+		bullet_time = false
+		
+
+func ghost_effect():
+	var tween:Tween = get_tree().create_tween() 
+	
+	tween.set_trans(Tween.TRANS_QUART)
+	tween.set_ease(Tween.EASE_OUT)
+	
+	tween.tween_property(self, \"modulate:a\", 0.0, 0.5)
 
 func manage_flip(direction):
 	if direction == 0:
 		return
 	
-# flip sprite
+	# flip sprite
 	if direction == -1.0:
 		sprite_2d.flip_h = true
 	elif direction == 1.0:
@@ -125,22 +178,22 @@ func manage_flip(direction):
 func set_animations():
 	manage_flip(Input.get_axis(\"moveleft\", \"moveright\"))
 	
-	if is_on_wall_only() and direction != 0:
+	if is_on_wall_only() and not direction == 0:
 		player_anim.play(\"wall\")
 	
-# jump anim
+	# jump anim
 	elif is_jumping and velocity.y < 0:
 		player_anim.play(\"jump\")
 		
-# fall anim
+	# fall anim
 	elif velocity.y > 0 and not is_on_floor():
 		player_anim.play(\"fall\")
 		
-# run anim
+	# run anim
 	elif velocity.x != 0 and is_on_floor():
 		player_anim.play(\"run\")
 		
-# idle anim
+	# idle anim
 	else:
 		player_anim.play(\"idle\")
 "
@@ -212,42 +265,6 @@ region = Rect2(144, 96, 48, 48)
 [sub_resource type="AtlasTexture" id="AtlasTexture_hxkm2"]
 atlas = ExtResource("1_cyojo")
 region = Rect2(192, 96, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cyojo"]
-atlas = ExtResource("1_cyojo")
-region = Rect2(0, 144, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1kbk7"]
-atlas = ExtResource("1_cyojo")
-region = Rect2(48, 144, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gqjuk"]
-atlas = ExtResource("1_cyojo")
-region = Rect2(96, 144, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_c4h5g"]
-atlas = ExtResource("1_cyojo")
-region = Rect2(144, 144, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_uiqp4"]
-atlas = ExtResource("1_cyojo")
-region = Rect2(192, 144, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hvfru"]
-atlas = ExtResource("1_cyojo")
-region = Rect2(240, 144, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_a06cl"]
-atlas = ExtResource("1_cyojo")
-region = Rect2(288, 144, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dl1wr"]
-atlas = ExtResource("1_cyojo")
-region = Rect2(336, 144, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wwtew"]
-atlas = ExtResource("1_cyojo")
-region = Rect2(384, 144, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cg2hl"]
 atlas = ExtResource("1_cyojo")
@@ -348,38 +365,6 @@ animations = [{
 }],
 "loop": true,
 "name": &"jump",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cyojo")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1kbk7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gqjuk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_c4h5g")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_uiqp4")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hvfru")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_a06cl")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dl1wr")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wwtew")
-}],
-"loop": true,
-"name": &"land",
 "speed": 5.0
 }, {
 "frames": [{
@@ -632,6 +617,8 @@ _data = {
 
 [node name="Player" type="CharacterBody2D"]
 script = SubResource("GDScript_cyojo")
+dash_speed = 1500.0
+dash_duration = 0.1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 3)
@@ -659,3 +646,5 @@ offset_top = -39.0
 offset_right = 79.0
 offset_bottom = -16.0
 text = "DEBUG LABEL"
+
+[node name="Dash" parent="." instance=ExtResource("2_1kbk7")]
