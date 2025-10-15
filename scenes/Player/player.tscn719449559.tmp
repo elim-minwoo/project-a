@@ -1,8 +1,8 @@
-[gd_scene load_steps=49 format=3 uid="uid://ktg27xjj1v6m"]
+[gd_scene load_steps=41 format=3 uid="uid://ktg27xjj1v6m"]
 
 [ext_resource type="Texture2D" uid="uid://bpkv8x701iiw7" path="res://assets/sprites/spritesheet.png" id="1_cyojo"]
 [ext_resource type="PackedScene" uid="uid://cf6b1oo7dd4dc" path="res://scenes/dash.tscn" id="2_1kbk7"]
-[ext_resource type="Script" uid="uid://mwqcmhsm0gv0" path="res://scenes/player/sprite_fade.gd" id="2_c4h5g"]
+[ext_resource type="Script" uid="uid://mwqcmhsm0gv0" path="res://scenes/Player/sprite_fade.gd" id="2_c4h5g"]
 [ext_resource type="PackedScene" uid="uid://cwqlyharjah1o" path="res://scenes/sprite_trail.tscn" id="4_c4h5g"]
 
 [sub_resource type="GDScript" id="GDScript_cyojo"]
@@ -22,7 +22,7 @@ script/source = "extends CharacterBody2D
 @export var wall_y_force = 1200.0
 @export var wall_slide_speed: float = 30.0
 
-@export_category(\"Dash VaAAAAA Ariables\")
+@export_category(\"Dash Variables\")
 @onready var dash: Node2D = $Dash	
 @export var dash_speed = 2000.0
 @export var dash_duration = 0.1
@@ -34,8 +34,6 @@ var can_dash = true
 var gravity
 var is_jumping := false
 var is_wall_jumping := false
-
-var is_parry := false
 
 # direction
 var direction = Input.get_axis(\"moveleft\", \"moveright\")
@@ -136,15 +134,13 @@ func floor_process():
 	
 	if Input.is_action_just_pressed(\"moveup\"):
 		jump_buffer_timer = JUMP_BUFFER_TIME
-		
-	if Input.is_action_just_pressed(\"parry\"):
-		is_parry = true
 
 func wall_process():
 	
 	if velocity.y <= wall_slide_speed:
 		return
-
+	
+	print(is_wall_jumping)
 	if velocity.x == 0:
 		is_wall_jumping = false
 	
@@ -174,7 +170,11 @@ func air_process(delta: float):
 func manage_abilities():
 	# bullet time ability
 	if Input.is_action_pressed(\"timeslow\"):
-		Engine.time_scale = 0.3 # must change laawater
+		
+		
+		Engine.time_scale = 0.3 # must change later
+		
+		
 		sprite_trail.activate_trail()
 		bullet_time = true
 	else:
@@ -200,29 +200,22 @@ func set_animations():
 	
 	if is_on_wall_only() and not direction == 0:
 		player_anim.play(\"wall\")
+	
 	# jump anim
 	elif is_jumping and velocity.y < 0:
 		player_anim.play(\"jump\")
+		
 	# fall anim
 	elif velocity.y > 0 and not is_on_floor():
 		player_anim.play(\"fall\")
-	#parry anim
-	elif is_parry == true:
-		player_anim.play(\"parry\")
+		
 	# run anim
 	elif velocity.x != 0 and is_on_floor():
 		player_anim.play(\"run\")
+		
 	# idle anim
 	else:
 		player_anim.play(\"idle\")
-
-func _on_player_anim_animation_finished(anim_name: StringName) -> void:
-	if anim_name == \"parry\":
-		is_parry = false
-
-func _on_player_anim_animation_changed(old_name: StringName, new_name: StringName) -> void:
-	if old_name == \"parry\" and new_name != \"parry\":
-		is_parry = false
 "
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cyojo"]
@@ -293,34 +286,6 @@ region = Rect2(144, 96, 48, 48)
 atlas = ExtResource("1_cyojo")
 region = Rect2(192, 96, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_lvxji"]
-atlas = ExtResource("1_cyojo")
-region = Rect2(0, 384, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_p47bc"]
-atlas = ExtResource("1_cyojo")
-region = Rect2(48, 384, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_75vfm"]
-atlas = ExtResource("1_cyojo")
-region = Rect2(96, 384, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0owmy"]
-atlas = ExtResource("1_cyojo")
-region = Rect2(144, 384, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qek5x"]
-atlas = ExtResource("1_cyojo")
-region = Rect2(192, 384, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5gtgg"]
-atlas = ExtResource("1_cyojo")
-region = Rect2(240, 384, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_h17s1"]
-atlas = ExtResource("1_cyojo")
-region = Rect2(288, 384, 48, 48)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_cg2hl"]
 atlas = ExtResource("1_cyojo")
 region = Rect2(0, 48, 48, 48)
@@ -359,11 +324,6 @@ region = Rect2(48, 192, 48, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_cgmen"]
 animations = [{
-"frames": [],
-"loop": true,
-"name": &"attack",
-"speed": 5.0
-}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_18ciy")
@@ -426,32 +386,6 @@ animations = [{
 "loop": true,
 "name": &"jump",
 "speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_lvxji")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_p47bc")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_75vfm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0owmy")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qek5x")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5gtgg")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_h17s1")
-}],
-"loop": true,
-"name": &"parry",
-"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -634,34 +568,6 @@ tracks/1/keys = {
 "values": [0, 1, 2, 3, 5, 6, 7, 8]
 }
 
-[sub_resource type="Animation" id="Animation_lvxji"]
-resource_name = "parry"
-length = 0.9
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("../AnimatedSprite2D:animation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [&"parry"]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("../AnimatedSprite2D:frame")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.5, 0.6, 0.7, 0.8, 0.93333334),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 6]
-}
-
 [sub_resource type="Animation" id="Animation_1kbk7"]
 resource_name = "run"
 length = 0.7
@@ -725,7 +631,6 @@ _data = {
 &"idle": SubResource("Animation_cyojo"),
 &"jump": SubResource("Animation_gqjuk"),
 &"land": SubResource("Animation_c4h5g"),
-&"parry": SubResource("Animation_lvxji"),
 &"run": SubResource("Animation_1kbk7"),
 &"wall": SubResource("Animation_a06cl")
 }
@@ -764,6 +669,3 @@ offset_top = -39.0
 offset_right = 79.0
 offset_bottom = -16.0
 text = "DEBUG LABEL"
-
-[connection signal="animation_changed" from="PlayerAnim" to="." method="_on_player_anim_animation_changed"]
-[connection signal="animation_finished" from="PlayerAnim" to="." method="_on_player_anim_animation_finished"]

@@ -1,7 +1,7 @@
 extends AnimatedSprite2D
 
 func UpdateAlpha(newValue: float):
-	modulate = Color(0.443, 0.459, 1.0, 1.0)
+	modulate = Color(0.008, 0.708, 1.0, 1.0)
 	modulate.a = newValue
 	
 func StartFading():

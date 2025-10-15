@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://ci80xotbgu18w"]
 
-[ext_resource type="PackedScene" uid="uid://ktg27xjj1v6m" path="res://scenes/Player/player.tscn" id="1_uwrxv"]
+[ext_resource type="PackedScene" uid="uid://ktg27xjj1v6m" path="res://scenes/player/player.tscn" id="1_uwrxv"]
 [ext_resource type="Texture2D" uid="uid://do6l0i2tom6w8" path="res://assets/sprites/world_tileset.png" id="2_yqjtg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lnu2h"]
@@ -188,4 +188,3 @@ layer_0/tile_data = PackedInt32Array(196607, 0, 0, 131072, 0, 0, 131073, 0, 0, 1
 [node name="Player" parent="." instance=ExtResource("1_uwrxv")]
 position = Vector2(-432, -2)
 safe_margin = 0.14
-max_fall_speed = 500.0

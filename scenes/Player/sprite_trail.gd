@@ -30,9 +30,9 @@ func _process(delta: float) -> void:
 	
 	if !trail_active:
 		return
-	elif player.velocity.x == 0:
+	elif player.velocity.x == 0 and player.is_on_floor():
 		return
-	
+	 
 	if (get_tree().get_frame() % trail_divide) == 0:
 		if spriteArray.is_empty() == false:
 			var sprite: AnimatedSprite2D = spriteArray.pop_front() as AnimatedSprite2D
