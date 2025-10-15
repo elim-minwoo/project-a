@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cf6b1oo7dd4dc"]
+
+[ext_resource type="Script" uid="uid://til1c0o1mm6b" path="res://assets/scripts/dash.gd" id="1_avqmg"]
+
+[node name="Dash" type="Node2D"]
+script = ExtResource("1_avqmg")
+
+[node name="DashDuration" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="DashDuration" to="." method="_on_dash_duration_timeout"]

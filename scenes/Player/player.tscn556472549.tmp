@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bpkv8x701iiw7" path="res://assets/sprites/spritesheet.png" id="1_cyojo"]
 [ext_resource type="PackedScene" uid="uid://cf6b1oo7dd4dc" path="res://scenes/dash.tscn" id="2_1kbk7"]
 [ext_resource type="Script" uid="uid://mwqcmhsm0gv0" path="res://scenes/Player/sprite_fade.gd" id="2_c4h5g"]
-[ext_resource type="PackedScene" uid="uid://cwqlyharjah1o" path="res://scenes/sprite_trail.tscn" id="4_c4h5g"]
+[ext_resource type="Script" uid="uid://d3mr3nf7i78jb" path="res://scenes/Player/sprite_trail.gd" id="3_gqjuk"]
 
 [sub_resource type="GDScript" id="GDScript_cyojo"]
 script/source = "extends CharacterBody2D
@@ -15,53 +15,50 @@ script/source = "extends CharacterBody2D
 @export_category(\"Velocity Variables\")
 @export var player_speed: float = 330.0
 @export var move_speed: float = 330.0
-@export var jump_velocity: float = - 500.0
+@export var jump_velocity: float = -500.0
+@export var fall_accel: float = 1.2
+@export var max_fall_speed: float = 1000.0
 
 @export_category(\"Wall Logic Variables\")
-@export var wall_x_force =  300.0
-@export var wall_y_force = 1200.0
+@export var wall_x_force = 300.0
+@export var wall_y_force = -420.0
 @export var wall_slide_speed: float = 30.0
 
 @export_category(\"Dash Variables\")
-@onready var dash: Node2D = $Dash	
-@export var dash_speed = 2000.0
-@export var dash_duration = 0.1
+@onready var dash: Node2D = $Dash
+@export var dash_speed = 550.0
+@export var dash_duration = 0.4
 var bullet_time = true
 var can_dash = true
 
-@onready var sprite_trail: Node = $SpriteTrail
-
 var gravity
 var is_jumping := false
+var is_sliding := false
 var is_wall_jumping := false
 
 # direction
 var direction = Input.get_axis(\"moveleft\", \"moveright\")
 var look_dir_x: int = 1
 
-# timers
+# coyote and jump buffer timers
 var coyote_timer := 0.0
 const COYOTE_TIME = 0.2
 
 var jump_buffer_timer := 0.0
 const JUMP_BUFFER_TIME = 0.1
 
-var wall_jump_timer := 0.0
-const WWALL_JUMP_TIME := 0.2
-
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed(\"debug_tp\"):
-		global_position = Vector2(-500, 0)
+		global_position = Vector2(0, 0)
+	
+	
 	
 	# dash
 	if Input.is_action_just_pressed(\"dash\") && dash.can_dash && !dash.is_dashing():
 		dash.start_dash(dash_duration)
-		if not bullet_time:
-			sprite_trail.activate_trail()
 		
 	player_speed = dash_speed if dash.is_dashing() else move_speed
-	
 
 func _physics_process(delta: float) -> void: 
 	
@@ -77,30 +74,23 @@ func _physics_process(delta: float) -> void:
 	coyote_timer = max(coyote_timer - delta, 0)
 	jump_buffer_timer = max(jump_buffer_timer - delta, 0)
 	
-	if wall_jump_timer > 0:
-		wall_jump_timer -= delta
-	else:
-		is_wall_jumping = false
-	
 	# jump buffer
 	if Input.is_action_just_pressed(\"moveup\"):
 		jump_buffer_timer = JUMP_BUFFER_TIME
 		
-	if on_wall:
-		wall_process()
-	elif is_on_floor():
+	if is_on_floor():
 		coyote_timer = COYOTE_TIME # coyote time
-		floor_process()
-	#else:
-		#air_process(delta)
+		floor_process(delta)
+	elif on_wall:
+		wall_process(delta)
+	#	else:
+	#		air_process(delta)
+	
+	
 	
 	# horizontal movement
-	if not is_wall_jumping:
-		velocity.x = direction * player_speed
-	else:
-		if abs(velocity.x) < player_speed:
-			velocity.x += direction * player_speed * 0.09
-	
+	velocity.x = direction * player_speed
+
 	# vertical movement
 	if jump_buffer_timer > 0 and (is_on_floor() or coyote_timer > 0):
 		velocity.y = jump_velocity
@@ -115,73 +105,65 @@ func _physics_process(delta: float) -> void:
 		velocity.y *= 0.3
 	
 	#region fall accel and clamp
+	# detect if falling and accerlerate
+	elif velocity.y > 0 and not is_on_floor():
+		velocity.y += gravity * fall_accel * delta
+
 	# set max falling speed
-	var max_fall_speed: float = 1000.0
 	velocity.y = clamp(velocity.y, float(-INF), max_fall_speed)
 	#endregion
 	
-	manage_abilities()
+	manage_abilities(delta)
 	set_animations()
 	move_and_slide()
-	debug_label.text = str(velocity)
+	debug_label.text = str(velocity.x)
 
 
 
 #region manage process when on floor, wall, and air
-func floor_process():
+func floor_process(delta: float):
 	is_jumping = false
-	is_wall_jumping = false
 	
 	if Input.is_action_just_pressed(\"moveup\"):
 		jump_buffer_timer = JUMP_BUFFER_TIME
 
-func wall_process():
-	
-	if velocity.y <= wall_slide_speed:
-		return
-	
-	print(is_wall_jumping)
-	if velocity.x == 0:
-		is_wall_jumping = false
-	
+func wall_process(delta: float):
+
 	# wall slide
-	if not is_wall_jumping:
-		velocity.y =  lerp(velocity.y, wall_slide_speed, 0.3)
-		
+	velocity.y =  lerp(velocity.y, wall_slide_speed, 0.2)
+
 	# wall jump
 	if Input.is_action_just_pressed(\"moveup\"):
 		is_jumping = true
-		is_wall_jumping = true
-		wall_jump_timer = WWALL_JUMP_TIME
-		
 		var wall_dir = get_wall_normal().x
-		velocity.x = wall_dir * wall_x_force
-		velocity.y  = jump_velocity
+		
+		velocity.x = wall_dir * -wall_x_force
+		
+		return
 
-@warning_ignore(\"unused_parameter\")
-func air_process(delta: float):
-	is_jumping = false
-	is_wall_jumping = false
-
+# func air_process(delta: float):
 #endregion
 
 
 
-func manage_abilities():
+func manage_abilities(delta: float) -> void:
 	# bullet time ability
 	if Input.is_action_pressed(\"timeslow\"):
-		
-		
-		Engine.time_scale = 0.3 # must change later
-		
-		
-		sprite_trail.activate_trail()
+		Engine.time_scale = 0.3
 		bullet_time = true
 	else:
 		Engine.time_scale = 1.0
 		bullet_time = false
+		
 
-@warning_ignore(\"shadowed_variable\")
+func ghost_effect():
+	var tween:Tween = get_tree().create_tween() 
+	
+	tween.set_trans(Tween.TRANS_QUART)
+	tween.set_ease(Tween.EASE_OUT)
+	
+	tween.tween_property(self, \"modulate:a\", 0.0, 0.5)
+
 func manage_flip(direction):
 	if direction == 0:
 		return
@@ -637,10 +619,8 @@ _data = {
 
 [node name="Player" type="CharacterBody2D"]
 script = SubResource("GDScript_cyojo")
-
-[node name="Dash" parent="." instance=ExtResource("2_1kbk7")]
-
-[node name="SpriteTrail" parent="." instance=ExtResource("4_c4h5g")]
+dash_speed = 1500.0
+dash_duration = 0.1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 3)
@@ -669,3 +649,8 @@ offset_top = -39.0
 offset_right = 79.0
 offset_bottom = -16.0
 text = "DEBUG LABEL"
+
+[node name="Dash" parent="." instance=ExtResource("2_1kbk7")]
+
+[node name="SpriteTrail" type="Node" parent="."]
+script = ExtResource("3_gqjuk")
