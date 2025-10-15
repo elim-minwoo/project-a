@@ -23,10 +23,10 @@ func SetupSpriteArray():
 
 func activate_trail() -> void:
 	trail_active = true
-	await get_tree().create_timer(0.155).timeout
+	await get_tree().create_timer(0.11).timeout
 	trail_active = false
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	
 	if !trail_active:
 		return
