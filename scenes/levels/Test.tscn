@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://ci80xotbgu18w"]
+[gd_scene load_steps=6 format=3 uid="uid://ci80xotbgu18w"]
 
+[ext_resource type="Texture2D" path="res://assets/sprites/placeholder.png" id="1_17xb1"]
 [ext_resource type="PackedScene" uid="uid://ktg27xjj1v6m" path="res://scenes/player/player.tscn" id="1_uwrxv"]
 [ext_resource type="Texture2D" uid="uid://do6l0i2tom6w8" path="res://assets/sprites/world_tileset.png" id="2_yqjtg"]
 
@@ -177,9 +178,16 @@ sources/0 = SubResource("TileSetAtlasSource_lnu2h")
 [node name="Node2D" type="Node2D"]
 position = Vector2(7, 0)
 
+[node name="Background" type="ParallaxBackground" parent="."]
+
+[node name="BGimage" type="Sprite2D" parent="Background"]
+position = Vector2(955.6817, 548.5)
+scale = Vector2(0.60355103, 0.5938889)
+texture = ExtResource("1_17xb1")
+
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
-[node name="ground" type="TileMap" parent="."]
+[node name="Tilemap" type="TileMap" parent="."]
 position = Vector2(-431, 0)
 tile_set = SubResource("TileSet_lbhrr")
 format = 2
