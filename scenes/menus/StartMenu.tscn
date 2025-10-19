@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://ckcx3loo288dy"]
+[gd_scene load_steps=3 format=3 uid="uid://ckcx3loo288dy"]
 
 [ext_resource type="Script" uid="uid://cjw7ubdwcmhwl" path="res://scenes/menus/StartMenui.gd" id="1_iafob"]
+[ext_resource type="FontFile" uid="uid://dau5xch28of36" path="res://assets/fonts/neodgm.ttf" id="2_1gd34"]
 
 [node name="StartMenu" type="Control"]
 layout_mode = 3
@@ -31,6 +32,8 @@ theme_override_constants/separation = 38
 
 [node name="StartButton" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_1gd34")
+theme_override_font_sizes/font_size = 25
 text = "Start"
 
 [node name="OptionsButton" type="Button" parent="MarginContainer/VBoxContainer"]

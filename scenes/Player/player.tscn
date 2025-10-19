@@ -743,9 +743,6 @@ sprite_frames = SubResource("SpriteFrames_cgmen")
 animation = &"wall"
 script = ExtResource("2_c4h5g")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(1.6, 1.6)
-
 [node name="PlayerAnim" type="AnimationPlayer" parent="."]
 root_node = NodePath("../CollisionShape2D")
 libraries = {

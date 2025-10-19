@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://b0me8cdj2436v"
-path="res://.godot/imported/PF스타더스트 3.0 ExtraBold.ttf-865720f2ab75e9cb91e851fdcb60fe44.fontdata"
+uid="uid://dd5sn4dni3pjg"
+path="res://.godot/imported/stardusk bold.ttf-940c211b18f154f9955ff769b624791f.fontdata"
 
 [deps]
 
-source_file="res://assets/fonts/PF스타더스트 3.0 ExtraBold.ttf"
-dest_files=["res://.godot/imported/PF스타더스트 3.0 ExtraBold.ttf-865720f2ab75e9cb91e851fdcb60fe44.fontdata"]
+source_file="res://assets/fonts/stardusk bold.ttf"
+dest_files=["res://.godot/imported/stardusk bold.ttf-940c211b18f154f9955ff769b624791f.fontdata"]
 
 [params]
 
