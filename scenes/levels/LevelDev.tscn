@@ -1,26 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://dfad6nck6tucx"]
+[gd_scene load_steps=3 format=3 uid="uid://dfad6nck6tucx"]
 
-[ext_resource type="PackedScene" uid="uid://ci80xotbgu18w" path="res://scenes/levels/levelassets/Dev.tscn" id="1_33iip"]
-[ext_resource type="PackedScene" uid="uid://cqu48vcrjln81" path="res://scenes/levels/levelassets/playergame.tscn" id="2_xos2p"]
+[ext_resource type="PackedScene" uid="uid://r3t8vyh6hk05" path="res://scenes/level layer/LevelDev.tscn" id="1_mwu3q"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_b48us"]
 
-[node name="Game" type="Node2D"]
+[node name="View" type="CanvasLayer"]
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 material = SubResource("CanvasItemMaterial_b48us")
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1920.0
+offset_bottom = 1080.0
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 handle_input_locally = false
 size = Vector2i(1920, 1080)
 render_target_update_mode = 4
 
-[node name="Main" type="Node2D" parent="SubViewportContainer/SubViewport"]
-
-[node name="DummyLevel" parent="SubViewportContainer/SubViewport/Main" instance=ExtResource("1_33iip")]
-
-[node name="PlayerGame" parent="SubViewportContainer/SubViewport/Main" instance=ExtResource("2_xos2p")]
-
-[node name="ParallaxBackground" type="ParallaxBackground" parent="SubViewportContainer/SubViewport/Main"]
+[node name="GameLevel" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_mwu3q")]

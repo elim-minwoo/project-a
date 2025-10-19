@@ -54,7 +54,7 @@ const WWALL_JUMP_TIME := 0.2
 func _process(_delta: float) -> void:
 	
 	if Input.is_action_just_pressed(\"debug_tp\"):
-		global_position = Vector2(-500, 0)
+		global_position = Vector2(0, 0)
 	
 	# dash
 	if Input.is_action_just_pressed(\"dash\") && dash.can_dash && !dash.is_dashing():
