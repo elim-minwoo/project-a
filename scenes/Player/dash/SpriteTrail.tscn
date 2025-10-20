@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://cwqlyharjah1o"]
+[gd_scene load_steps=2 format=3 uid="uid://deha7d3q11t06"]
 
-[ext_resource type="Script" uid="uid://d3mr3nf7i78jb" path="res://scenes/player/dash/SpriteTrail.gd" id="1_4yktg"]
+[ext_resource type="Script" uid="uid://d3mr3nf7i78jb" path="res://scenes/player/dash/sprite_trail.gd" id="1_4yktg"]
 
 [node name="SpriteTrail" type="Node2D"]
 z_index = -3

@@ -1,4 +1,4 @@
-[gd_scene load_steps=2 format=3 uid="uid://cf6b1oo7dd4dc"]
+[gd_scene load_steps=2 format=3 uid="uid://dvpx2n88sf8na"]
 
 [ext_resource type="Script" uid="uid://til1c0o1mm6b" path="res://scenes/player/dash/Dash.gd" id="1_avqmg"]
 

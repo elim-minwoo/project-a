@@ -1,9 +1,9 @@
 [gd_scene load_steps=49 format=3 uid="uid://ktg27xjj1v6m"]
 
 [ext_resource type="Texture2D" uid="uid://bpkv8x701iiw7" path="res://assets/sprites/spritesheet.png" id="1_cyojo"]
-[ext_resource type="PackedScene" uid="uid://cf6b1oo7dd4dc" path="res://scenes/player/dash/Dash.tscn" id="2_1kbk7"]
-[ext_resource type="Script" uid="uid://mwqcmhsm0gv0" path="res://scenes/player/dash/SpriteFade.gd" id="2_c4h5g"]
-[ext_resource type="PackedScene" uid="uid://cwqlyharjah1o" path="res://scenes/player/dash/SpriteTrail.tscn" id="4_c4h5g"]
+[ext_resource type="PackedScene" uid="uid://dvpx2n88sf8na" path="res://scenes/player/dash/dash.tscn" id="2_1kbk7"]
+[ext_resource type="Script" uid="uid://mwqcmhsm0gv0" path="res://scenes/player/dash/sprite_fade.gd" id="2_c4h5g"]
+[ext_resource type="PackedScene" uid="uid://dg6w0v1q4lhl1" path="res://scenes/player/dash/sprite_trail.tscn" id="4_c4h5g"]
 
 [sub_resource type="GDScript" id="GDScript_cyojo"]
 script/source = "extends CharacterBody2D

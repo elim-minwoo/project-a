@@ -7,6 +7,6 @@ func _ready() -> void:
 	Global.main_scene = self
 	
 	Global.ui_layer = $UICanvasLayer
-	Global.game_layer = $GameCanvasLayer2
+	Global.game_layer = $GameCanvasLayer
 
 	Global.ui_layer.load_scene(START_MENU)
