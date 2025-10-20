@@ -18,7 +18,7 @@ func SetupSpriteArray():
 		newSprite.stop()
 		newSprite.z_index = -1
 		newSprite.modulate.a = 0
-		get_tree().root.add_child.call_deferred(newSprite)
+		Global.game_node.add_child.call_deferred(newSprite)
 		spriteArray.append(newSprite)
 
 func activate_trail() -> void:

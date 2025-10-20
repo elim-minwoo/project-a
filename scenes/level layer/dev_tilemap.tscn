@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://r3t8vyh6hk05"]
+[gd_scene load_steps=7 format=3 uid="uid://r3t8vyh6hk05"]
 
 [ext_resource type="Texture2D" uid="uid://do6l0i2tom6w8" path="res://assets/sprites/world_tileset.png" id="1_4s7r6"]
+[ext_resource type="Script" uid="uid://b8jug26w13p6u" path="res://scenes/level layer/dev_tilemap.gd" id="1_72y1w"]
 [ext_resource type="PackedScene" uid="uid://ktg27xjj1v6m" path="res://scenes/player/player.tscn" id="2_jaf5q"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mwu0i"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5uksr"]
 texture = ExtResource("1_4s7r6")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -172,7 +173,7 @@ texture = ExtResource("1_4s7r6")
 
 [sub_resource type="TileSet" id="TileSet_qh453"]
 physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_mwu0i")
+sources/0 = SubResource("TileSetAtlasSource_5uksr")
 
 [sub_resource type="GDScript" id="GDScript_gb22c"]
 script/source = "extends Camera2D
@@ -187,6 +188,7 @@ func _process(delta: float) -> void:
 "
 
 [node name="GameLevel" type="Node2D"]
+script = ExtResource("1_72y1w")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 

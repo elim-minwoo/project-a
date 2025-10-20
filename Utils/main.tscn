@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://b8adn54kewvuk"]
+
+[ext_resource type="Script" uid="uid://g3ni2mghsei6" path="res://Utils/main.gd" id="1_28upj"]
+[ext_resource type="Script" uid="uid://bfdc1dg7nw368" path="res://Utils/ui_canvas_layer.gd" id="2_ug6pa"]
+[ext_resource type="Script" uid="uid://1h4u0r32nwo7" path="res://Utils/game_canvas_layer_2.gd" id="3_fg24f"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_m7c58"]
+
+[node name="Main" type="Node"]
+script = ExtResource("1_28upj")
+
+[node name="GameCanvasLayer2" type="CanvasLayer" parent="."]
+script = ExtResource("3_fg24f")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="GameCanvasLayer2"]
+material = SubResource("CanvasItemMaterial_m7c58")
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="SubViewport" type="SubViewport" parent="GameCanvasLayer2/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="UICanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource("2_ug6pa")
