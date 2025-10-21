@@ -199,6 +199,7 @@ layer_0/tile_data = PackedInt32Array(196607, 0, 0, 131072, 0, 0, 131073, 0, 0, 1
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.5, 1.5)
+process_callback = 0
 script = SubResource("GDScript_gb22c")
 
 [node name="Player" parent="." instance=ExtResource("3_fwncx")]
