@@ -7,7 +7,7 @@ var spriteArray: Array[AnimatedSprite2D] = []
 var trail_active := false
 
 var trail_divide = 1
-var trail_number = 10
+var trail_number = 20
 
 func _ready() -> void:
 	SetupSpriteArray()
