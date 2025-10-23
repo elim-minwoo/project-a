@@ -1,7 +1,7 @@
 [gd_scene load_steps=49 format=3 uid="uid://ktg27xjj1v6m"]
 
 [ext_resource type="Texture2D" uid="uid://bpkv8x701iiw7" path="res://assets/sprites/spritesheet.png" id="1_cyojo"]
-[ext_resource type="PackedScene" uid="uid://dvpx2n88sf8na" path="res://scenes/player/dash/Dash.tscn" id="2_1kbk7"]
+[ext_resource type="PackedScene" uid="uid://dvpx2n88sf8na" path="res://scenes/player/dash/dash.tscn" id="2_1kbk7"]
 [ext_resource type="Script" uid="uid://mwqcmhsm0gv0" path="res://scenes/player/dash/sprite_fade.gd" id="2_c4h5g"]
 [ext_resource type="PackedScene" uid="uid://dg6w0v1q4lhl1" path="res://scenes/player/dash/sprite_trail.tscn" id="4_c4h5g"]
 
@@ -222,7 +222,7 @@ func _on_player_anim_animation_finished(anim_name: StringName) -> void:
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lvxji"]
-size = Vector2(11, 19)
+size = Vector2(11, 28)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_18ciy"]
 atlas = ExtResource("1_cyojo")
@@ -733,7 +733,7 @@ script = SubResource("GDScript_cyojo")
 [node name="SpriteTrail" parent="." instance=ExtResource("4_c4h5g")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, 6.5)
+position = Vector2(-0.5, 2)
 shape = SubResource("RectangleShape2D_lvxji")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

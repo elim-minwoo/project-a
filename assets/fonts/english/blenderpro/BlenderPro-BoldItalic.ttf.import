@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://dau5xch28of36"
-path="res://.godot/imported/neodgm.ttf-56a2ba7cd44cac636f344001a4de6fa3.fontdata"
+uid="uid://7rogmqewdifx"
+path="res://.godot/imported/BlenderPro-BoldItalic.ttf-79bfd7125804f46f899145e96aa05c8f.fontdata"
 
 [deps]
 
-source_file="res://assets/fonts/neodgm.ttf"
-dest_files=["res://.godot/imported/neodgm.ttf-56a2ba7cd44cac636f344001a4de6fa3.fontdata"]
+source_file="res://assets/fonts/english/blenderpro/BlenderPro-BoldItalic.ttf"
+dest_files=["res://.godot/imported/BlenderPro-BoldItalic.ttf-79bfd7125804f46f899145e96aa05c8f.fontdata"]
 
 [params]
 

@@ -1,40 +1,40 @@
 [gd_scene load_steps=3 format=3 uid="uid://ckcx3loo288dy"]
 
-[ext_resource type="Script" uid="uid://cjw7ubdwcmhwl" path="res://scenes/menus/StartMenui.gd" id="1_iafob"]
-[ext_resource type="FontFile" uid="uid://dau5xch28of36" path="res://assets/fonts/neodgm.ttf" id="2_1gd34"]
+[ext_resource type="Script" uid="uid://cjw7ubdwcmhwl" path="res://scenes/menus/start_menui.gd" id="1_r2ayf"]
+[ext_resource type="FontFile" uid="uid://bmdfgrq0sdewi" path="res://assets/fonts/english/blenderpro/BlenderPro-Bold.ttf" id="2_r2ayf"]
 
 [node name="StartMenu" type="Control"]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
 grow_vertical = 2
-script = ExtResource("1_iafob")
+script = ExtResource("1_r2ayf")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
-anchors_preset = 7
+anchors_preset = 8
 anchor_left = 0.5
-anchor_top = 1.0
+anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -184.0
-offset_top = -291.305
-offset_right = 184.0
-offset_bottom = -119.0
+anchor_bottom = 0.5
+offset_left = 178.965
+offset_top = 96.89
+offset_right = 546.9652
+offset_bottom = 272.89014
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 38
+theme_override_constants/separation = 30
 
 [node name="StartButton" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_1gd34")
-theme_override_font_sizes/font_size = 25
-text = "Start"
+theme_override_fonts/font = ExtResource("2_r2ayf")
+theme_override_font_sizes/font_size = 35
+text = "   START GAME"
+alignment = 0
 
 [node name="OptionsButton" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2

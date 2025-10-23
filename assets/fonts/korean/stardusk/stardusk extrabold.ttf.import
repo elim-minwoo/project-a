@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://b0me8cdj2436v"
-path="res://.godot/imported/stardusk extrabold.ttf-cacf0b4afc35574ab9d0fcfe5c976ade.fontdata"
+path="res://.godot/imported/stardusk extrabold.ttf-0caac6738ed0ccc6385340d0935c997a.fontdata"
 
 [deps]
 
-source_file="res://assets/fonts/stardusk extrabold.ttf"
-dest_files=["res://.godot/imported/stardusk extrabold.ttf-cacf0b4afc35574ab9d0fcfe5c976ade.fontdata"]
+source_file="res://assets/fonts/korean/stardusk/stardusk extrabold.ttf"
+dest_files=["res://.godot/imported/stardusk extrabold.ttf-0caac6738ed0ccc6385340d0935c997a.fontdata"]
 
 [params]
 

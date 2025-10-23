@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://0f7rg76gkd5m"
-path="res://.godot/imported/stardusk.ttf-a46d36c6ffc003f23cf3439556ac06c4.fontdata"
+uid="uid://7y3yvxmb1d75"
+path="res://.godot/imported/BlenderPro-Thin.ttf-dbe47e2ba99593276ec81c04f0012be1.fontdata"
 
 [deps]
 
-source_file="res://assets/fonts/stardusk.ttf"
-dest_files=["res://.godot/imported/stardusk.ttf-a46d36c6ffc003f23cf3439556ac06c4.fontdata"]
+source_file="res://assets/fonts/english/blenderpro/BlenderPro-Thin.ttf"
+dest_files=["res://.godot/imported/BlenderPro-Thin.ttf-dbe47e2ba99593276ec81c04f0012be1.fontdata"]
 
 [params]
 
