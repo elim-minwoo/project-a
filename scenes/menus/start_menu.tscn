@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://ckcx3loo288dy"]
 
 [ext_resource type="Script" uid="uid://cjw7ubdwcmhwl" path="res://scenes/menus/start_menui.gd" id="1_r2ayf"]
-[ext_resource type="FontFile" uid="uid://bmdfgrq0sdewi" path="res://assets/fonts/english/blenderpro/BlenderPro-Bold.ttf" id="2_r2ayf"]
+[ext_resource type="Theme" uid="uid://bhwr2tosn5y8h" path="res://assets/themes/start_menu.tres" id="2_r2ayf"]
 
 [node name="StartMenu" type="Control"]
 layout_mode = 3
@@ -18,10 +18,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 178.965
-offset_top = 96.89
-offset_right = 546.9652
-offset_bottom = 272.89014
+offset_left = 381.935
+offset_top = 68.765
+offset_right = 762.0906
+offset_bottom = 263.76495
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -31,18 +31,18 @@ theme_override_constants/separation = 30
 
 [node name="StartButton" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_r2ayf")
-theme_override_font_sizes/font_size = 35
-text = "   START GAME"
-alignment = 0
+theme = ExtResource("2_r2ayf")
+text = "START GAME"
 
 [node name="OptionsButton" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Options"
+theme = ExtResource("2_r2ayf")
+text = "OPTIONS"
 
 [node name="QuitButton" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "Quit"
+theme = ExtResource("2_r2ayf")
+text = "QUIT"
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]

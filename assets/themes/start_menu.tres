@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bhwr2tosn5y8h"]
+
+[ext_resource type="FontFile" uid="uid://bmdfgrq0sdewi" path="res://assets/fonts/english/blenderpro/BlenderPro-Bold.ttf" id="1_ya8dl"]
+
+[resource]
+default_font = ExtResource("1_ya8dl")
+default_font_size = 35
