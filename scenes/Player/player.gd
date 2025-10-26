@@ -7,12 +7,7 @@ extends CharacterBody2D
 
 #region variables
 var jump_velocity: float = -500.0
-
 var gravity
-var is_jumping := false
-var is_wall_jumping := false
-
-var is_parry := false
 
 # direction
 var direction = Input.get_axis("moveleft", "moveright")
@@ -44,6 +39,12 @@ var can_dash = true
 @export var wall_x_force =  300.0
 @export var wall_y_force = 1200.0
 @export var wall_slide_speed: float = 30.0
+
+# state variables
+@export var is_attacking := false
+@export var is_parrying := false
+@export var is_jumping := false
+@export var is_wall_jumping := false
 #endregion
 
 
@@ -124,7 +125,7 @@ func _physics_process(delta: float) -> void:
 		#air_process(delta)
 	
 	manage_abilities()
-	set_animations()
+	update_animations()
 	move_and_slide()
 
 
@@ -190,7 +191,8 @@ func manage_abilities():
 		bullet_time = false
 
 func parry():
-	pass
+	is_parrying = true
+	player_anim.play("parry")
 
 
 
@@ -210,26 +212,27 @@ func manage_flip(direction):
 
 
 
-func set_animations():
+func update_animations():
 	manage_flip(Input.get_axis("moveleft", "moveright"))
 	
-	if is_on_wall_only() and not direction == 0:
-	#wall jump anim
-		player_anim.play("wall")
-		
-	# jump anim
-	elif velocity.y < 0 and is_jumping:
-		player_anim.play("jump")
-		
-	# fall anim
-	elif velocity.y > 0 and not is_on_floor():
-		player_anim.play("fall")
-		
-	# run anim
-	elif velocity.x != 0 and is_on_floor():
-		player_anim.play("run")
-		
-	# idle anim
-	else:
-		player_anim.play("idle")
-		
+	if not is_attacking and not is_parrying:
+		if is_on_wall_only() and not direction == 0:
+		#wall jump anim
+			player_anim.play("wall")
+			
+		# jump anim
+		elif velocity.y < 0 and is_jumping:
+			player_anim.play("jump")
+			
+		# fall anim
+		elif velocity.y > 0 and not is_on_floor():
+			player_anim.play("fall")
+			
+		# run anim
+		elif velocity.x != 0 and is_on_floor():
+			player_anim.play("run")
+			
+		# idle anim
+		else:
+			player_anim.play("idle")
+			
