@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://ktg27xjj1v6m"]
+[gd_scene load_steps=50 format=3 uid="uid://ktg27xjj1v6m"]
 
 [ext_resource type="Texture2D" uid="uid://bpkv8x701iiw7" path="res://assets/sprites/spritesheet.png" id="1_cyojo"]
 [ext_resource type="Script" uid="uid://c1qnfs4yr8bgk" path="res://scenes/player/player.gd" id="1_p47bc"]
@@ -8,6 +8,9 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lvxji"]
 size = Vector2(11, 28)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p47bc"]
+size = Vector2(24.5, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_18ciy"]
 atlas = ExtResource("1_cyojo")
@@ -276,7 +279,7 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../AnimatedSprite2D:frame")
+tracks/0/path = NodePath("../PlayerSprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -288,7 +291,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../AnimatedSprite2D:animation")
+tracks/1/path = NodePath("../PlayerSprite:animation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -309,6 +312,18 @@ tracks/2/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../ParryHitbox:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_hvfru"]
 resource_name = "fall"
@@ -316,7 +331,7 @@ step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../AnimatedSprite2D:animation")
+tracks/0/path = NodePath("../PlayerSprite:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -328,7 +343,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../AnimatedSprite2D:frame")
+tracks/1/path = NodePath("../PlayerSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -345,7 +360,7 @@ step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../AnimatedSprite2D:animation")
+tracks/0/path = NodePath("../PlayerSprite:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -357,7 +372,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../AnimatedSprite2D:frame")
+tracks/1/path = NodePath("../PlayerSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -374,7 +389,7 @@ step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../AnimatedSprite2D:animation")
+tracks/0/path = NodePath("../PlayerSprite:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -386,7 +401,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../AnimatedSprite2D:frame")
+tracks/1/path = NodePath("../PlayerSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -404,7 +419,7 @@ step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../AnimatedSprite2D:animation")
+tracks/0/path = NodePath("../PlayerSprite:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -416,7 +431,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../AnimatedSprite2D:frame")
+tracks/1/path = NodePath("../PlayerSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -432,7 +447,7 @@ length = 0.6
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../AnimatedSprite2D:animation")
+tracks/0/path = NodePath("../PlayerSprite:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -444,7 +459,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../AnimatedSprite2D:frame")
+tracks/1/path = NodePath("../PlayerSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -465,6 +480,18 @@ tracks/2/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../ParryHitbox:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.10689247, 0.25),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [true, false, false, true]
+}
 
 [sub_resource type="Animation" id="Animation_1kbk7"]
 resource_name = "run"
@@ -472,7 +499,7 @@ length = 0.7
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../AnimatedSprite2D:animation")
+tracks/0/path = NodePath("../PlayerSprite:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -484,7 +511,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../AnimatedSprite2D:frame")
+tracks/1/path = NodePath("../PlayerSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -500,7 +527,7 @@ step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("../AnimatedSprite2D:animation")
+tracks/0/path = NodePath("../PlayerSprite:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -512,7 +539,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("../AnimatedSprite2D:frame")
+tracks/1/path = NodePath("../PlayerSprite:frame")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -541,17 +568,21 @@ script = ExtResource("1_p47bc")
 
 [node name="SpriteTrail" parent="." instance=ExtResource("4_c4h5g")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="PlayerHitbox" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 2)
 shape = SubResource("RectangleShape2D_lvxji")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="ParryHitbox" type="CollisionShape2D" parent="."]
+position = Vector2(10.25, -1)
+shape = SubResource("RectangleShape2D_p47bc")
+
+[node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_cgmen")
 animation = &"wall"
 script = ExtResource("2_c4h5g")
 
 [node name="PlayerAnim" type="AnimationPlayer" parent="."]
-root_node = NodePath("../CollisionShape2D")
+root_node = NodePath("../PlayerHitbox")
 libraries = {
 &"": SubResource("AnimationLibrary_hvfru")
 }
