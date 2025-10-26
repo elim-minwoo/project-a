@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@onready var sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@onready var sprite_2d: AnimatedSprite2D = $PlayerSprite
 @onready var player_anim = get_node("PlayerAnim")
 @onready var sprite_trail: Node = $SpriteTrail
 @onready var dash: Node2D = $Dash	

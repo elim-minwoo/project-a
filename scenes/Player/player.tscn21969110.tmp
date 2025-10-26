@@ -1,10 +1,9 @@
-[gd_scene load_steps=51 format=3 uid="uid://ktg27xjj1v6m"]
+[gd_scene load_steps=50 format=3 uid="uid://ktg27xjj1v6m"]
 
 [ext_resource type="Texture2D" uid="uid://bpkv8x701iiw7" path="res://assets/sprites/spritesheet.png" id="1_cyojo"]
 [ext_resource type="Script" uid="uid://c1qnfs4yr8bgk" path="res://scenes/player/player.gd" id="1_p47bc"]
 [ext_resource type="PackedScene" uid="uid://dvpx2n88sf8na" path="res://scenes/player/dash/dash.tscn" id="2_1kbk7"]
 [ext_resource type="Script" uid="uid://mwqcmhsm0gv0" path="res://scenes/player/dash/sprite_fade.gd" id="2_c4h5g"]
-[ext_resource type="Script" uid="uid://bf2olv6q0ci4r" path="res://scenes/player/parry.gd" id="4_75vfm"]
 [ext_resource type="PackedScene" uid="uid://dg6w0v1q4lhl1" path="res://scenes/player/dash/sprite_trail.tscn" id="4_c4h5g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lvxji"]
@@ -316,7 +315,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("../Parry/ParryHitbox:disabled")
+tracks/3/path = NodePath("../ParryHitbox:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -353,18 +352,6 @@ tracks/1/keys = {
 "update": 1,
 "values": [0]
 }
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../Parry/ParryHitbox:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
 
 [sub_resource type="Animation" id="Animation_cyojo"]
 resource_name = "idle"
@@ -394,18 +381,6 @@ tracks/1/keys = {
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 }
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../Parry/ParryHitbox:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
 
 [sub_resource type="Animation" id="Animation_gqjuk"]
 resource_name = "jump"
@@ -434,18 +409,6 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 4]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../Parry/ParryHitbox:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_c4h5g"]
@@ -520,7 +483,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("../Parry/ParryHitbox:disabled")
+tracks/3/path = NodePath("../ParryHitbox:disabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -557,18 +520,6 @@ tracks/1/keys = {
 "update": 1,
 "values": [0, 1, 2, 3, 4, 5, 6, 7]
 }
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../Parry/ParryHitbox:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
 
 [sub_resource type="Animation" id="Animation_a06cl"]
 resource_name = "wall"
@@ -597,18 +548,6 @@ tracks/1/keys = {
 "update": 1,
 "values": [0]
 }
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../Parry/ParryHitbox:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_hvfru"]
 _data = {
@@ -633,10 +572,7 @@ script = ExtResource("1_p47bc")
 position = Vector2(-0.5, 2)
 shape = SubResource("RectangleShape2D_lvxji")
 
-[node name="Parry" type="Area2D" parent="."]
-script = ExtResource("4_75vfm")
-
-[node name="ParryHitbox" type="CollisionShape2D" parent="Parry"]
+[node name="ParryHitbox" type="CollisionShape2D" parent="."]
 position = Vector2(10.25, -1)
 shape = SubResource("RectangleShape2D_p47bc")
 
@@ -651,5 +587,4 @@ libraries = {
 &"": SubResource("AnimationLibrary_hvfru")
 }
 
-[connection signal="area_entered" from="Parry" to="Parry" method="_on_area_entered"]
 [connection signal="animation_finished" from="PlayerAnim" to="." method="_on_player_anim_animation_finished"]

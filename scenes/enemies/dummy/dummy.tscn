@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cmddc3d4la3ka" path="res://scenes/enemies/dummy/dummy.png" id="1_0gs5x"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_005t2"]
-radius = 8.0
+radius = 7.0
 height = 28.0
 
 [node name="Dummy" type="RigidBody2D"]
@@ -12,5 +12,5 @@ height = 28.0
 texture = ExtResource("1_0gs5x")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1)
+position = Vector2(1, 1)
 shape = SubResource("CapsuleShape2D_005t2")

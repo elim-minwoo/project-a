@@ -187,4 +187,4 @@ process_callback = 0
 script = SubResource("GDScript_gb22c")
 
 [node name="Dummy" parent="." instance=ExtResource("4_on0lb")]
-position = Vector2(1023, 17)
+position = Vector2(1029, 16)
