@@ -1,17 +1,16 @@
 extends Area2D
 
 var speed : float = 200.0
-var direction : Vector2 = Vector2.LEFT
+@export var direction: int = 1 : set = set_direction
 
-func _physics_process(delta: float) -> void:
-	position += speed * direction * delta 
-	$Sprite2D.rotation = direction.angle()
+func set_direction(value: int) -> void:
+	direction = value
+	$Sprite2D.flip_h = direction < 0
 
-func _on_screen_exited() -> void:
-	queue_free()
+func _process(delta: float) -> void:
+	position.x += speed * direction * delta
 
-func mirror_flip():
-	direction = Vector2 (-direction.x, -direction.y)
-
-func destroy():
-	speed = 0
+func reflect():
+	direction *= -1
+	speed *= 2
+	set_direction(direction)

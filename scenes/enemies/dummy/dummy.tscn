@@ -1,16 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://8iiys5wrfwql"]
+[gd_scene load_steps=4 format=3 uid="uid://8iiys5wrfwql"]
 
 [ext_resource type="Texture2D" uid="uid://cmddc3d4la3ka" path="res://scenes/enemies/dummy/dummy.png" id="1_0gs5x"]
 [ext_resource type="Script" uid="uid://dnxpd3mspf18m" path="res://scenes/enemies/dummy/dummy.gd" id="1_005t2"]
-[ext_resource type="PackedScene" uid="uid://coednfjc0rx2q" path="res://scenes/enemies/dummy/dummy_projectile.tscn" id="2_jfabm"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_005t2"]
 radius = 7.0
 height = 28.0
 
-[node name="Dummy" type="RigidBody2D"]
+[node name="Dummy" type="CharacterBody2D"]
 script = ExtResource("1_005t2")
-projectile_node = ExtResource("2_jfabm")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_0gs5x")
