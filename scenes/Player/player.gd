@@ -131,14 +131,18 @@ func _physics_process(delta: float) -> void:
 
 #region manage process when on floor, wall, and air
 func floor_process():
-	is_jumping = false
+	if not is_on_floor():
+		return
+		
+	if velocity.y == 0:
+		is_jumping = false
 	is_wall_jumping = false
 	
 	if Input.is_action_just_pressed("moveup"):
 		jump_buffer_timer = JUMP_BUFFER_TIME
 		
 	if Input.is_action_just_pressed("parry"):
-		is_parry = true
+		parry()
 
 
 
@@ -185,6 +189,9 @@ func manage_abilities():
 		Engine.time_scale = 1.0
 		bullet_time = false
 
+func parry():
+	pass
+
 
 
 @warning_ignore("shadowed_variable")
@@ -211,16 +218,12 @@ func set_animations():
 		player_anim.play("wall")
 		
 	# jump anim
-	elif is_jumping and velocity.y < 0:
+	elif velocity.y < 0 and is_jumping:
 		player_anim.play("jump")
 		
 	# fall anim
 	elif velocity.y > 0 and not is_on_floor():
 		player_anim.play("fall")
-		
-	#parry anim
-	elif is_parry == true:
-		player_anim.play("parry")
 		
 	# run anim
 	elif velocity.x != 0 and is_on_floor():
@@ -230,7 +233,3 @@ func set_animations():
 	else:
 		player_anim.play("idle")
 		
-
-func _on_player_anim_animation_finished(anim_name: StringName) -> void:
-	if anim_name == "parry":
-		is_parry = false
