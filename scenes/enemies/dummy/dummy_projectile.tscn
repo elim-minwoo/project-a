@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://coednfjc0rx2q"]
+
+[ext_resource type="Script" uid="uid://bujnp855fgkq7" path="res://scenes/enemies/dummy/dummy_projectile.gd" id="1_bhlsh"]
+[ext_resource type="Texture2D" uid="uid://ijpae0s2w7t8" path="res://scenes/enemies/dummy/dummyknife.png" id="1_iktcg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bhlsh"]
+size = Vector2(30, 7)
+
+[node name="DummyProjectile" type="Area2D"]
+script = ExtResource("1_bhlsh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_iktcg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_bhlsh")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-5, 0)
+rect = Rect2(-10, -14, 30, 29)
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_exited"]
