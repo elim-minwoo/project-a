@@ -2,29 +2,12 @@ extends CharacterBody2D
 
 @onready var sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var player_anim = get_node("PlayerAnim")
-
-#region export variables
-@export_category("Velocity Variables")
-@export var player_speed: float = 330.0
-@export var move_speed: float = 330.0
-@export var jump_velocity: float = - 500.0
-
-@export_category("Wall Logic Variables")
-@export var wall_x_force =  300.0
-@export var wall_y_force = 1200.0
-@export var wall_slide_speed: float = 30.0
-
-@export_category("Dash VaAAAAA Ariables")
-@onready var dash: Node2D = $Dash	
-@export var dash_speed = 2000.0
-@export var dash_duration = 0.1
-var bullet_time = true
-var can_dash = true
-
 @onready var sprite_trail: Node = $SpriteTrail
-#endregion
+@onready var dash: Node2D = $Dash	
 
 #region variables
+var jump_velocity: float = -500.0
+
 var gravity
 var is_jumping := false
 var is_wall_jumping := false
@@ -43,7 +26,24 @@ var jump_buffer_timer := 0.0
 const JUMP_BUFFER_TIME = 0.1
 
 var wall_jump_timer := 0.0
-const WWALL_JUMP_TIME := 0.2
+const WALL_JUMP_TIME := 0.2
+
+# dash variables
+var dash_speed = 2000.0
+var dash_duration = 0.1
+var bullet_time = true
+var can_dash = true
+#endregion
+
+#region export variables
+@export_category("Velocity Variables")
+@export var player_speed: float = 330.0
+@export var move_speed: float = 330.0
+
+@export_category("Wall Logic Variables")
+@export var wall_x_force =  300.0
+@export var wall_y_force = 1200.0
+@export var wall_slide_speed: float = 30.0
 #endregion
 
 
@@ -72,31 +72,9 @@ func _physics_process(delta: float) -> void:
 	
 	var on_wall = is_on_wall_only() and not direction == 0
 	
-	# input buffer timer
-	coyote_timer = max(coyote_timer - delta, 0)
-	jump_buffer_timer = max(jump_buffer_timer - delta, 0)
-	
-	if wall_jump_timer > 0:
-		wall_jump_timer -= delta
-	else:
-		is_wall_jumping = false
-	
-	# jump buffer
-	if Input.is_action_just_pressed("moveup"):
-		jump_buffer_timer = JUMP_BUFFER_TIME
-		
-	if on_wall:
-		wall_process()
-	elif is_on_floor():
-		coyote_timer = COYOTE_TIME # coyote time
-		floor_process()
-	#else:
-		#air_process(delta)
-	
-	
 	
 	#region movement
-	# horizontal movement
+	# handle movement
 	if not is_wall_jumping:
 		velocity.x = direction * player_speed
 	else:
@@ -105,7 +83,7 @@ func _physics_process(delta: float) -> void:
 	
 	
 	
-	# vertical movement
+	# handle jump
 	if jump_buffer_timer > 0 and (is_on_floor() or coyote_timer > 0):
 		velocity.y = jump_velocity
 		is_jumping = true
@@ -120,6 +98,30 @@ func _physics_process(delta: float) -> void:
 	var max_fall_speed: float = 1000.0
 	velocity.y = clamp(velocity.y, float(-INF), max_fall_speed)
 	#endregion
+	
+	
+	# input buffer timer
+	coyote_timer = max(coyote_timer - delta, 0)
+	jump_buffer_timer = max(jump_buffer_timer - delta, 0)
+	
+	if wall_jump_timer > 0:
+		wall_jump_timer -= delta
+	else:
+		is_wall_jumping = false
+	
+	# jump buffer
+	if Input.is_action_just_pressed("moveup"):
+		jump_buffer_timer = JUMP_BUFFER_TIME
+	
+	
+	## state machine??
+	if on_wall:
+		wall_process()
+	elif is_on_floor():
+		coyote_timer = COYOTE_TIME # coyote time
+		floor_process()
+	#else:
+		#air_process(delta)
 	
 	manage_abilities()
 	set_animations()
@@ -155,7 +157,7 @@ func wall_process():
 	if Input.is_action_just_pressed("moveup"):
 		is_jumping = true
 		is_wall_jumping = true
-		wall_jump_timer = WWALL_JUMP_TIME
+		wall_jump_timer = WALL_JUMP_TIME
 		
 		var wall_dir = get_wall_normal().x
 		velocity.x = wall_dir * wall_x_force

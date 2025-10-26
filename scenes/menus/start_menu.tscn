@@ -11,38 +11,110 @@ anchor_bottom = 0.5
 grow_vertical = 2
 script = ExtResource("1_r2ayf")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MainMenu" type="Panel" parent="."]
+layout_mode = 0
+
+[node name="StartMenuBtns" type="MarginContainer" parent="MainMenu"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 381.935
-offset_top = 68.765
-offset_right = 762.0906
-offset_bottom = 263.76495
+offset_left = 361.935
+offset_top = 48.765015
+offset_right = 742.0906
+offset_bottom = 243.76495
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="MainBtns" type="VBoxContainer" parent="MainMenu/StartMenuBtns"]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="StartButton" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="StartBtn" type="Button" parent="MainMenu/StartMenuBtns/MainBtns"]
 layout_mode = 2
+focus_neighbor_top = NodePath("../QuitBtn")
+focus_neighbor_bottom = NodePath("../OptionsBtn")
 theme = ExtResource("2_r2ayf")
 text = "START GAME"
 
-[node name="OptionsButton" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="OptionsBtn" type="Button" parent="MainMenu/StartMenuBtns/MainBtns"]
 layout_mode = 2
+focus_neighbor_top = NodePath("../StartBtn")
+focus_neighbor_bottom = NodePath("../QuitBtn")
 theme = ExtResource("2_r2ayf")
 text = "OPTIONS"
 
-[node name="QuitButton" type="Button" parent="MarginContainer/VBoxContainer"]
+[node name="QuitBtn" type="Button" parent="MainMenu/StartMenuBtns/MainBtns"]
 layout_mode = 2
+focus_neighbor_top = NodePath("../OptionsBtn")
+focus_neighbor_bottom = NodePath("../StartBtn")
 theme = ExtResource("2_r2ayf")
 text = "QUIT"
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
+[node name="Options" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 118.0
+offset_top = -479.5
+offset_right = 1790.2395
+offset_bottom = 479.5
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Options"]
+layout_mode = 0
+offset_left = 561.0
+offset_top = 47.5
+offset_right = 1150.0
+offset_bottom = 116.5
+theme_override_font_sizes/font_size = 40
+text = "Options"
+horizontal_alignment = 1
+
+[node name="QuitEnsure" type="Panel" parent="."]
+layout_mode = 0
+offset_left = -1.0
+offset_top = -541.0
+offset_right = 1922.0
+offset_bottom = 539.0
+
+[node name="Label" type="Label" parent="QuitEnsure"]
+layout_mode = 0
+offset_left = 365.0
+offset_top = 180.0
+offset_right = 1543.0
+offset_bottom = 397.0
+theme_override_font_sizes/font_size = 45
+text = "Are You Sure You Want To Quit?"
+horizontal_alignment = 1
+
+[node name="QuitYes" type="Button" parent="QuitEnsure"]
+layout_mode = 0
+offset_left = 421.0
+offset_top = 846.0
+offset_right = 771.0
+offset_bottom = 939.0
+theme = ExtResource("2_r2ayf")
+text = "YES"
+
+[node name="QuitNo" type="Button" parent="QuitEnsure"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.016
+anchor_bottom = 0.029000001
+offset_left = 1207.0
+offset_top = 845.0
+offset_right = 1545.232
+offset_bottom = 915.68
+theme = ExtResource("2_r2ayf")
+text = "NO"
+
+[connection signal="pressed" from="MainMenu/StartMenuBtns/MainBtns/StartBtn" to="." method="_on_start_btn_pressed"]
+[connection signal="pressed" from="MainMenu/StartMenuBtns/MainBtns/OptionsBtn" to="." method="_on_options_btn_pressed"]
+[connection signal="pressed" from="MainMenu/StartMenuBtns/MainBtns/QuitBtn" to="." method="_on_quit_btn_pressed"]
+[connection signal="pressed" from="QuitEnsure/QuitYes" to="." method="_on_quit_yes_pressed"]
+[connection signal="pressed" from="QuitEnsure/QuitNo" to="." method="_on_quit_no_pressed"]

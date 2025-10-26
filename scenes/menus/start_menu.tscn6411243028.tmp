@@ -1,0 +1,71 @@
+[gd_scene load_steps=3 format=3 uid="uid://ckcx3loo288dy"]
+
+[ext_resource type="Script" uid="uid://cjw7ubdwcmhwl" path="res://scenes/menus/start_menui.gd" id="1_r2ayf"]
+[ext_resource type="Theme" uid="uid://bhwr2tosn5y8h" path="res://assets/themes/start_menu.tres" id="2_r2ayf"]
+
+[node name="StartMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+grow_vertical = 2
+script = ExtResource("1_r2ayf")
+
+[node name="StartMenuBtns" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 381.935
+offset_top = 68.765
+offset_right = 762.0906
+offset_bottom = 263.76495
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MainBtns" type="VBoxContainer" parent="StartMenuBtns"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="StartBtn" type="Button" parent="StartMenuBtns/MainBtns"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../QuitBtn")
+focus_neighbor_bottom = NodePath("../OptionsBtn")
+theme = ExtResource("2_r2ayf")
+text = "START GAME"
+
+[node name="OptionsBtn" type="Button" parent="StartMenuBtns/MainBtns"]
+layout_mode = 2
+theme = ExtResource("2_r2ayf")
+text = "OPTIONS"
+
+[node name="QuitBtn" type="Button" parent="StartMenuBtns/MainBtns"]
+layout_mode = 2
+theme = ExtResource("2_r2ayf")
+text = "QUIT"
+
+[node name="Options" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 118.0
+offset_top = -479.5
+offset_right = 1790.2395
+offset_bottom = 479.5
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Options"]
+layout_mode = 0
+offset_left = 561.0
+offset_top = 47.5
+offset_right = 1150.0
+offset_bottom = 116.5
+theme_override_font_sizes/font_size = 40
+text = "Options"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="StartMenuBtns/MainBtns/StartBtn" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="StartMenuBtns/MainBtns/OptionsBtn" to="." method="_on_options_button_pressed"]
