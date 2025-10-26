@@ -1,11 +1,11 @@
 [gd_scene load_steps=7 format=3 uid="uid://bakqi37iis4tj"]
 
-[ext_resource type="Texture2D" uid="uid://clf2c0sspikq8" path="res://assets/sprites/parallax placeholder/1.png" id="1_bvqoj"]
-[ext_resource type="Texture2D" uid="uid://dow7cla4ouwbt" path="res://assets/sprites/parallax placeholder/2.png" id="2_b28wv"]
-[ext_resource type="Texture2D" uid="uid://gkehssu3xv0g" path="res://assets/sprites/parallax placeholder/3.png" id="3_gcs76"]
-[ext_resource type="Texture2D" uid="uid://dgeg8bf1vab44" path="res://assets/sprites/parallax placeholder/4.png" id="4_4lsk3"]
-[ext_resource type="Texture2D" uid="uid://c1f4upwyaixoe" path="res://assets/sprites/parallax placeholder/5.png" id="5_wgnmo"]
-[ext_resource type="Texture2D" uid="uid://oflasojxm82h" path="res://assets/sprites/parallax placeholder/6.png" id="6_sk2fw"]
+[ext_resource type="Texture2D" uid="uid://clf2c0sspikq8" path="res://assets/sprites/world/parallax placeholder/1.png" id="1_bvqoj"]
+[ext_resource type="Texture2D" uid="uid://dow7cla4ouwbt" path="res://assets/sprites/world/parallax placeholder/2.png" id="2_b28wv"]
+[ext_resource type="Texture2D" uid="uid://gkehssu3xv0g" path="res://assets/sprites/world/parallax placeholder/3.png" id="3_gcs76"]
+[ext_resource type="Texture2D" uid="uid://dgeg8bf1vab44" path="res://assets/sprites/world/parallax placeholder/4.png" id="4_4lsk3"]
+[ext_resource type="Texture2D" uid="uid://c1f4upwyaixoe" path="res://assets/sprites/world/parallax placeholder/5.png" id="5_wgnmo"]
+[ext_resource type="Texture2D" uid="uid://oflasojxm82h" path="res://assets/sprites/world/parallax placeholder/6.png" id="6_sk2fw"]
 
 [node name="ParallaxPlaceholder" type="Node2D"]
 

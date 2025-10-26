@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bvx8vqv3gdwwv"
+path="res://.godot/imported/Pausing the Game.mp3-2eb12b56be93affb9a3793df4a6dd77f.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/sfx/Pausing the Game.mp3"
+dest_files=["res://.godot/imported/Pausing the Game.mp3-2eb12b56be93affb9a3793df4a6dd77f.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
