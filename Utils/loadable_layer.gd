@@ -1,7 +1,7 @@
 extends CanvasLayer
 class_name LoadableLayer
 
-func load_scene(scene: PackedScene):
+func load_scene(_scene: PackedScene):
 	return
 
 func unload_current():

@@ -2,8 +2,8 @@ extends CharacterBody2D
 
 @onready var sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var player_anim = get_node("PlayerAnim")
-@onready var debug_label: Label = $DebugLabel
 
+#region export variables
 @export_category("Velocity Variables")
 @export var player_speed: float = 330.0
 @export var move_speed: float = 330.0
@@ -22,7 +22,9 @@ var bullet_time = true
 var can_dash = true
 
 @onready var sprite_trail: Node = $SpriteTrail
+#endregion
 
+#region variables
 var gravity
 var is_jumping := false
 var is_wall_jumping := false
@@ -42,6 +44,7 @@ const JUMP_BUFFER_TIME = 0.1
 
 var wall_jump_timer := 0.0
 const WWALL_JUMP_TIME := 0.2
+#endregion
 
 
 
@@ -92,6 +95,7 @@ func _physics_process(delta: float) -> void:
 	
 	
 	
+	#region movement
 	# horizontal movement
 	if not is_wall_jumping:
 		velocity.x = direction * player_speed
@@ -108,13 +112,10 @@ func _physics_process(delta: float) -> void:
 		jump_buffer_timer = 0.0
 		coyote_timer = 0.0
 		
-		
-		
 	# jump cut
 	if Input.is_action_just_released("moveup") and is_jumping and velocity.y < 0:
 		velocity.y *= 0.3
-	
-	#region fall accel and clamp
+
 	# set max falling speed
 	var max_fall_speed: float = 1000.0
 	velocity.y = clamp(velocity.y, float(-INF), max_fall_speed)
@@ -182,6 +183,8 @@ func manage_abilities():
 		Engine.time_scale = 1.0
 		bullet_time = false
 
+
+
 @warning_ignore("shadowed_variable")
 func manage_flip(direction):
 	if direction == 0:
@@ -196,26 +199,35 @@ func manage_flip(direction):
 	if is_on_wall_only():
 		sprite_2d.flip_h = not sprite_2d.flip_h
 
+
+
 func set_animations():
 	manage_flip(Input.get_axis("moveleft", "moveright"))
 	
 	if is_on_wall_only() and not direction == 0:
+	#wall jump anim
 		player_anim.play("wall")
+		
 	# jump anim
 	elif is_jumping and velocity.y < 0:
 		player_anim.play("jump")
+		
 	# fall anim
 	elif velocity.y > 0 and not is_on_floor():
 		player_anim.play("fall")
+		
 	#parry anim
 	elif is_parry == true:
 		player_anim.play("parry")
+		
 	# run anim
 	elif velocity.x != 0 and is_on_floor():
 		player_anim.play("run")
+		
 	# idle anim
 	else:
 		player_anim.play("idle")
+		
 
 func _on_player_anim_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "parry":
