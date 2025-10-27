@@ -11,6 +11,13 @@ func _process(delta: float) -> void:
 	position.x += speed * direction * delta
 
 func reflect():
+	frame_freeze(0.0, 0.15)
 	direction *= -1
 	speed *= 2
 	set_direction(direction)
+
+func frame_freeze(timeScale : float, duration : float):
+	
+	Engine.time_scale = timeScale
+	await get_tree().create_timer(duration, true, false, true).timeout
+	Engine.time_scale = 1.0

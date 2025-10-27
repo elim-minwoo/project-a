@@ -186,9 +186,9 @@ func manage_abilities():
 		Engine.time_scale = 0.3 # must change laawater
 		sprite_trail.activate_trail()
 		bullet_time = true
-	else:
-		Engine.time_scale = 1.0
-		bullet_time = false
+	#else:
+		#Engine.time_scale = 1.0
+		#bullet_time = false
 
 func parry():
 	is_parrying = true
