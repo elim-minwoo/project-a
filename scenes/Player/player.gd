@@ -61,8 +61,8 @@ func _process(_delta: float) -> void:
 			sprite_trail.activate_trail()
 		
 	player_speed = dash_speed if dash.is_dashing() else move_speed
-
-
+	
+	$Label.text = str(round(coyote_timer * 100) / 1)
 
 func _physics_process(delta: float) -> void: 
 	
@@ -87,10 +87,10 @@ func _physics_process(delta: float) -> void:
 	
 	# handle jump
 	if jump_buffer_timer > 0 and (is_on_floor() or coyote_timer > 0):
+		coyote_timer = 0.0
 		velocity.y = jump_velocity
 		is_jumping = true
 		jump_buffer_timer = 0.0
-		coyote_timer = 0.0
 		
 	# jump cut
 	if Input.is_action_just_released("moveup") and is_jumping and velocity.y < 0:
