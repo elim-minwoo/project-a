@@ -91,9 +91,9 @@ func _physics_process(delta: float) -> void:
 	else:
 		if abs(velocity.x) < player_speed:
 			velocity.x += direction * player_speed * 0.09
-	
 
-	
+
+
 	# handle jump
 	if jump_buffer_timer > 0 and (is_on_floor() or coyote_timer > 0):
 		coyote_timer = 0.0
@@ -104,28 +104,15 @@ func _physics_process(delta: float) -> void:
 	# jump cut
 	if Input.is_action_just_released("moveup") and is_jumping and velocity.y < 0:
 		velocity.y *= 0.3
-
+	
 	# set max falling speed
 	var max_fall_speed: float = 1000.0
 	velocity.y = clamp(velocity.y, float(-INF), max_fall_speed)
 	#endregion
 	
-	# input buffer timer
-	coyote_timer = max(coyote_timer - delta, 0)
-	jump_buffer_timer = max(jump_buffer_timer - delta, 0)
-	
-	if wall_jump_timer > 0:
-		wall_jump_timer -= delta
-	else:
-		is_wall_jumping = false
-	
-	# jump buffer
-	if Input.is_action_just_pressed("moveup"):
-		jump_buffer_timer = JUMP_BUFFER_TIME
-	
-
-	
+	manage_buffer(delta)
 	manage_abilities()
+	
 	update_animations()
 	move_and_slide()
 
@@ -180,6 +167,21 @@ func air_process(delta: float):
 #endregion
 
 
+
+func manage_buffer(delta):
+	
+	# coyote and jump buffer timer
+	coyote_timer = max(coyote_timer - delta, 0)
+	jump_buffer_timer = max(jump_buffer_timer - delta, 0)
+	
+	if wall_jump_timer > 0:
+		wall_jump_timer -= delta
+	else:
+		is_wall_jumping = false
+	
+	# jump buffer reset
+	if Input.is_action_just_pressed("moveup"):
+		jump_buffer_timer = JUMP_BUFFER_TIME
 
 func manage_abilities():
 	# bullet time ability
