@@ -190,7 +190,7 @@ func manage_abilities():
 	else:
 		if Global.is_parrying == false:
 			Engine.time_scale = 1.0
-			bullet_time = false 
+			bullet_time = false
 
 func parry():
 	is_parrying = true

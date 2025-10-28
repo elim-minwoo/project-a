@@ -11,7 +11,7 @@
 size = Vector2(11, 28)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p47bc"]
-size = Vector2(24.5, 8)
+size = Vector2(39, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_18ciy"]
 atlas = ExtResource("1_cyojo")
@@ -637,7 +637,7 @@ shape = SubResource("RectangleShape2D_lvxji")
 script = ExtResource("4_75vfm")
 
 [node name="ParryHitbox" type="CollisionShape2D" parent="Parry"]
-position = Vector2(10.25, -1)
+position = Vector2(8.5, -1)
 shape = SubResource("RectangleShape2D_p47bc")
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
