@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://ktg27xjj1v6m" path="res://scenes/player/player.tscn" id="3_fwncx"]
 [ext_resource type="Shader" uid="uid://yhwf7f8ggklt" path="res://shaders/screen_flash.gdshader" id="4_fwncx"]
 [ext_resource type="PackedScene" uid="uid://8iiys5wrfwql" path="res://scenes/enemies/dummy/dummy.tscn" id="4_on0lb"]
-[ext_resource type="Script" uid="uid://c4ltmgi154dnl" path="res://scenes/levels/flash_rect.gd" id="5_fcomi"]
+[ext_resource type="Script" uid="uid://c4ltmgi154dnl" path="res://scenes/player/abilities/parry/flash_rect.gd" id="5_fcomi"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_io14e"]
 texture = ExtResource("2_on0lb")

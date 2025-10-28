@@ -5,6 +5,7 @@ extends CharacterBody2D
 @onready var sprite_trail: Node = $SpriteTrail
 @onready var dash: Node2D = $Dash	
 
+
 #region variables
 var jump_velocity: float = -500.0
 var gravity
@@ -186,9 +187,10 @@ func manage_abilities():
 		Engine.time_scale = 0.3 # must change laawater
 		sprite_trail.activate_trail()
 		bullet_time = true
-	#else:
-		#Engine.time_scale = 1.0
-		#bullet_time = false
+	else:
+		if Global.is_parrying == false:
+			Engine.time_scale = 1.0
+			bullet_time = false 
 
 func parry():
 	is_parrying = true

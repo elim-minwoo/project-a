@@ -1,6 +1,7 @@
 extends Area2D
 
 var speed : float = 200.0
+var is_parrying := false
 @export var direction: int = 1 : set = set_direction
 
 func set_direction(value: int) -> void:
@@ -17,8 +18,10 @@ func reflect():
 	set_direction(direction)
 
 func frame_freeze(timeScale : float, duration : float):
-	Global.flash_visible.set_flash(0.5)
+	Global.is_parrying = true
+	Global.flash_visible.set_flash(0.3)
 	Engine.time_scale = timeScale
 	await get_tree().create_timer(duration, true, false, true).timeout
 	Engine.time_scale = 1.0
 	Global.flash_visible.set_flash(0.0)
+	Global.is_parrying = false

@@ -4,7 +4,6 @@ class_name ScreenFlash
 var flash: float
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Global.flash_visible = self
 	
