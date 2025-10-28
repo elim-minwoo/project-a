@@ -2,6 +2,7 @@ extends Area2D
 
 var speed : float = 200.0
 var is_parrying := false
+var been_parried : bool = false
 @export var direction: int = 1 : set = set_direction
 
 func set_direction(value: int) -> void:
@@ -13,8 +14,10 @@ func _process(delta: float) -> void:
 
 func reflect():
 	frame_freeze(0.0, 0.25)
-	direction *= -1
-	speed *= 2
+	if not been_parried:
+		direction *= -1
+		speed *= 2
+		been_parried = true
 	set_direction(direction)
 
 func frame_freeze(timeScale : float, duration : float):

@@ -11,7 +11,7 @@
 size = Vector2(11, 28)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p47bc"]
-size = Vector2(39, 8)
+size = Vector2(25, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_18ciy"]
 atlas = ExtResource("1_cyojo")
@@ -637,7 +637,7 @@ shape = SubResource("RectangleShape2D_lvxji")
 script = ExtResource("4_75vfm")
 
 [node name="ParryHitbox" type="CollisionShape2D" parent="Parry"]
-position = Vector2(8.5, -1)
+position = Vector2(18.5, -1)
 shape = SubResource("RectangleShape2D_p47bc")
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
@@ -650,13 +650,6 @@ root_node = NodePath("../PlayerHitbox")
 libraries = {
 &"": SubResource("AnimationLibrary_hvfru")
 }
-
-[node name="Label" type="Label" parent="."]
-offset_left = -19.0
-offset_top = -40.0
-offset_right = 21.0
-offset_bottom = -17.0
-text = "tesst"
 
 [connection signal="area_entered" from="Parry" to="Parry" method="_on_area_entered"]
 [connection signal="animation_finished" from="PlayerAnim" to="." method="_on_player_anim_animation_finished"]

@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://b8adn54kewvuk"]
 
-[ext_resource type="Script" uid="uid://g3ni2mghsei6" path="res://Utils/main.gd" id="1_28upj"]
-[ext_resource type="Script" uid="uid://bfdc1dg7nw368" path="res://Utils/ui_canvas_layer.gd" id="2_ug6pa"]
-[ext_resource type="Script" uid="uid://1h4u0r32nwo7" path="res://Utils/game_canvas_layer.gd" id="3_fg24f"]
+[ext_resource type="Script" uid="uid://g3ni2mghsei6" path="res://utils/main.gd" id="1_28upj"]
+[ext_resource type="Script" uid="uid://bfdc1dg7nw368" path="res://utils/ui_canvas_layer.gd" id="2_ug6pa"]
+[ext_resource type="Script" uid="uid://1h4u0r32nwo7" path="res://utils/game_canvas_layer.gd" id="3_fg24f"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_m7c58"]
 

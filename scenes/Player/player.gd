@@ -61,8 +61,6 @@ func _process(_delta: float) -> void:
 			sprite_trail.activate_trail()
 		
 	player_speed = dash_speed if dash.is_dashing() else move_speed
-	
-	$Label.text = str(round(coyote_timer * 100) / 100)
 
 
 
