@@ -62,7 +62,9 @@ func _process(_delta: float) -> void:
 		
 	player_speed = dash_speed if dash.is_dashing() else move_speed
 	
-	$Label.text = str(round(coyote_timer * 100) / 1)
+	$Label.text = str(round(coyote_timer * 100) / 100)
+
+
 
 func _physics_process(delta: float) -> void: 
 	
@@ -75,6 +77,15 @@ func _physics_process(delta: float) -> void:
 	var on_wall = is_on_wall_only() and not direction == 0
 	
 	
+	## state machine??
+	if on_wall:
+		wall_process()
+	elif is_on_floor():
+		coyote_timer = COYOTE_TIME # coyote time
+		floor_process()
+	#else:
+		#air_process(delta)
+	
 	#region movement
 	# handle movement
 	if not is_wall_jumping:
@@ -83,7 +94,7 @@ func _physics_process(delta: float) -> void:
 		if abs(velocity.x) < player_speed:
 			velocity.x += direction * player_speed * 0.09
 	
-	
+
 	
 	# handle jump
 	if jump_buffer_timer > 0 and (is_on_floor() or coyote_timer > 0):
@@ -101,7 +112,6 @@ func _physics_process(delta: float) -> void:
 	velocity.y = clamp(velocity.y, float(-INF), max_fall_speed)
 	#endregion
 	
-	
 	# input buffer timer
 	coyote_timer = max(coyote_timer - delta, 0)
 	jump_buffer_timer = max(jump_buffer_timer - delta, 0)
@@ -115,15 +125,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("moveup"):
 		jump_buffer_timer = JUMP_BUFFER_TIME
 	
-	
-	## state machine??
-	if on_wall:
-		wall_process()
-	elif is_on_floor():
-		coyote_timer = COYOTE_TIME # coyote time
-		floor_process()
-	#else:
-		#air_process(delta)
+
 	
 	manage_abilities()
 	update_animations()
