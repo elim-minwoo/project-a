@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bpf75gfu1t758"
+path="res://.godot/imported/Opening Phone Contacts.mp3-97a71d69ba6ffb5a3f17155dd3397d4c.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/sfx/ui/Opening Phone Contacts.mp3"
+dest_files=["res://.godot/imported/Opening Phone Contacts.mp3-97a71d69ba6ffb5a3f17155dd3397d4c.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

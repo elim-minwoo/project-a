@@ -189,7 +189,7 @@ layer_0/tile_data = PackedInt32Array(196607, 131073, 1, 131072, 196609, 1, 13107
 safe_margin = 0.14
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(1.8, 1.8)
+zoom = Vector2(1.7, 1.7)
 process_callback = 0
 script = SubResource("GDScript_gb22c")
 

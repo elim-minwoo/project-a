@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://bd2iuaskchnib"
+path="res://.godot/imported/Outgoing Call.mp3-5b5506e769b20195591973333cdaf56a.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/sfx/ui/Outgoing Call.mp3"
+dest_files=["res://.godot/imported/Outgoing Call.mp3-5b5506e769b20195591973333cdaf56a.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

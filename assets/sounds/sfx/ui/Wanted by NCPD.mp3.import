@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://daop173shwm0j"
+path="res://.godot/imported/Wanted by NCPD.mp3-ae1f3aee478d3a672d309f15fac773eb.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/sfx/ui/Wanted by NCPD.mp3"
+dest_files=["res://.godot/imported/Wanted by NCPD.mp3-ae1f3aee478d3a672d309f15fac773eb.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

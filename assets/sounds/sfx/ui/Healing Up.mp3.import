@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dvxxe807dm116"
+path="res://.godot/imported/Healing Up.mp3-3f76cc9d91ace51425fb6afb2c6e1ec7.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/sfx/ui/Healing Up.mp3"
+dest_files=["res://.godot/imported/Healing Up.mp3-3f76cc9d91ace51425fb6afb2c6e1ec7.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

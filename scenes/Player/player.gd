@@ -1,12 +1,19 @@
 extends CharacterBody2D
 
+# refer sprites
 @onready var sprite_2d: AnimatedSprite2D = $PlayerSprite
 @onready var player_anim = get_node("PlayerAnim")
+
+# refer abilities
 @onready var sprite_trail: Node = $SpriteTrail
 @onready var dash: Node2D = $Dash	
 
+# refer audio
+
+
 
 #region variables
+# jump
 var jump_velocity: float = -500.0
 var gravity
 
@@ -14,21 +21,23 @@ var gravity
 var direction = Input.get_axis("moveleft", "moveright")
 var look_dir_x: int = 1
 
-# timers
+# timers (coyote)
 var coyote_timer := 0.0
 const COYOTE_TIME = 0.2
 
+# timers (jump buffer)
 var jump_buffer_timer := 0.0
 const JUMP_BUFFER_TIME = 0.1
 
+# timers (wall jumps)
 var wall_jump_timer := 0.0
 const WALL_JUMP_TIME := 0.2
 
-# dash variables
+# ability variables
 var dash_speed = 2000.0
 var dash_duration = 0.1
-var bullet_time = true
 var can_dash = true
+var bullet_time = true
 #endregion
 
 #region export variables
@@ -51,31 +60,26 @@ var can_dash = true
 
 
 func _process(_delta: float) -> void:
+	# debug tp to spawn
 	if Input.is_action_just_pressed("debug_tp"):
 		global_position = Vector2(0, 0)
-	
-	# dash
-	if Input.is_action_just_pressed("dash") && dash.can_dash && !dash.is_dashing():
-		dash.start_dash(dash_duration)
-		if not bullet_time:
-			sprite_trail.activate_trail()
-		
-	player_speed = dash_speed if dash.is_dashing() else move_speed
 
 
 
 func _physics_process(delta: float) -> void: 
 	
+	# player direction (from left right input)
 	direction = Input.get_axis("moveleft", "moveright")
 	
-	# gravity
+	# get and apply gravity
 	gravity = get_gravity().y
 	velocity.y += gravity * delta
 	
+	# recognise if on wall
 	var on_wall = is_on_wall_only() and not direction == 0
 	
 	
-	## state machine??
+	## state machine
 	if on_wall:
 		wall_process()
 	elif is_on_floor():
@@ -122,23 +126,26 @@ func _physics_process(delta: float) -> void:
 func floor_process():
 	if not is_on_floor():
 		return
-		
+	
+	# if on floor and not moving up, not jumping or wall jumping
 	if velocity.y == 0:
 		is_jumping = false
-	is_wall_jumping = false
+		is_wall_jumping = false
 	
+	# reset jump buffer only when on floor
 	if Input.is_action_just_pressed("moveup"):
 		jump_buffer_timer = JUMP_BUFFER_TIME
-		
+	
+	# only allow parry when on floor
 	if Input.is_action_just_pressed("parry"):
 		parry()
-
 
 
 func wall_process():
 	if velocity.y <= wall_slide_speed:
 		return
 
+	# if on wall but not moving towards wall, wall jump is canceled
 	if velocity.x == 0:
 		is_wall_jumping = false
 	
@@ -152,10 +159,10 @@ func wall_process():
 		is_wall_jumping = true
 		wall_jump_timer = WALL_JUMP_TIME
 		
+		# get wall direction and apply force to jump diagonally
 		var wall_dir = get_wall_normal().x
 		velocity.x = wall_dir * wall_x_force
 		velocity.y  = jump_velocity
-
 
 
 @warning_ignore("unused_parameter")
@@ -163,7 +170,6 @@ func air_process(delta: float):
 	
 	is_jumping = false
 	is_wall_jumping = false
-
 #endregion
 
 
@@ -193,6 +199,14 @@ func manage_abilities():
 		if Global.is_parrying == false:
 			Engine.time_scale = 1.0
 			bullet_time = false
+
+	# dash ability
+	if Input.is_action_just_pressed("dash") && dash.can_dash && !dash.is_dashing():
+		dash.start_dash(dash_duration)
+		if not bullet_time and not velocity.x == 0.0:
+			sprite_trail.activate_trail()
+
+	player_speed = dash_speed if dash.is_dashing() else move_speed
 
 func parry():
 	is_parrying = true
@@ -239,4 +253,3 @@ func update_animations():
 		# idle anim
 		else:
 			player_anim.play("idle")
-			
