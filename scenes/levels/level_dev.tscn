@@ -196,10 +196,10 @@ script = SubResource("GDScript_gb22c")
 [node name="ColorRect" type="ColorRect" parent="Camera2D"]
 top_level = true
 material = SubResource("ShaderMaterial_fcomi")
-offset_left = -747.0
-offset_top = -394.0
-offset_right = 1940.0
-offset_bottom = 1126.0
+offset_left = -748.0
+offset_top = -381.0
+offset_right = 1939.0
+offset_bottom = 1139.0
 script = ExtResource("5_fcomi")
 
 [node name="Dummy" parent="." instance=ExtResource("4_on0lb")]

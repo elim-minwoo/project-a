@@ -680,4 +680,3 @@ volume_db = -4.277
 pitch_scale = 0.8
 
 [connection signal="area_entered" from="Parry" to="Parry" method="_on_area_entered"]
-[connection signal="animation_finished" from="PlayerAnim" to="." method="_on_player_anim_animation_finished"]

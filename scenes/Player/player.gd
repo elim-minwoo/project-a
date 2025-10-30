@@ -17,7 +17,6 @@ var gravity
 
 # direction
 var direction = Input.get_axis("moveleft", "moveright")
-var look_dir_x: int = 1
 
 # timers (coyote)
 var coyote_timer := 0.0
@@ -68,6 +67,8 @@ func _physics_process(delta: float) -> void:
 	
 	# player direction (from left right input)
 	direction = Input.get_axis("moveleft", "moveright")
+	if direction != 0:
+		Global.player_dir = int(direction)
 	
 	# get and apply gravity
 	gravity = get_gravity().y
@@ -209,7 +210,6 @@ func manage_abilities():
 func parry():
 	is_parrying = true
 	player_anim.play("parry")
-
 
 
 func manage_flip(direction):
