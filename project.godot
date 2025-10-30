@@ -39,6 +39,13 @@ window/size/mode=3
 
 project/assembly_name="Projecct A"
 
+[file_customization]
+
+folder_colors={
+"res://assets/sprites/": "yellow",
+"res://scenes/player/": "yellow"
+}
+
 [input]
 
 moveup={

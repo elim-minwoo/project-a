@@ -545,7 +545,7 @@ tracks/4/keys = {
 "start_offset": 0.0,
 "stream": ExtResource("10_h17s1")
 }],
-"times": PackedFloat32Array(0.16666667)
+"times": PackedFloat32Array(0.099999994)
 }
 tracks/4/use_blend = true
 
@@ -676,7 +676,7 @@ libraries = {
 }
 
 [node name="PlayerAudio" type="AudioStreamPlayer" parent="."]
-volume_db = -10.817
+volume_db = -4.277
 pitch_scale = 0.8
 
 [connection signal="area_entered" from="Parry" to="Parry" method="_on_area_entered"]
