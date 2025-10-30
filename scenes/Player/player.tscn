@@ -8,8 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://dg6w0v1q4lhl1" path="res://scenes/player/abilities/dash/sprite_trail.tscn" id="4_c4h5g"]
 [ext_resource type="Script" uid="uid://byhjiso0pemc3" path="res://assets/sounds/sfx/multi_audio_player.gd" id="5_qek5x"]
 [ext_resource type="AudioStream" uid="uid://ci76p3xspu637" path="res://assets/sounds/sfx/player/parry_hit.ogg" id="6_h17s1"]
-[ext_resource type="AudioStream" uid="uid://cq15nolrpcvf" path="res://assets/sounds/sfx/player/parry.ogg" id="7_0owmy"]
 [ext_resource type="AudioStream" uid="uid://d3tf5sqjb6n68" path="res://assets/sounds/sfx/player/parry_hit2.ogg" id="7_je7p5"]
+[ext_resource type="AudioStream" uid="uid://b1c17jk6xle0f" path="res://assets/sounds/sfx/player/parry_default.ogg" id="10_h17s1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lvxji"]
 size = Vector2(11, 28)
@@ -543,9 +543,9 @@ tracks/4/keys = {
 "clips": [{
 "end_offset": 0.0,
 "start_offset": 0.0,
-"stream": ExtResource("7_0owmy")
+"stream": ExtResource("10_h17s1")
 }],
-"times": PackedFloat32Array(0.1)
+"times": PackedFloat32Array(0.16666667)
 }
 tracks/4/use_blend = true
 
@@ -676,6 +676,7 @@ libraries = {
 }
 
 [node name="PlayerAudio" type="AudioStreamPlayer" parent="."]
+volume_db = -10.817
 pitch_scale = 0.8
 
 [connection signal="area_entered" from="Parry" to="Parry" method="_on_area_entered"]
