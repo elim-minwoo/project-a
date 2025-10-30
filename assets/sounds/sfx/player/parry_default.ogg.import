@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/parry_default.ogg-a282e1f18c4c886035d8519f9a0
 [params]
 
 loop=false
-loop_offset=0
-bpm=0
+loop_offset=0.0
+bpm=0.0
 beat_count=0
 bar_beats=4
