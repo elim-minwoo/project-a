@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://ktg27xjj1v6m"]
+[gd_scene load_steps=55 format=3 uid="uid://ktg27xjj1v6m"]
 
 [ext_resource type="Texture2D" uid="uid://bpkv8x701iiw7" path="res://assets/sprites/spritesheet.png" id="1_cyojo"]
 [ext_resource type="Script" uid="uid://c1qnfs4yr8bgk" path="res://scenes/player/player.gd" id="1_p47bc"]
@@ -6,7 +6,10 @@
 [ext_resource type="Script" uid="uid://mwqcmhsm0gv0" path="res://scenes/player/abilities/dash/sprite_fade.gd" id="2_c4h5g"]
 [ext_resource type="Script" uid="uid://bf2olv6q0ci4r" path="res://scenes/player/abilities/parry/parry.gd" id="4_75vfm"]
 [ext_resource type="PackedScene" uid="uid://dg6w0v1q4lhl1" path="res://scenes/player/abilities/dash/sprite_trail.tscn" id="4_c4h5g"]
-[ext_resource type="AudioStream" uid="uid://dt1jm2krblgo" path="res://assets/sounds/sfx/player/parry.mp3" id="7_0owmy"]
+[ext_resource type="Script" uid="uid://byhjiso0pemc3" path="res://assets/sounds/sfx/multi_audio_player.gd" id="5_qek5x"]
+[ext_resource type="AudioStream" uid="uid://ci76p3xspu637" path="res://assets/sounds/sfx/player/parry_hit.ogg" id="6_h17s1"]
+[ext_resource type="AudioStream" uid="uid://cq15nolrpcvf" path="res://assets/sounds/sfx/player/parry.ogg" id="7_0owmy"]
+[ext_resource type="AudioStream" uid="uid://d3tf5sqjb6n68" path="res://assets/sounds/sfx/player/parry_hit2.ogg" id="7_je7p5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lvxji"]
 size = Vector2(11, 28)
@@ -530,6 +533,21 @@ tracks/3/keys = {
 "update": 1,
 "values": [true, false, false, true]
 }
+tracks/4/type = "audio"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../PlayerAudio")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"clips": [{
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource("7_0owmy")
+}],
+"times": PackedFloat32Array(0.1)
+}
+tracks/4/use_blend = true
 
 [sub_resource type="Animation" id="Animation_1kbk7"]
 resource_name = "run"
@@ -641,6 +659,11 @@ script = ExtResource("4_75vfm")
 position = Vector2(18.5, -1)
 shape = SubResource("RectangleShape2D_p47bc")
 
+[node name="MultiAudioStreamer" type="AudioStreamPlayer" parent="Parry"]
+script = ExtResource("5_qek5x")
+sounds = Array[AudioStream]([ExtResource("6_h17s1"), ExtResource("7_je7p5")])
+metadata/_custom_type_script = "uid://byhjiso0pemc3"
+
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_cgmen")
 animation = &"wall"
@@ -652,8 +675,8 @@ libraries = {
 &"": SubResource("AnimationLibrary_hvfru")
 }
 
-[node name="ParrySFX" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("7_0owmy")
+[node name="PlayerAudio" type="AudioStreamPlayer" parent="."]
+pitch_scale = 0.8
 
 [connection signal="area_entered" from="Parry" to="Parry" method="_on_area_entered"]
 [connection signal="animation_finished" from="PlayerAnim" to="." method="_on_player_anim_animation_finished"]

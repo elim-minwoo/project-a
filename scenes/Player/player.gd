@@ -8,8 +8,6 @@ extends CharacterBody2D
 @onready var sprite_trail: Node = $SpriteTrail
 @onready var dash: Node2D = $Dash	
 
-# refer audio
-
 
 
 #region variables
@@ -214,7 +212,6 @@ func parry():
 
 
 
-@warning_ignore("shadowed_variable")
 func manage_flip(direction):
 	if direction == 0:
 		return
@@ -227,7 +224,6 @@ func manage_flip(direction):
 	
 	if is_on_wall_only():
 		sprite_2d.flip_h = not sprite_2d.flip_h
-
 
 
 func update_animations():

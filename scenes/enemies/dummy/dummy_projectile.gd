@@ -1,4 +1,5 @@
 extends Area2D
+class_name ParryableProjectile
 
 var speed : float = 200.0
 var is_parrying := false
@@ -12,7 +13,8 @@ func set_direction(value: int) -> void:
 func _process(delta: float) -> void:
 	position.x += speed * direction * delta
 
-func reflect():
+func reflect(reflector: Node2D):
+	reflector.reflected()
 	frame_freeze(0.0, 0.25)
 	if not been_parried:
 		direction *= -1
