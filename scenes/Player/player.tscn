@@ -660,7 +660,6 @@ position = Vector2(18.5, -1)
 shape = SubResource("RectangleShape2D_p47bc")
 
 [node name="MultiAudioStreamer" type="AudioStreamPlayer" parent="Parry"]
-volume_db = -2.254
 script = ExtResource("5_qek5x")
 sounds = Array[AudioStream]([ExtResource("6_h17s1"), ExtResource("7_je7p5")])
 metadata/_custom_type_script = "uid://byhjiso0pemc3"

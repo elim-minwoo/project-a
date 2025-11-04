@@ -1,6 +1,6 @@
 extends Node2D
 
-const dash_delay = 0.5
+const dash_delay = 0.7
 
 @onready var duration_timer = $DashDuration
 var can_dash = true
