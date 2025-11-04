@@ -15,7 +15,7 @@
 size = Vector2(11, 28)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p47bc"]
-size = Vector2(25, 8)
+size = Vector2(23, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_18ciy"]
 atlas = ExtResource("1_cyojo")
@@ -656,7 +656,7 @@ shape = SubResource("RectangleShape2D_lvxji")
 script = ExtResource("4_75vfm")
 
 [node name="ParryHitbox" type="CollisionShape2D" parent="Parry"]
-position = Vector2(18.5, -1)
+position = Vector2(19.5, -1)
 shape = SubResource("RectangleShape2D_p47bc")
 
 [node name="MultiAudioStreamer" type="AudioStreamPlayer" parent="Parry"]
