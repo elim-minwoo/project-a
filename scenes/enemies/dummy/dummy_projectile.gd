@@ -1,7 +1,7 @@
 extends Area2D
 class_name ParryableProjectile
 
-var speed : float = 200.0
+var speed : float = 150.0
 var is_parrying := false
 var been_parried : bool = false
 @export var direction: int = 1 : set = set_direction
