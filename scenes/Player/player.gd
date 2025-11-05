@@ -31,6 +31,7 @@ var wall_jump_timer := 0.0
 const WALL_JUMP_TIME := 0.2
 
 # ability variables
+var is_dashing := false
 var dash_speed = 2000.0
 var dash_duration = 0.1
 var can_dash = true
@@ -189,10 +190,13 @@ func manage_buffer(delta):
 		jump_buffer_timer = JUMP_BUFFER_TIME
 
 func manage_abilities():
+	
+	is_dashing = dash.is_dashing()
+	
 	# bullet time ability
 	if Input.is_action_pressed("timeslow"):
-		Engine.time_scale = 0.3 # must change laawater
-		sprite_trail.activate_trail()
+		Engine.time_scale = 0.3
+		sprite_trail.activate_trail(8, 50, is_dashing)
 		bullet_time = true
 	else:
 		if Global.is_parrying == false:
@@ -202,8 +206,7 @@ func manage_abilities():
 	# dash ability
 	if Input.is_action_just_pressed("dash") && dash.can_dash && !dash.is_dashing():
 		dash.start_dash(dash_duration)
-		if not bullet_time and not velocity.x == 0.0:
-			sprite_trail.activate_trail()
+		sprite_trail.activate_trail(1, 20, is_dashing)
 
 	player_speed = dash_speed if dash.is_dashing() else move_speed
 

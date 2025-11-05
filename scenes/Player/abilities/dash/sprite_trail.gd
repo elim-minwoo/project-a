@@ -21,26 +21,33 @@ func SetupSpriteArray():
 		Global.game_node.add_child.call_deferred(newSprite)
 		spriteArray.append(newSprite)
 
-func activate_trail() -> void:
+func activate_trail(t_divide, t_number, is_dashing) -> void:
+	if trail_active:
+		return
+	trail_divide = t_divide
+	trail_number = t_number
+	
+	if is_dashing == true:
+		trail_divide = 1
+		trail_number = 20
+		
 	trail_active = true
-	await get_tree().create_timer(0.11).timeout
+	await get_tree().create_timer(0.11, false, true).timeout
 	trail_active = false
 
-func _process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	
 	if !trail_active:
 		return
 	elif player.velocity.x == 0 and player.is_on_floor():
 		return
 	 
-	if (get_tree().get_frame() % trail_divide) == 0:
+	if (Engine.get_physics_frames() % trail_divide) == 0:
 		if spriteArray.is_empty() == false:
-			var sprite: AnimatedSprite2D = spriteArray.pop_front() as AnimatedSprite2D
+			var sprite: AnimatedSprite2D = spriteArray.pop_front()
 			sprite.animation = player_sprite.animation
 			sprite.flip_h = player_sprite.flip_h
 			sprite.frame = player_sprite.frame
 			sprite.global_position = player.global_position + player_sprite.position
 			sprite.StartFading()
-			
-			await get_tree().create_timer(0.0).timeout
 			spriteArray.append(sprite)
