@@ -504,16 +504,6 @@ terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 sources/0 = SubResource("TileSetAtlasSource_fcomi")
 
 [sub_resource type="GDScript" id="GDScript_gb22c"]
-script/source = "extends Camera2D
-
-@onready var player: CharacterBody2D = $\"../Player\"
-
-func _ready() -> void:
-	pass
-
-func _process(delta: float) -> void:
-	position = position.lerp($\"../Player\".position, delta * 3)
-"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fcomi"]
 shader = ExtResource("4_fwncx")
@@ -535,12 +525,12 @@ tile_set = SubResource("TileSet_qh453")
 [node name="Player" parent="." instance=ExtResource("3_fwncx")]
 safe_margin = 0.14
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(1.8, 1.8)
+[node name="Camera2D" type="Camera2D" parent="Player"]
+offset = Vector2(0, -30)
 process_callback = 0
 script = SubResource("GDScript_gb22c")
 
-[node name="ColorRect" type="ColorRect" parent="Camera2D"]
+[node name="ColorRect" type="ColorRect" parent="Player/Camera2D"]
 top_level = true
 material = SubResource("ShaderMaterial_fcomi")
 offset_left = -605.0
