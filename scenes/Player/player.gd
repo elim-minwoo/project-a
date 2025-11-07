@@ -6,7 +6,7 @@ extends CharacterBody2D
 
 # refer abilities
 @onready var sprite_trail: Node = $SpriteTrail
-@onready var dash: Node2D = $Dash	
+@onready var dash: Node2D = $Dash
 
 
 
@@ -30,12 +30,18 @@ const JUMP_BUFFER_TIME = 0.1
 var wall_jump_timer := 0.0
 const WALL_JUMP_TIME := 0.2
 
+# state variables
+var on_wall = false
+var is_wall_sliding = false
+
 # ability variables
 var is_dashing := false
-var dash_speed = 2000.0
-var dash_duration = 0.1
+var dash_speed := 2000.0
+var dash_duration := 0.1
 var can_dash = true
+var has_dashed = false
 var bullet_time = true
+var t_divide := 1
 #endregion
 
 #region export variables
@@ -76,7 +82,7 @@ func _physics_process(delta: float) -> void:
 	velocity.y += gravity * delta
 	
 	# recognise if on wall
-	var on_wall = is_on_wall_only() and not direction == 0
+	on_wall = is_on_wall_only() and not direction == 0
 	
 	
 	## state machine
@@ -85,8 +91,6 @@ func _physics_process(delta: float) -> void:
 	elif is_on_floor():
 		coyote_timer = COYOTE_TIME # coyote time
 		floor_process()
-	#else:
-		#air_process(delta)
 	
 	#region movement
 	# handle movement
@@ -163,19 +167,11 @@ func wall_process():
 		var wall_dir = get_wall_normal().x
 		velocity.x = wall_dir * wall_x_force
 		velocity.y  = jump_velocity
-
-
-@warning_ignore("unused_parameter")
-func air_process(delta: float):
-	
-	is_jumping = false
-	is_wall_jumping = false
 #endregion
 
 
 
 func manage_buffer(delta):
-	
 	# coyote and jump buffer timer
 	coyote_timer = max(coyote_timer - delta, 0)
 	jump_buffer_timer = max(jump_buffer_timer - delta, 0)
@@ -190,24 +186,35 @@ func manage_buffer(delta):
 		jump_buffer_timer = JUMP_BUFFER_TIME
 
 func manage_abilities():
-	
 	is_dashing = dash.is_dashing()
 	
 	# bullet time ability
 	if Input.is_action_pressed("timeslow"):
 		Engine.time_scale = 0.3
-		sprite_trail.activate_trail(8, 50)
+		t_divide = 8
+		sprite_trail.activate_trail(t_divide, 50)
 		bullet_time = true
 	else:
 		if Global.is_parrying == false:
 			Engine.time_scale = 1.0
 			bullet_time = false
 
+
+
 	# dash ability
-	if Input.is_action_just_pressed("dash") && dash.can_dash && !dash.is_dashing():
-		dash.start_dash(dash_duration)
-		if bullet_time == false and velocity.x != 0:
+	if is_on_floor() or is_on_wall():
+		has_dashed = false
+		
+	if Input.is_action_just_pressed("dash") and not has_dashed and dash.can_dash and not dash.is_dashing():
+		is_dashing = true
+		has_dashed = true
+		
+		if bullet_time == false and velocity.x != 0 and not is_on_wall():
+			dash.start_dash(dash_duration)
 			sprite_trail.activate_trail(1, 20)
+			
+		if not dash.is_dashing():
+			is_dashing = false
 
 	player_speed = dash_speed if dash.is_dashing() else move_speed
 
@@ -230,26 +237,33 @@ func manage_flip(direction):
 		sprite_2d.flip_h = not sprite_2d.flip_h
 
 
+var wall_anim_played := false
+
 func update_animations():
 	manage_flip(Input.get_axis("moveleft", "moveright"))
 	
 	if not is_attacking and not is_parrying:
-		if is_on_wall_only() and not direction == 0:
+		
 		#wall jump anim
-			player_anim.play("wall")
-			
-		# jump anim
-		elif velocity.y < 0 and is_jumping:
-			player_anim.play("jump")
-			
-		# fall anim
-		elif velocity.y > 0 and not is_on_floor():
-			player_anim.play("fall")
-			
-		# run anim
-		elif velocity.x != 0 and is_on_floor():
-			player_anim.play("run")
-			
-		# idle anim
+		if is_on_wall_only() and not direction == 0:
+			if not wall_anim_played:
+				player_anim.play("wall")
+				wall_anim_played = true
 		else:
-			player_anim.play("idle")
+			wall_anim_played = false
+				
+			# jump anim
+			if velocity.y < 0 and is_jumping:
+				player_anim.play("jump")
+				
+			# fall anim
+			elif velocity.y > 0 and not is_on_floor():
+				player_anim.play("fall")
+				
+			# run anim
+			elif velocity.x != 0 and is_on_floor():
+				player_anim.play("run")
+				
+			# idle anim
+			else:
+				player_anim.play("idle")

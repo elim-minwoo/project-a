@@ -20,12 +20,9 @@ texture_filter = 1
 material = SubResource("ShaderMaterial_c2y40")
 offset_left = -2.0
 offset_top = -2.0
-offset_right = 1918.0
-offset_bottom = 1078.0
+offset_right = 1278.0
+offset_bottom = 718.0
 scale = Vector2(2, 2)
-
-[node name="BGViewport" type="SubViewport" parent="GameCanvasLayer/GameViewportContainer"]
-size = Vector2i(1920, 1080)
 
 [node name="GameViewport" type="SubViewport" parent="GameCanvasLayer/GameViewportContainer"]
 handle_input_locally = false

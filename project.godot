@@ -42,6 +42,10 @@ window/stretch/scale_mode="integer"
 
 project/assembly_name="Projecct A"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/Scene-Manager-1.1.1/Scene-Manager-1.1.1/addons/scene_manager/plugin.cfg", "res://addons/godot-addon-animated-shape-2d-1.5.0/godot-addon-animated-shape-2d-1.5.0/addons/goutte.animated_shape_2d/plugin.cfg")
+
 [file_customization]
 
 folder_colors={

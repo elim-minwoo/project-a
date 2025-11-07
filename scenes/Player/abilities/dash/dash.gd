@@ -1,21 +1,21 @@
 extends Node2D
 
-const dash_delay = 0.7
+const dash_delay = 0.6
 
 @onready var duration_timer = $DashDuration
 var can_dash = true
 
-func start_dash(duration):
+func start_dash(duration: float) -> void:
 	if not can_dash:
 		return
 	can_dash = false
 	duration_timer.wait_time = duration
 	duration_timer.start()
 	
-func is_dashing():
+func is_dashing() -> bool:
 	return !duration_timer.is_stopped()
 
-func end_dash():
+func end_dash() -> void:
 	await get_tree().create_timer(dash_delay).timeout
 	can_dash = true
 
