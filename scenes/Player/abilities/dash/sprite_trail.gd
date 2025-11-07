@@ -21,15 +21,11 @@ func SetupSpriteArray():
 		Global.game_node.add_child.call_deferred(newSprite)
 		spriteArray.append(newSprite)
 
-func activate_trail(t_divide, t_number, is_dashing) -> void:
+func activate_trail(t_divide, t_number) -> void:
 	if trail_active:
 		return
 	trail_divide = t_divide
 	trail_number = t_number
-	
-	if is_dashing == true:
-		trail_divide = 1
-		trail_number = 20
 		
 	trail_active = true
 	await get_tree().create_timer(0.11, false, true).timeout

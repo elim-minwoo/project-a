@@ -196,7 +196,7 @@ func manage_abilities():
 	# bullet time ability
 	if Input.is_action_pressed("timeslow"):
 		Engine.time_scale = 0.3
-		sprite_trail.activate_trail(8, 50, is_dashing)
+		sprite_trail.activate_trail(8, 50)
 		bullet_time = true
 	else:
 		if Global.is_parrying == false:
@@ -206,7 +206,8 @@ func manage_abilities():
 	# dash ability
 	if Input.is_action_just_pressed("dash") && dash.can_dash && !dash.is_dashing():
 		dash.start_dash(dash_duration)
-		sprite_trail.activate_trail(1, 20, is_dashing)
+		if bullet_time == false and velocity.x != 0:
+			sprite_trail.activate_trail(1, 20)
 
 	player_speed = dash_speed if dash.is_dashing() else move_speed
 

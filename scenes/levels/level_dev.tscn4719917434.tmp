@@ -2,11 +2,20 @@
 
 [ext_resource type="Script" uid="uid://b8jug26w13p6u" path="res://scenes/levels/level_dev.gd" id="1_io14e"]
 [ext_resource type="Texture2D" uid="uid://42gd7farliby" path="res://assets/sprites/world/world_tileset.png" id="2_on0lb"]
-[ext_resource type="Script" uid="uid://cddetjchfebqs" path="res://scenes/levels/camera.gd" id="2_rmyai"]
 [ext_resource type="PackedScene" uid="uid://ktg27xjj1v6m" path="res://scenes/player/player.tscn" id="3_fwncx"]
 [ext_resource type="Shader" uid="uid://yhwf7f8ggklt" path="res://shaders/screen_flash.gdshader" id="4_fwncx"]
 [ext_resource type="PackedScene" uid="uid://8iiys5wrfwql" path="res://scenes/enemies/dummy/dummy.tscn" id="4_on0lb"]
 [ext_resource type="Script" uid="uid://c4ltmgi154dnl" path="res://scenes/player/abilities/parry/flash_rect.gd" id="5_fcomi"]
+
+[sub_resource type="GDScript" id="GDScript_gb22c"]
+script/source = "extends Camera2D
+
+func _ready() -> void:
+	pass
+
+func _process(delta: float) -> void:
+	position = position.lerp()
+"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fcomi"]
 shader = ExtResource("4_fwncx")
@@ -510,12 +519,12 @@ terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 sources/0 = SubResource("TileSetAtlasSource_fcomi")
 
 [node name="GameLevel" type="Node2D"]
-texture_filter = 1
 script = ExtResource("1_io14e")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+offset = Vector2(160, 60)
 process_callback = 0
-script = ExtResource("2_rmyai")
+script = SubResource("GDScript_gb22c")
 
 [node name="ColorRect" type="ColorRect" parent="Camera2D"]
 top_level = true
