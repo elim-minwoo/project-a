@@ -10,3 +10,4 @@ func _ready() -> void:
 	Global.game_layer = $GameCanvasLayer
 
 	Global.ui_layer.load_scene(START_MENU)
+	

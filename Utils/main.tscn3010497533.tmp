@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://b8adn54kewvuk"]
 
-[ext_resource type="Script" uid="uid://g3ni2mghsei6" path="res://utils/main.gd" id="1_28upj"]
-[ext_resource type="Script" uid="uid://bfdc1dg7nw368" path="res://utils/ui_canvas_layer.gd" id="2_ug6pa"]
-[ext_resource type="Script" uid="uid://1h4u0r32nwo7" path="res://utils/game_canvas_layer.gd" id="3_fg24f"]
+[ext_resource type="Script" uid="uid://g3ni2mghsei6" path="res://Utils/main.gd" id="1_28upj"]
+[ext_resource type="Script" uid="uid://bfdc1dg7nw368" path="res://Utils/ui_canvas_layer.gd" id="2_ug6pa"]
+[ext_resource type="Script" uid="uid://1h4u0r32nwo7" path="res://Utils/game_canvas_layer.gd" id="3_fg24f"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_m7c58"]
 
@@ -19,8 +19,20 @@ offset_bottom = 540.0
 
 [node name="GameViewport" type="SubViewport" parent="GameCanvasLayer/GameViewportContainer"]
 handle_input_locally = false
-size = Vector2i(1280, 720)
+size = Vector2i(960, 540)
 render_target_update_mode = 4
 
 [node name="UICanvasLayer" type="CanvasLayer" parent="."]
 script = ExtResource("2_ug6pa")
+
+[node name="HDviewport" type="SubViewport" parent="UICanvasLayer"]
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="UICanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1

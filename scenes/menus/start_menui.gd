@@ -9,6 +9,7 @@ const PARALLAX_PLACEHOLDER = preload("uid://bakqi37iis4tj")
 @onready var start_btn: Button = $MainMenu/StartMenuBtns/MainBtns/StartBtn
 
 func _ready() -> void:
+	
 	start_btn.grab_focus()
 	
 	main_menu.visible = true

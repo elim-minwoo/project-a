@@ -526,7 +526,7 @@ tile_set = SubResource("TileSet_qh453")
 safe_margin = 0.14
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
-offset = Vector2(0, -30)
+offset = Vector2(160, 60)
 process_callback = 0
 script = SubResource("GDScript_gb22c")
 

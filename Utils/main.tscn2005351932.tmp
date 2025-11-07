@@ -19,8 +19,20 @@ offset_bottom = 540.0
 
 [node name="GameViewport" type="SubViewport" parent="GameCanvasLayer/GameViewportContainer"]
 handle_input_locally = false
-size = Vector2i(1280, 720)
+size = Vector2i(960, 540)
 render_target_update_mode = 4
 
 [node name="UICanvasLayer" type="CanvasLayer" parent="."]
 script = ExtResource("2_ug6pa")
+
+[node name="UIViewport" type="SubViewport" parent="UICanvasLayer"]
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="UIDisplay" type="TextureRect" parent="UICanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
