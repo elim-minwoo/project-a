@@ -1,8 +1,10 @@
 extends CharacterBody2D
 
-# refer sprites
+# refer nodes
 @onready var sprite_2d: AnimatedSprite2D = $PlayerSprite
 @onready var player_anim = get_node("PlayerAnim")
+@onready var player_hitbox: CollisionShape2D = $PlayerHitbox
+@onready var parry_hitbox: CollisionShape2D = $Parry/ParryHitbox
 
 # refer abilities
 @onready var sprite_trail: Node = $SpriteTrail
@@ -44,6 +46,7 @@ var bullet_time = true
 var t_divide := 1
 #endregion
 
+
 #region export variables
 @export_category("Velocity Variables")
 @export var player_speed: float = 330.0
@@ -70,6 +73,7 @@ func _process(_delta: float) -> void:
 
 
 
+#region physics and movement
 func _physics_process(delta: float) -> void: 
 	
 	# player direction (from left right input)
@@ -108,7 +112,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y = jump_velocity
 		is_jumping = true
 		jump_buffer_timer = 0.0
-		
+	
 	# jump cut
 	if Input.is_action_just_released("moveup") and is_jumping and velocity.y < 0:
 		velocity.y *= 0.3
@@ -125,8 +129,25 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
+func manage_buffer(delta):
+	# coyote and jump buffer timer
+	coyote_timer = max(coyote_timer - delta, 0)
+	jump_buffer_timer = max(jump_buffer_timer - delta, 0)
+	
+	if wall_jump_timer > 0:
+		wall_jump_timer -= delta
+	else:
+		is_wall_jumping = false
+	
+	# jump buffer reset
+	if Input.is_action_just_pressed("moveup"):
+		jump_buffer_timer = JUMP_BUFFER_TIME
+#endregion
 
-#region manage process when on floor, wall, and air
+
+
+
+#region state functions
 func floor_process():
 	if not is_on_floor():
 		return
@@ -171,20 +192,7 @@ func wall_process():
 
 
 
-func manage_buffer(delta):
-	# coyote and jump buffer timer
-	coyote_timer = max(coyote_timer - delta, 0)
-	jump_buffer_timer = max(jump_buffer_timer - delta, 0)
-	
-	if wall_jump_timer > 0:
-		wall_jump_timer -= delta
-	else:
-		is_wall_jumping = false
-	
-	# jump buffer reset
-	if Input.is_action_just_pressed("moveup"):
-		jump_buffer_timer = JUMP_BUFFER_TIME
-
+#region abilities
 func manage_abilities():
 	is_dashing = dash.is_dashing()
 	
@@ -204,28 +212,40 @@ func manage_abilities():
 	# dash ability
 	if is_on_floor() or is_on_wall():
 		has_dashed = false
-		
-	if Input.is_action_just_pressed("dash") and not has_dashed and dash.can_dash and not dash.is_dashing():
+	
+	var can_dash = Input.is_action_just_pressed("dash") and not has_dashed and dash.can_dash and not dash.is_dashing() and not is_parrying
+	
+	if can_dash:
 		is_dashing = true
 		has_dashed = true
 		
-		if bullet_time == false and velocity.x != 0 and not is_on_wall():
+		if velocity.x != 0 and !is_on_wall():
 			dash.start_dash(dash_duration)
 			sprite_trail.activate_trail(1, 20)
-			
+		
 		if not dash.is_dashing():
 			is_dashing = false
 
 	player_speed = dash_speed if dash.is_dashing() else move_speed
 
+
 func parry():
-	is_parrying = true
-	player_anim.play("parry")
+	if is_on_floor_only():
+		is_parrying = true
+		player_anim.play("parry")
+#endregion
+
+
+#region misc functions
+func hbox_adjust(hbox_x, hbox_y):
+	player_hitbox.position = Vector2(hbox_x, hbox_y)
 
 
 func manage_flip(direction):
 	if direction == 0:
 		return
+	
+	parry_hitbox.position = Vector2(direction * 18.5, -1.0)
 	
 	# flip sprite
 	if direction == -1.0:
@@ -238,7 +258,6 @@ func manage_flip(direction):
 
 
 var wall_anim_played := false
-
 func update_animations():
 	manage_flip(Input.get_axis("moveleft", "moveright"))
 	
@@ -247,23 +266,29 @@ func update_animations():
 		#wall jump anim
 		if is_on_wall_only() and not direction == 0:
 			if not wall_anim_played:
+				hbox_adjust((direction * 1.0), 5.0)
 				player_anim.play("wall")
 				wall_anim_played = true
 		else:
 			wall_anim_played = false
-				
+			
 			# jump anim
 			if velocity.y < 0 and is_jumping:
 				player_anim.play("jump")
-				
+			
 			# fall anim
 			elif velocity.y > 0 and not is_on_floor():
 				player_anim.play("fall")
-				
+			
 			# run anim
-			elif velocity.x != 0 and is_on_floor():
+			elif not is_dashing and velocity.x != 0 and is_on_floor():
 				player_anim.play("run")
-				
+			
+			elif is_dashing:
+				player_anim.play("dash")
+			
 			# idle anim
 			else:
+				hbox_adjust(0.0, 5.0)
 				player_anim.play("idle")
+#endregion
