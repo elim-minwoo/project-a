@@ -3,10 +3,10 @@
 [ext_resource type="Script" uid="uid://b8jug26w13p6u" path="res://scenes/levels/level_dev.gd" id="1_io14e"]
 [ext_resource type="Texture2D" uid="uid://42gd7farliby" path="res://assets/sprites/world/world_tileset.png" id="2_on0lb"]
 [ext_resource type="Script" uid="uid://cddetjchfebqs" path="res://scenes/levels/camera.gd" id="2_rmyai"]
-[ext_resource type="PackedScene" uid="uid://ktg27xjj1v6m" path="res://scenes/player/player.tscn" id="3_fwncx"]
+[ext_resource type="PackedScene" uid="uid://ktg27xjj1v6m" path="res://scenes/Player/player.tscn" id="3_fwncx"]
 [ext_resource type="Shader" uid="uid://yhwf7f8ggklt" path="res://shaders/screen_flash.gdshader" id="4_fwncx"]
 [ext_resource type="PackedScene" uid="uid://8iiys5wrfwql" path="res://scenes/enemies/dummy/dummy.tscn" id="4_on0lb"]
-[ext_resource type="Script" uid="uid://c4ltmgi154dnl" path="res://scenes/player/abilities/parry/flash_rect.gd" id="5_fcomi"]
+[ext_resource type="Script" uid="uid://c4ltmgi154dnl" path="res://scenes/Player/abilities/parry/flash_rect.gd" id="5_fcomi"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fcomi"]
 shader = ExtResource("4_fwncx")
