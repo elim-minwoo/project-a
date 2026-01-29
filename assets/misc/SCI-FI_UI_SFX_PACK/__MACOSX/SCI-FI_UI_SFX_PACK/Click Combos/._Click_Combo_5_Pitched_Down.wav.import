@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dywwg3n0y0p4n"
+path="res://.godot/imported/._Click_Combo_5_Pitched_Down.wav-c2c0a04e2beb893a49e57726a90029b1.sample"
+
+[deps]
+
+source_file="res://assets/misc/SCI-FI_UI_SFX_PACK/__MACOSX/SCI-FI_UI_SFX_PACK/Click Combos/._Click_Combo_5_Pitched_Down.wav"
+dest_files=["res://.godot/imported/._Click_Combo_5_Pitched_Down.wav-c2c0a04e2beb893a49e57726a90029b1.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

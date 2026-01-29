@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bkjia03vert74"
+path="res://.godot/imported/._Tone2B_Double.wav-d6d4b141e7363f5dd3f2210c139263b4.sample"
+
+[deps]
+
+source_file="res://assets/misc/SCI-FI_UI_SFX_PACK/__MACOSX/SCI-FI_UI_SFX_PACK/Tone2/Basic Tones/._Tone2B_Double.wav"
+dest_files=["res://.godot/imported/._Tone2B_Double.wav-d6d4b141e7363f5dd3f2210c139263b4.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2
