@@ -1,10 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://ckcx3loo288dy"]
+[gd_scene load_steps=11 format=3 uid="uid://ckcx3loo288dy"]
 
 [ext_resource type="Script" uid="uid://cjw7ubdwcmhwl" path="res://scenes/menus/start_menui.gd" id="1_r2ayf"]
 [ext_resource type="Theme" uid="uid://bhwr2tosn5y8h" path="res://assets/themes/start_menu.tres" id="2_r2ayf"]
-[ext_resource type="AudioStream" uid="uid://cwvuodvg3u3h7" path="res://assets/misc/ui_sfx_pack/ui/click.wav" id="3_ifl8t"]
 [ext_resource type="Script" uid="uid://byhjiso0pemc3" path="res://assets/sounds/sfx/multi_audio_player.gd" id="3_wc57o"]
 [ext_resource type="AudioStream" uid="uid://b6ev44u1cybnj" path="res://assets/sounds/sfx/ui/hover.ogg" id="4_wc57o"]
+[ext_resource type="AudioStream" uid="uid://b126drlvvajye" path="res://assets/sounds/sfx/ui/click.ogg" id="5_wc57o"]
+[ext_resource type="AudioStream" uid="uid://cuwxhr8j66fpd" path="res://assets/sounds/sfx/ui/close.ogg" id="6_eba3y"]
+[ext_resource type="AudioStream" uid="uid://dr5hntgmf7kdt" path="res://assets/sounds/sfx/ui/warning.ogg" id="7_kkacw"]
+[ext_resource type="AudioStream" uid="uid://cogvt1aghlvl5" path="res://assets/sounds/sfx/ui/select.ogg" id="8_fnyec"]
+[ext_resource type="AudioStream" uid="uid://c852jo6ssikjg" path="res://assets/sounds/music/menu_music.ogg" id="9_kkacw"]
 
 [sub_resource type="GDScript" id="GDScript_eba3y"]
 script/source = "extends Button
@@ -20,7 +24,7 @@ func _process(delta: float) -> void:
 	pass
 "
 
-[node name="StartMenu" type="Control" node_paths=PackedStringArray("sound_playing_buttons")]
+[node name="StartMenu" type="Control" node_paths=PackedStringArray("sound_playing_buttons", "click_playing_buttons")]
 layout_mode = 3
 anchors_preset = 4
 anchor_top = 0.5
@@ -28,6 +32,7 @@ anchor_bottom = 0.5
 grow_vertical = 2
 script = ExtResource("1_r2ayf")
 sound_playing_buttons = [NodePath("MainMenu/StartMenuBtns/MainBtns/StartBtn"), NodePath("MainMenu/StartMenuBtns/MainBtns/OptionsBtn"), NodePath("MainMenu/StartMenuBtns/MainBtns/QuitBtn"), NodePath("QuitEnsure/QuitYes"), NodePath("QuitEnsure/QuitNo")]
+click_playing_buttons = [NodePath("MainMenu/StartMenuBtns/MainBtns/OptionsBtn")]
 
 [node name="MainMenu" type="Panel" parent="."]
 layout_mode = 0
@@ -134,9 +139,17 @@ theme = ExtResource("2_r2ayf")
 text = "NO"
 
 [node name="ButtonAudio" type="AudioStreamPlayer" parent="."]
-volume_db = -6.0
 script = ExtResource("3_wc57o")
-sounds = Array[AudioStream]([ExtResource("4_wc57o"), ExtResource("3_ifl8t")])
+sounds = Array[AudioStream]([ExtResource("4_wc57o"), ExtResource("5_wc57o"), ExtResource("6_eba3y"), ExtResource("7_kkacw"), ExtResource("8_fnyec")])
+metadata/_custom_type_script = "uid://byhjiso0pemc3"
+
+[node name="MenuMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_kkacw")
+volume_db = -1.0
+autoplay = true
+parameters/looping = true
+script = ExtResource("3_wc57o")
+sounds = Array[AudioStream]([ExtResource("4_wc57o"), ExtResource("5_wc57o"), ExtResource("6_eba3y"), ExtResource("7_kkacw"), ExtResource("8_fnyec")])
 metadata/_custom_type_script = "uid://byhjiso0pemc3"
 
 [connection signal="pressed" from="MainMenu/StartMenuBtns/MainBtns/StartBtn" to="." method="_on_start_btn_pressed"]

@@ -14,8 +14,10 @@ const LEVEL_DEV = preload("uid://r3t8vyh6hk05")
 @onready var quit_yes: Button = $QuitEnsure/QuitYes
 @onready var quit_no: Button = $QuitEnsure/QuitNo
 
-
 @export var sound_playing_buttons: Array[Button]
+@export var click_playing_buttons: Array[Button]
+
+
 
 func _ready() -> void:
 	
@@ -28,14 +30,16 @@ func _ready() -> void:
 	for button in sound_playing_buttons:
 		button.focus_entered.connect(_on_btn_focus)
 		button.mouse_entered.connect(_on_btn_hover)
-		button.pressed.connect(_on_btn_click)
-
+	for button in click_playing_buttons:
+		button.pressed.connect(_on_btn_clicked)
 
 func _process(delta: float) -> void:
 	esc_test()
 
 func esc_test():
-	if Input.is_action_pressed("ui_cancel"):
+	if Input.is_action_just_pressed("ui_cancel"):
+		start_btn.grab_focus()
+		btn_audio.play_sound_index(2)
 		options_menu.visible = false
 		quit_ensure.visible = false
 
@@ -46,6 +50,7 @@ func esc_test():
 
 
 func _on_start_btn_pressed() -> void:
+	btn_audio.play_sound_index(4)
 	await btn_audio.finished
 	
 	Global.game_layer.load_scene(LEVEL_DEV)
@@ -57,13 +62,12 @@ func _on_options_btn_pressed() -> void:
 func _on_quit_btn_pressed() -> void:
 	quit_ensure.visible = true
 	quit_no.grab_focus()
+	btn_audio.play_sound_index(3)
 	
 
 
 
 
-func _on_btn_click() -> void:
-	btn_audio.play_sound_index(1)
 
 func _on_btn_focus() -> void:
 	btn_audio.play_sound_index(0)
@@ -71,7 +75,8 @@ func _on_btn_focus() -> void:
 func _on_btn_hover() -> void:
 	btn_audio.play_sound_index(0)
 
-
+func _on_btn_clicked() -> void:
+	btn_audio.play_sound_index(1)
 
 
 
@@ -80,4 +85,5 @@ func _on_quit_yes_pressed() -> void:
 
 func _on_quit_no_pressed() -> void:
 	quit_ensure.visible = false
-	start_btn.grab_focus()
+	quit_btn.grab_focus()
+	btn_audio.play_sound_index(4)
