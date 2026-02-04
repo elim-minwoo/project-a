@@ -20,14 +20,13 @@ func _process(delta: float) -> void:
 	pass
 "
 
-[node name="StartMenu" type="Control" node_paths=PackedStringArray("sound_playing_buttons")]
+[node name="StartMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
 grow_vertical = 2
 script = ExtResource("1_r2ayf")
-sound_playing_buttons = [NodePath("MainMenu/StartMenuBtns/MainBtns/StartBtn"), NodePath("MainMenu/StartMenuBtns/MainBtns/OptionsBtn"), NodePath("MainMenu/StartMenuBtns/MainBtns/QuitBtn"), NodePath("QuitEnsure/QuitYes"), NodePath("QuitEnsure/QuitNo")]
 
 [node name="MainMenu" type="Panel" parent="."]
 layout_mode = 0
@@ -73,7 +72,6 @@ theme = ExtResource("2_r2ayf")
 text = "QUIT"
 
 [node name="Options" type="Panel" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -139,8 +137,11 @@ script = ExtResource("3_wc57o")
 sounds = Array[AudioStream]([ExtResource("4_wc57o"), ExtResource("3_ifl8t")])
 metadata/_custom_type_script = "uid://byhjiso0pemc3"
 
+[connection signal="mouse_entered" from="MainMenu/StartMenuBtns/MainBtns/StartBtn" to="." method="_on_start_btn_mouse_entered"]
 [connection signal="pressed" from="MainMenu/StartMenuBtns/MainBtns/StartBtn" to="." method="_on_start_btn_pressed"]
+[connection signal="mouse_entered" from="MainMenu/StartMenuBtns/MainBtns/OptionsBtn" to="." method="_on_options_btn_mouse_entered"]
 [connection signal="pressed" from="MainMenu/StartMenuBtns/MainBtns/OptionsBtn" to="." method="_on_options_btn_pressed"]
+[connection signal="mouse_entered" from="MainMenu/StartMenuBtns/MainBtns/QuitBtn" to="." method="_on_quit_btn_mouse_entered"]
 [connection signal="pressed" from="MainMenu/StartMenuBtns/MainBtns/QuitBtn" to="." method="_on_quit_btn_pressed"]
 [connection signal="pressed" from="QuitEnsure/QuitYes" to="." method="_on_quit_yes_pressed"]
 [connection signal="pressed" from="QuitEnsure/QuitNo" to="." method="_on_quit_no_pressed"]
