@@ -37,7 +37,7 @@ func _process(delta: float) -> void:
 	esc_test()
 
 func esc_test():
-	if Input.is_action_just_pressed("ui_cancel"):
+	if Input.is_action_just_pressed("ui_cancel") and (options_menu.visible == true or quit_ensure.visible == true):
 		start_btn.grab_focus()
 		btn_audio.play_sound_index(2)
 		options_menu.visible = false

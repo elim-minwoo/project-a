@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://ckcx3loo288dy"]
+[gd_scene load_steps=10 format=3 uid="uid://ckcx3loo288dy"]
 
 [ext_resource type="Script" uid="uid://cjw7ubdwcmhwl" path="res://scenes/menus/start_menui.gd" id="1_r2ayf"]
 [ext_resource type="Theme" uid="uid://bhwr2tosn5y8h" path="res://assets/themes/start_menu.tres" id="2_r2ayf"]
@@ -9,20 +9,6 @@
 [ext_resource type="AudioStream" uid="uid://dr5hntgmf7kdt" path="res://assets/sounds/sfx/ui/warning.ogg" id="7_kkacw"]
 [ext_resource type="AudioStream" uid="uid://cogvt1aghlvl5" path="res://assets/sounds/sfx/ui/select.ogg" id="8_fnyec"]
 [ext_resource type="AudioStream" uid="uid://c852jo6ssikjg" path="res://assets/sounds/music/menu_music.ogg" id="9_kkacw"]
-
-[sub_resource type="GDScript" id="GDScript_eba3y"]
-script/source = "extends Button
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-"
 
 [node name="StartMenu" type="Control" node_paths=PackedStringArray("sound_playing_buttons", "click_playing_buttons")]
 layout_mode = 3
@@ -61,7 +47,6 @@ focus_neighbor_top = NodePath("../QuitBtn")
 focus_neighbor_bottom = NodePath("../OptionsBtn")
 theme = ExtResource("2_r2ayf")
 text = "START GAME"
-script = SubResource("GDScript_eba3y")
 
 [node name="OptionsBtn" type="Button" parent="MainMenu/StartMenuBtns/MainBtns"]
 layout_mode = 2
@@ -78,7 +63,6 @@ theme = ExtResource("2_r2ayf")
 text = "QUIT"
 
 [node name="Options" type="Panel" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -102,10 +86,10 @@ horizontal_alignment = 1
 [node name="QuitEnsure" type="Panel" parent="."]
 visible = false
 layout_mode = 0
-offset_left = -1.0
-offset_top = -541.0
-offset_right = 1922.0
-offset_bottom = 539.0
+offset_left = 35.0
+offset_top = -494.0
+offset_right = 1874.0
+offset_bottom = 498.0
 
 [node name="Label" type="Label" parent="QuitEnsure"]
 layout_mode = 0
