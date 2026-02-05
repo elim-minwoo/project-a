@@ -7,7 +7,10 @@ extends CharacterBody2D
 @onready var parry_hitbox: CollisionShape2D = $Parry/ParryHitbox
 
 # refer abilities
+@onready var GHOSTING_EFFECT = preload("uid://cd16ivfapdapm")
 @onready var dash: Node2D = $Dash
+
+
 
 
 
@@ -45,6 +48,9 @@ var bullet_time = true
 #endregion
 
 
+
+
+
 #region export variables
 @export_category("Velocity Variables")
 @export var player_speed: float = 330.0
@@ -64,10 +70,14 @@ var bullet_time = true
 
 
 
+
+
 func _process(_delta: float) -> void:
 	# debug tp to spawn
 	if Input.is_action_just_pressed("debug_tp"):
 		global_position = Vector2(0, 0)
+
+
 
 
 
@@ -87,13 +97,18 @@ func _physics_process(delta: float) -> void:
 	on_wall = is_on_wall_only() and not direction == 0
 	
 	
+	
 	## state machine
 	if on_wall:
 		wall_process()
 	elif is_on_floor():
 		coyote_timer = COYOTE_TIME # coyote time
 		floor_process()
-	
+
+
+
+
+
 	#region movement
 	# handle movement
 	if not is_wall_jumping:
@@ -127,6 +142,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
+
 func manage_buffer(delta):
 	# coyote and jump buffer timer
 	coyote_timer = max(coyote_timer - delta, 0)
@@ -141,6 +157,7 @@ func manage_buffer(delta):
 	if Input.is_action_just_pressed("moveup"):
 		jump_buffer_timer = JUMP_BUFFER_TIME
 #endregion
+
 
 
 
@@ -190,6 +207,8 @@ func wall_process():
 
 
 
+
+
 #region abilities
 func manage_abilities():
 	is_dashing = dash.is_dashing()
@@ -221,7 +240,8 @@ func manage_abilities():
 		
 		if not dash.is_dashing():
 			is_dashing = false
-
+			
+	$GhostEffectTimer.start()
 	player_speed = dash_speed if dash.is_dashing() else move_speed
 
 
@@ -229,12 +249,28 @@ func parry():
 	if is_on_floor_only():
 		is_parrying = true
 		player_anim.play("parry")
+
+
+
+func add_ghosting_effect():
+	var ghost_sprite = GHOSTING_EFFECT.instantiate()
+	ghost_sprite.set_property(global_position,$PlayerSprite.scale)
+	get_tree().current_scene.add_child(ghost_sprite)
+
+
+
+func _on_ghost_effect_timer_timeout() -> void:
+	add_ghosting_effect()
+
 #endregion
 
 
 #region misc functions
 func hbox_adjust(hbox_x, hbox_y):
 	player_hitbox.position = Vector2(hbox_x, hbox_y)
+
+
+
 
 
 func manage_flip(direction):
@@ -251,6 +287,9 @@ func manage_flip(direction):
 	
 	if is_on_wall_only():
 		sprite_2d.flip_h = not sprite_2d.flip_h
+
+
+
 
 
 var wall_anim_played := false
