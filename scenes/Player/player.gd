@@ -7,7 +7,7 @@ extends CharacterBody2D
 @onready var parry_hitbox: CollisionShape2D = $Parry/ParryHitbox
 
 # refer abilities
-@onready var GHOSTING_EFFECT = preload("uid://cd16ivfapdapm")
+@onready var sprite_trail: Node = $SpriteTrail
 @onready var dash: Node2D = $Dash
 
 
@@ -236,12 +236,11 @@ func manage_abilities():
 		
 		if velocity.x != 0 and !is_on_wall():
 			dash.start_dash(dash_duration)
-			
+			sprite_trail.trail_effect()
 		
 		if not dash.is_dashing():
 			is_dashing = false
 			
-	$GhostEffectTimer.start()
 	player_speed = dash_speed if dash.is_dashing() else move_speed
 
 
@@ -249,18 +248,6 @@ func parry():
 	if is_on_floor_only():
 		is_parrying = true
 		player_anim.play("parry")
-
-
-
-func add_ghosting_effect():
-	var ghost_sprite = GHOSTING_EFFECT.instantiate()
-	ghost_sprite.set_property(global_position,$PlayerSprite.scale)
-	get_tree().current_scene.add_child(ghost_sprite)
-
-
-
-func _on_ghost_effect_timer_timeout() -> void:
-	add_ghosting_effect()
 
 #endregion
 
