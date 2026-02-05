@@ -7,7 +7,6 @@ extends CharacterBody2D
 @onready var parry_hitbox: CollisionShape2D = $Parry/ParryHitbox
 
 # refer abilities
-@onready var sprite_trail: Node = $SpriteTrail
 @onready var dash: Node2D = $Dash
 
 
@@ -43,7 +42,6 @@ var dash_duration := 0.1
 var can_dash = true
 var has_dashed = false
 var bullet_time = true
-var t_divide := 1
 #endregion
 
 
@@ -199,8 +197,6 @@ func manage_abilities():
 	# bullet time ability
 	if Input.is_action_pressed("timeslow"):
 		Engine.time_scale = 0.3
-		t_divide = 8
-		sprite_trail.activate_trail(t_divide, 50)
 		bullet_time = true
 	else:
 		if Global.is_parrying == false:
@@ -221,7 +217,7 @@ func manage_abilities():
 		
 		if velocity.x != 0 and !is_on_wall():
 			dash.start_dash(dash_duration)
-			sprite_trail.activate_trail(1, 20)
+			
 		
 		if not dash.is_dashing():
 			is_dashing = false
