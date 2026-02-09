@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 # refer nodes
-@onready var sprite_2d: AnimatedSprite2D = $PlayerSprite
+@onready var sprite: AnimatedSprite2D = $PlayerSprite
 @onready var player_anim = get_node("PlayerAnim")
 @onready var player_hitbox: CollisionShape2D = $PlayerHitbox
 @onready var parry_hitbox: CollisionShape2D = $Parry/ParryHitbox
@@ -235,8 +235,7 @@ func manage_abilities():
 		has_dashed = true
 		
 		if velocity.x != 0 and !is_on_wall():
-			dash.start_dash(dash_duration)
-			sprite_trail.trail_effect()
+			dash.start_dash(sprite, dash_duration)
 		
 		if not dash.is_dashing():
 			is_dashing = false
@@ -268,12 +267,12 @@ func manage_flip(direction):
 	
 	# flip sprite
 	if direction == -1.0:
-		sprite_2d.flip_h = true
+		sprite.flip_h = true
 	elif direction == 1.0:
-		sprite_2d.flip_h = false
+		sprite.flip_h = false
 	
 	if is_on_wall_only():
-		sprite_2d.flip_h = not sprite_2d.flip_h
+		sprite.flip_h = not sprite.flip_h
 
 
 
