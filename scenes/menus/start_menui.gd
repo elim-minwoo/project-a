@@ -51,6 +51,9 @@ func esc_test():
 
 func _on_start_btn_pressed() -> void:
 	btn_audio.play_sound_index(4)
+	start_btn.disabled = true
+	options_btn.disabled = true
+	quit_btn.disabled = true
 	await btn_audio.finished
 	
 	Global.game_layer.load_scene(LEVEL_DEV)
