@@ -9,8 +9,7 @@ extends CharacterBody2D
 # refer abilities
 @onready var dash: Node2D = $Dash
 
-
-
+signal wall_touched
 
 
 #region variables
@@ -78,8 +77,6 @@ func _process(_delta: float) -> void:
 
 
 
-
-
 #region physics and movement
 func _physics_process(delta: float) -> void: 
 	
@@ -95,6 +92,9 @@ func _physics_process(delta: float) -> void:
 	# recognise if on wall
 	on_wall = is_on_wall_only() and not direction == 0
 	
+	
+	if is_on_wall():
+		emit_signal("wall_touched")
 	
 	
 	## state machine
