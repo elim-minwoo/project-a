@@ -7,7 +7,6 @@ extends CharacterBody2D
 @onready var parry_hitbox: CollisionShape2D = $Parry/ParryHitbox
 
 # refer abilities
-@onready var sprite_trail: Node = $SpriteTrail
 @onready var dash: Node2D = $Dash
 
 
