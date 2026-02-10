@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dvpx2n88sf8na"]
+[gd_scene load_steps=3 format=3 uid="uid://dvpx2n88sf8na"]
 
 [ext_resource type="Script" uid="uid://til1c0o1mm6b" path="res://scenes/player/abilities/dash/dash.gd" id="1_avqmg"]
+[ext_resource type="PackedScene" uid="uid://bt0yirbcqq6c5" path="res://scenes/player/abilities/dash/dash_ghost.tscn" id="2_mdhjh"]
 
 [node name="Dash" type="Node2D"]
 script = ExtResource("1_avqmg")
@@ -9,7 +10,9 @@ script = ExtResource("1_avqmg")
 one_shot = true
 
 [node name="GhostTimer" type="Timer" parent="."]
-wait_time = 0.009999999999999998
+wait_time = 0.03
+
+[node name="DashGhost" parent="." instance=ExtResource("2_mdhjh")]
 
 [connection signal="timeout" from="DashDuration" to="." method="_on_dash_duration_timeout"]
 [connection signal="timeout" from="GhostTimer" to="." method="_on_ghost_timer_timeout"]

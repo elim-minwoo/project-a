@@ -8,7 +8,7 @@ func _ready() -> void:
 	tween.set_trans(Tween.TRANS_QUART)
 	tween.set_ease(Tween.EASE_OUT)
 
-	tween.tween_property(self, "modulate:a", 0.0, 0.5)	
+	tween.tween_property(self, "modulate:a", 0.0, 0.3)	
 	tween.finished.connect(_on_tween_end)
 
 func _on_tween_end() -> void:

@@ -7,7 +7,8 @@ const dash_delay = 0.6
 
 @onready var duration_timer = $DashDuration
 @onready var ghost_timer: Timer = $GhostTimer
-var dash_ghost = preload("uid://2t33ax3als6d")
+const dash_ghost = preload("uid://2t33ax3als6d")
+
 
 
 var can_dash = true

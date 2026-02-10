@@ -1,5 +1,11 @@
 extends CharacterBody2D
 
+"""
+between regions:	5 indents
+between functions:	3 indents
+between variables:	2 indents
+"""
+
 # refer nodes
 @onready var sprite: AnimatedSprite2D = $PlayerSprite
 @onready var player_anim = get_node("PlayerAnim")
@@ -9,7 +15,12 @@ extends CharacterBody2D
 # refer abilities
 @onready var dash: Node2D = $Dash
 
-signal wall_touched
+
+# manual signals
+signal wall_touched # manual signal for wall touch
+
+
+
 
 
 #region variables
@@ -42,6 +53,8 @@ var dash_speed := 2000.0
 var dash_duration := 0.1
 var can_dash = true
 var has_dashed = false
+var dash_dir := 0
+
 var bullet_time = true
 #endregion
 
@@ -70,15 +83,21 @@ var bullet_time = true
 
 
 
-func _process(_delta: float) -> void:
+func _process(_delta: float) -> void: # load all the time
 	# debug tp to spawn
-	if Input.is_action_just_pressed("debug_tp"):
+	if Input.is_action_just_pressed("debug_tp"): # backslash
 		global_position = Vector2(0, 0)
 
 
 
+
+
 #region physics and movement
-func _physics_process(delta: float) -> void: 
+func _physics_process(delta: float) -> void: # loads every physics tick
+	
+	if is_on_wall(): # emit signal when wall touched
+		emit_signal("wall_touched")
+	
 	
 	# player direction (from left right input)
 	direction = Input.get_axis("moveleft", "moveright")
@@ -91,10 +110,6 @@ func _physics_process(delta: float) -> void:
 	
 	# recognise if on wall
 	on_wall = is_on_wall_only() and not direction == 0
-	
-	
-	if is_on_wall():
-		emit_signal("wall_touched")
 	
 	
 	## state machine
@@ -110,12 +125,13 @@ func _physics_process(delta: float) -> void:
 
 	#region movement
 	# handle movement
-	if not is_wall_jumping:
+	if dash.is_dashing(): # if dashing, do not change direction
+		velocity.x = dash_dir * dash_speed
+	elif not is_wall_jumping: # if not wall jumping, move left and right by player direction
 		velocity.x = direction * player_speed
 	else:
 		if abs(velocity.x) < player_speed:
 			velocity.x += direction * player_speed * 0.09
-
 
 
 	# handle jump
@@ -124,22 +140,24 @@ func _physics_process(delta: float) -> void:
 		velocity.y = jump_velocity
 		is_jumping = true
 		jump_buffer_timer = 0.0
-	
+
+
 	# jump cut
 	if Input.is_action_just_released("moveup") and is_jumping and velocity.y < 0:
 		velocity.y *= 0.3
-	
+
+
 	# set max falling speed
 	var max_fall_speed: float = 1000.0
 	velocity.y = clamp(velocity.y, float(-INF), max_fall_speed)
-	#endregion
-	
+
+
 	manage_buffer(delta)
 	manage_abilities()
 	
 	update_animations()
 	move_and_slide()
-
+#endregion
 
 
 func manage_buffer(delta):
@@ -180,18 +198,21 @@ func floor_process():
 		parry()
 
 
+
 func wall_process():
 	if velocity.y <= wall_slide_speed:
 		return
-
+		
 	# if on wall but not moving towards wall, wall jump is canceled
 	if velocity.x == 0:
 		is_wall_jumping = false
 	
+	
 	# wall slide
 	if not is_wall_jumping:
 		velocity.y =  lerp(velocity.y, wall_slide_speed, 0.3)
-		
+	
+	
 	# wall jump
 	if Input.is_action_just_pressed("moveup"):
 		is_jumping = true
@@ -212,6 +233,7 @@ func wall_process():
 func manage_abilities():
 	is_dashing = dash.is_dashing()
 	
+	
 	# bullet time ability
 	if Input.is_action_pressed("timeslow"):
 		Engine.time_scale = 0.3
@@ -220,29 +242,39 @@ func manage_abilities():
 		if Global.is_parrying == false:
 			Engine.time_scale = 1.0
 			bullet_time = false
-
-
-
+	
+	
 	# dash ability
 	if is_on_floor() or is_on_wall():
 		has_dashed = false
 	
-	var can_dash = Input.is_action_just_pressed("dash") and not has_dashed and dash.can_dash and not dash.is_dashing() and not is_parrying
 	
-	if can_dash:
+	var can_dash = ( # the requirents to be able to dash
+		Input.is_action_just_pressed("dash") 
+		and not has_dashed 
+		and dash.can_dash 
+		and not dash.is_dashing() 
+		and not is_parrying
+		and not is_on_wall()
+		and velocity.x != 0
+	)
+	
+	
+	if can_dash: # if can dash, is dashing, has dashed, and then dash towards dash_direction
 		is_dashing = true
 		has_dashed = true
+		dash_dir = sign(direction)
 		
-		if velocity.x != 0 and !is_on_wall():
-			dash.start_dash(sprite, dash_duration)
-		
-		if not dash.is_dashing():
-			is_dashing = false
+		if dash_dir == 0:
+			dash_dir = Global.player_dir
 			
+		dash.start_dash(sprite, dash_duration)
+		
 	player_speed = dash_speed if dash.is_dashing() else move_speed
 
 
-func parry():
+
+func parry(): # parry function
 	if is_on_floor_only():
 		is_parrying = true
 		player_anim.play("parry")
@@ -250,11 +282,12 @@ func parry():
 #endregion
 
 
+
+
+
 #region misc functions
 func hbox_adjust(hbox_x, hbox_y):
 	player_hitbox.position = Vector2(hbox_x, hbox_y)
-
-
 
 
 
@@ -274,10 +307,9 @@ func manage_flip(direction):
 		sprite.flip_h = not sprite.flip_h
 
 
-
-
-
 var wall_anim_played := false
+
+
 func update_animations():
 	manage_flip(Input.get_axis("moveleft", "moveright"))
 	

@@ -7,8 +7,10 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nhtew"]
 shader = ExtResource("1_dftkd")
 shader_parameter/custom_color = Color(1, 1, 1, 1)
+shader_parameter/glow_color = Color(0, 0, 0, 1)
 
 [node name="DashGhost" type="Sprite2D"]
+modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
 material = SubResource("ShaderMaterial_nhtew")
 texture = ExtResource("1_rm1np")
 script = ExtResource("2_dftkd")

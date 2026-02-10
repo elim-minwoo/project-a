@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://r3t8vyh6hk05"]
+[gd_scene load_steps=12 format=4 uid="uid://r3t8vyh6hk05"]
 
 [ext_resource type="Script" uid="uid://b8jug26w13p6u" path="res://scenes/levels/level_dev.gd" id="1_io14e"]
 [ext_resource type="Texture2D" uid="uid://42gd7farliby" path="res://assets/sprites/world/world_tileset.png" id="2_on0lb"]
@@ -509,6 +509,15 @@ terrain_set_0/terrain_0/name = "World Terrain"
 terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 sources/0 = SubResource("TileSetAtlasSource_fcomi")
 
+[sub_resource type="Environment" id="Environment_rmyai"]
+background_mode = 3
+glow_enabled = true
+glow_normalized = true
+glow_intensity = 1.0
+glow_strength = 2.0
+glow_blend_mode = 1
+glow_hdr_threshold = 1.5
+
 [node name="GameLevel" type="Node2D"]
 texture_filter = 1
 script = ExtResource("1_io14e")
@@ -536,7 +545,11 @@ tile_map_data = PackedByteArray("AAA/AAIAAAADAAEAAABAAAIAAAAEAAEAAABBAAIAAAAFAAE
 tile_set = SubResource("TileSet_qh453")
 
 [node name="Player" parent="." instance=ExtResource("3_fwncx")]
+self_modulate = Color(1, 1, 1, 1)
 safe_margin = 0.14
 
 [node name="Dummy" parent="." instance=ExtResource("4_on0lb")]
 position = Vector2(1029, 16)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_rmyai")
