@@ -1,12 +1,13 @@
 extends Node2D
 
-const dash_delay = 0.6
-
 @onready var player: CharacterBody2D = $".."
-
 
 @onready var duration_timer = $DashDuration
 @onready var ghost_timer: Timer = $GhostTimer
+@onready var frame_timer: FrameTimer = $FrameTimer
+@onready var dash_delay: Timer = $DashDelay
+
+
 const dash_ghost = preload("uid://2t33ax3als6d")
 
 
@@ -15,7 +16,7 @@ var can_dash = true
 var sprite
 
 func _ready() -> void:
-	player.wall_touched.connect(_on_player_touched_wall)
+	player.wall_touching.connect(_on_player_touching_wall)
 
 func start_dash(sprite, duration: float) -> void:
 	self.sprite = sprite
@@ -45,7 +46,7 @@ func instance_ghost():
 
 
 
-func _on_player_touched_wall():
+func _on_player_touching_wall():
 	ghost_timer.stop()
 
 
@@ -54,8 +55,12 @@ func is_dashing() -> bool:
 	return !duration_timer.is_stopped()
 
 func end_dash() -> void:
+	frame_timer.start()
+	await frame_timer.timeout # let trail appear for a bit more time
 	ghost_timer.stop()
-	await get_tree().create_timer(dash_delay).timeout
+	
+	dash_delay.start()
+	await dash_delay.timeout
 	can_dash = true
 
 

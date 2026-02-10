@@ -1,11 +1,5 @@
 extends CharacterBody2D
 
-"""
-between regions:	5 indents
-between functions:	3 indents
-between variables:	2 indents
-"""
-
 # refer nodes
 @onready var sprite: AnimatedSprite2D = $PlayerSprite
 @onready var player_anim = get_node("PlayerAnim")
@@ -17,7 +11,7 @@ between variables:	2 indents
 
 
 # manual signals
-signal wall_touched # manual signal for wall touch
+signal wall_touching # manual signal for wall touch
 
 
 
@@ -96,7 +90,7 @@ func _process(_delta: float) -> void: # load all the time
 func _physics_process(delta: float) -> void: # loads every physics tick
 	
 	if is_on_wall(): # emit signal when wall touched
-		emit_signal("wall_touched")
+		wall_touching.emit()
 	
 	
 	# player direction (from left right input)
