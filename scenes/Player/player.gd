@@ -50,6 +50,7 @@ var has_dashed = false
 var dash_dir := 0
 
 var bullet_time = true
+@onready var slow_timer: Timer = $SlowTimer
 #endregion
 
 
@@ -229,30 +230,31 @@ func manage_abilities():
 	
 	
 	# bullet time ability
-	if Input.is_action_pressed("timeslow"):
-		Engine.time_scale = 0.3
+	var can_bullettime = (
+		Input.is_action_pressed("timeslow") 
+		and not slow_timer.time_left == 0.0 
+	)
+	
+	if can_bullettime:
+		slow_timer.start()
 		bullet_time = true
 	else:
-		if Global.is_parrying == false:
-			Engine.time_scale = 1.0
-			bullet_time = false
+		bullet_time = false
 	
 	
 	# dash ability
 	if is_on_floor() or is_on_wall():
 		has_dashed = false
 	
-	
 	var can_dash = ( # the requirents to be able to dash
-		Input.is_action_just_pressed("dash") 
-		and not has_dashed 
-		and dash.can_dash 
-		and not dash.is_dashing() 
-		and not is_parrying
-		and not is_on_wall()
-		and velocity.x != 0
+			Input.is_action_just_pressed("dash") 
+			and not has_dashed 
+			and dash.can_dash 
+			and not dash.is_dashing() 
+			and not is_parrying
+			and not is_on_wall()
+			and velocity.x != 0
 	)
-	
 	
 	if can_dash: # if can dash, is dashing, has dashed, and then dash towards dash_direction
 		is_dashing = true

@@ -772,4 +772,7 @@ libraries = {
 [node name="PlayerAudio" type="AudioStreamPlayer" parent="."]
 volume_db = -2.0
 
+[node name="SlowTimer" type="Timer" parent="."]
+wait_time = 3.0
+
 [connection signal="area_entered" from="Parry" to="Parry" method="_on_area_entered"]
