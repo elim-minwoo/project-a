@@ -773,7 +773,7 @@ libraries = {
 volume_db = -2.0
 
 [node name="SlowTimer" type="Timer" parent="."]
-wait_time = 2.5
+wait_time = 3.0
 
 [node name="Label" type="Label" parent="."]
 offset_right = 40.0

@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@onready var debug_label: Label = $Label
+
 # refer nodes
 @onready var sprite: AnimatedSprite2D = $PlayerSprite
 @onready var player_anim = get_node("PlayerAnim")
@@ -50,6 +52,9 @@ var has_dashed = false
 var dash_dir := 0
 
 var bullet_time = true
+
+var stamina: float = 0.0
+
 @onready var slow_timer: Timer = $SlowTimer
 #endregion
 
@@ -228,11 +233,14 @@ func wall_process():
 func manage_abilities():
 	is_dashing = dash.is_dashing()
 	
+	debug_label.text = str(slow_timer.time_left)
+	
 	
 	# bullet time ability
 	var can_bullettime = (
 		Input.is_action_pressed("timeslow") 
-		and not slow_timer.time_left == 0.0 
+		and slow_timer.time_left == 0.0 
+		#and slow_timer.time_left >= 0.5
 	)
 	
 	if can_bullettime:
@@ -241,6 +249,8 @@ func manage_abilities():
 	else:
 		bullet_time = false
 	
+	if slow_timer.time_left == 0.0:
+		pass
 	
 	# dash ability
 	if is_on_floor() or is_on_wall():
