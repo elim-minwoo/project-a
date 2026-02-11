@@ -1,8 +1,9 @@
-[gd_scene load_steps=67 format=3 uid="uid://ktg27xjj1v6m"]
+[gd_scene load_steps=68 format=3 uid="uid://ktg27xjj1v6m"]
 
 [ext_resource type="Texture2D" uid="uid://bpkv8x701iiw7" path="res://assets/sprites/spritesheet.png" id="1_cyojo"]
 [ext_resource type="Script" uid="uid://c1qnfs4yr8bgk" path="res://scenes/player/player.gd" id="1_p47bc"]
 [ext_resource type="PackedScene" uid="uid://dvpx2n88sf8na" path="res://scenes/player/abilities/dash/dash.tscn" id="2_1kbk7"]
+[ext_resource type="PackedScene" uid="uid://wvdq738tf713" path="res://bar_test.tscn" id="2_5gtgg"]
 [ext_resource type="Script" uid="uid://bf2olv6q0ci4r" path="res://scenes/player/abilities/parry/parry.gd" id="4_75vfm"]
 [ext_resource type="Script" uid="uid://byhjiso0pemc3" path="res://assets/sounds/sfx/multi_audio_player.gd" id="5_qek5x"]
 [ext_resource type="AudioStream" uid="uid://cs7d5pyxyvpff" path="res://assets/sounds/sfx/player/parry_hit1.ogg" id="6_h17s1"]
@@ -738,6 +739,13 @@ _data = {
 self_modulate = Color(1.6294096, 1.6294096, 1.6294096, 1)
 script = ExtResource("1_p47bc")
 
+[node name="TimeSlowBar" parent="." instance=ExtResource("2_5gtgg")]
+offset_left = 10.0
+offset_top = -25.0
+offset_right = 10.0
+offset_bottom = -25.0
+scale = Vector2(0.38, 0.38)
+
 [node name="Dash" parent="." instance=ExtResource("2_1kbk7")]
 
 [node name="PlayerHitbox" type="CollisionShape2D" parent="."]
@@ -771,12 +779,5 @@ libraries = {
 
 [node name="PlayerAudio" type="AudioStreamPlayer" parent="."]
 volume_db = -2.0
-
-[node name="SlowTimer" type="Timer" parent="."]
-wait_time = 2.5
-
-[node name="Label" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
 
 [connection signal="area_entered" from="Parry" to="Parry" method="_on_area_entered"]

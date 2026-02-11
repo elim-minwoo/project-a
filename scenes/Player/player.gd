@@ -1,7 +1,5 @@
 extends CharacterBody2D
 
-@onready var debug_label: Label = $Label
-
 # refer nodes
 @onready var sprite: AnimatedSprite2D = $PlayerSprite
 @onready var player_anim = get_node("PlayerAnim")
@@ -10,7 +8,6 @@ extends CharacterBody2D
 
 # refer abilities
 @onready var dash: Node2D = $Dash
-
 
 # manual signals
 signal wall_touching # manual signal for wall touch
@@ -51,11 +48,7 @@ var can_dash = true
 var has_dashed = false
 var dash_dir := 0
 
-var bullet_time = true
-
-var stamina: float = 0.0
-
-@onready var slow_timer: Timer = $SlowTimer
+@onready var stamina_ui: Control = $TimeSlowBar
 #endregion
 
 
@@ -157,7 +150,7 @@ func _physics_process(delta: float) -> void: # loads every physics tick
 	
 	update_animations()
 	move_and_slide()
-#endregion
+
 
 
 func manage_buffer(delta):
@@ -231,26 +224,15 @@ func wall_process():
 
 #region abilities
 func manage_abilities():
-	is_dashing = dash.is_dashing()
 	
-	debug_label.text = str(slow_timer.time_left)
-	
-	
-	# bullet time ability
-	var can_bullettime = (
-		Input.is_action_pressed("timeslow") 
-		and slow_timer.time_left == 0.0 
-		#and slow_timer.time_left >= 0.5
-	)
-	
-	if can_bullettime:
-		slow_timer.start()
-		bullet_time = true
+	if Input.is_action_pressed("timeslow") and stamina_ui.has_stamina():
+		Engine.time_scale = 0.3
 	else:
-		bullet_time = false
+		Engine.time_scale = 1.0
 	
-	if slow_timer.time_left == 0.0:
-		pass
+	
+	
+	is_dashing = dash.is_dashing()
 	
 	# dash ability
 	if is_on_floor() or is_on_wall():
