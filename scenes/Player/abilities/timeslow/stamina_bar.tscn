@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://cdnq0fo77nxp6"]
+
+[ext_resource type="Script" uid="uid://bqc1sokvbvyni" path="res://scenes/player/abilities/timeslow/stamina_bar.gd" id="1_l08y3"]
+[ext_resource type="Texture2D" uid="uid://v37tiryxaoab" path="res://assets/sprites/player/stamina_bar/empty_bar.png" id="2_3prlv"]
+[ext_resource type="Texture2D" uid="uid://bse4ewviqu6pj" path="res://assets/sprites/player/stamina_bar/full_bar.png" id="3_0prfh"]
+
+[node name="TimeSlowBar" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1919.9998
+offset_bottom = -1080.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l08y3")
+
+[node name="Stamina" type="TextureProgressBar" parent="."]
+layout_mode = 0
+offset_right = 800.0
+offset_bottom = 800.0
+scale = Vector2(0.07, 0.07)
+value = 100.0
+fill_mode = 4
+texture_under = ExtResource("2_3prlv")
+texture_progress = ExtResource("3_0prfh")

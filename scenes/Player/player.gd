@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@onready var debug_label: Label = $Label
+
 # refer nodes
 @onready var sprite: AnimatedSprite2D = $PlayerSprite
 @onready var player_anim = get_node("PlayerAnim")
@@ -226,9 +228,9 @@ func wall_process():
 func manage_abilities():
 	
 	if Input.is_action_pressed("timeslow") and stamina_ui.has_stamina():
-		Engine.time_scale = 0.3
+		debug_label.text = "on"
 	else:
-		Engine.time_scale = 1.0
+		debug_label.text = "off"
 	
 	
 	
