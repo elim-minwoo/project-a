@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@onready var debug_label: Label = $Label
+
 # refer nodes
 @onready var sprite: AnimatedSprite2D = $PlayerSprite
 @onready var player_anim = get_node("PlayerAnim")
@@ -8,7 +10,6 @@ extends CharacterBody2D
 
 # refer abilities
 @onready var dash: Node2D = $Dash
-
 
 # manual signals
 signal wall_touching # manual signal for wall touch
@@ -49,7 +50,7 @@ var can_dash = true
 var has_dashed = false
 var dash_dir := 0
 
-var bullet_time = true
+@onready var stamina_ui: Control = $TimeSlowBar
 #endregion
 
 
@@ -151,7 +152,7 @@ func _physics_process(delta: float) -> void: # loads every physics tick
 	
 	update_animations()
 	move_and_slide()
-#endregion
+
 
 
 func manage_buffer(delta):
@@ -225,34 +226,29 @@ func wall_process():
 
 #region abilities
 func manage_abilities():
-	is_dashing = dash.is_dashing()
 	
-	
-	# bullet time ability
-	if Input.is_action_pressed("timeslow"):
-		Engine.time_scale = 0.3
-		bullet_time = true
+	if Input.is_action_pressed("timeslow") and stamina_ui.has_stamina():
+		debug_label.text = "on"
 	else:
-		if Global.is_parrying == false:
-			Engine.time_scale = 1.0
-			bullet_time = false
+		debug_label.text = "off"
 	
+	
+	
+	is_dashing = dash.is_dashing()
 	
 	# dash ability
 	if is_on_floor() or is_on_wall():
 		has_dashed = false
 	
-	
 	var can_dash = ( # the requirents to be able to dash
-		Input.is_action_just_pressed("dash") 
-		and not has_dashed 
-		and dash.can_dash 
-		and not dash.is_dashing() 
-		and not is_parrying
-		and not is_on_wall()
-		and velocity.x != 0
+			Input.is_action_just_pressed("dash") 
+			and not has_dashed 
+			and dash.can_dash 
+			and not dash.is_dashing() 
+			and not is_parrying
+			and not is_on_wall()
+			and velocity.x != 0
 	)
-	
 	
 	if can_dash: # if can dash, is dashing, has dashed, and then dash towards dash_direction
 		is_dashing = true
