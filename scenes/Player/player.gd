@@ -7,6 +7,7 @@ extends CharacterBody2D
 @onready var player_anim = get_node("PlayerAnim")
 @onready var player_hitbox: CollisionShape2D = $PlayerHitbox
 @onready var parry_hitbox: CollisionShape2D = $Parry/ParryHitbox
+@onready var player_audio: AudioStreamPlayer = $PlayerAudio
 
 # refer abilities
 @onready var dash: Node2D = $Dash
@@ -138,7 +139,7 @@ func _physics_process(delta: float) -> void: # loads every physics tick
 
 
 	# jump cut
-	if Input.is_action_just_released("moveup") and is_jumping and velocity.y < 0:
+	if Input.is_action_just_released("jump") and is_jumping and velocity.y < 0:
 		velocity.y *= 0.3
 
 
@@ -166,7 +167,7 @@ func manage_buffer(delta):
 		is_wall_jumping = false
 	
 	# jump buffer reset
-	if Input.is_action_just_pressed("moveup"):
+	if Input.is_action_just_pressed("jump"):
 		jump_buffer_timer = JUMP_BUFFER_TIME
 #endregion
 
@@ -185,7 +186,7 @@ func floor_process():
 		is_wall_jumping = false
 	
 	# reset jump buffer only when on floor
-	if Input.is_action_just_pressed("moveup"):
+	if Input.is_action_just_pressed("jump"):
 		jump_buffer_timer = JUMP_BUFFER_TIME
 	
 	# only allow parry when on floor
@@ -209,7 +210,7 @@ func wall_process():
 	
 	
 	# wall jump
-	if Input.is_action_just_pressed("moveup"):
+	if Input.is_action_just_pressed("jump"):
 		is_jumping = true
 		is_wall_jumping = true
 		wall_jump_timer = WALL_JUMP_TIME
@@ -229,8 +230,10 @@ func manage_abilities():
 	
 	if Input.is_action_pressed("timeslow") and stamina_ui.has_stamina():
 		debug_label.text = "on"
+		Engine.time_scale = 0.3
 	else:
 		debug_label.text = "off"
+		Engine.time_scale = 1.0
 	
 	
 	
@@ -334,3 +337,8 @@ func update_animations():
 				hbox_adjust(0.0, 5.0)
 				player_anim.play("idle")
 #endregion
+
+
+func footstep_play():
+	player_audio.pitch_scale = randf_range(.8, 1.2)
+	player_audio.random_play()

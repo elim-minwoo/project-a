@@ -1,0 +1,100 @@
+*   [33m480b703[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m Merge branch 'timeslow-mechanic-test'
+[31m|[m[32m\[m  
+[31m|[m * [33m4b7aa20[m[33m ([m[1;31morigin/timeslow-mechanic-test[m[33m, [m[1;32mtimeslow-mechanic-test[m[33m)[m timeslow bar fade
+[31m|[m * [33mbcdedeb[m stamina bar cleanup
+[31m|[m [32m|[m * [33m9cb7cb4[m[33m ([m[1;35mrefs/stash[m[33m)[m WIP on timeslow_mechanic_test: 27955f7 timeslow stamina bar
+[31m|[m [32m|[m[32m/[m[34m|[m 
+[31m|[m [32m|[m * [33m9ac3de7[m index on timeslow_mechanic_test: 27955f7 timeslow stamina bar
+[31m|[m [32m|[m[32m/[m  
+[31m|[m * [33m27955f7[m timeslow stamina bar
+[31m|[m * [33m85d6a83[m stamina test
+[31m|[m * [33m9d3fcea[m initial test
+[31m|[m[31m/[m  
+* [33m0081740[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m dash v1.0
+* [33mfc73afe[m temporary remove glow
+* [33m1df0798[m fix undirectional dash
+* [33mb44e1bc[m trail wall interaction
+* [33m47c9985[m dash script improve
+*   [33m7f82e59[m Merge branch 'trail-effect-test'
+[35m|[m[36m\[m  
+[35m|[m * [33m7d86cb5[m trail finish
+[35m|[m * [33m93c7db7[m[33m ([m[1;31morigin/trail-effect-test[m[33m)[m trail test #2
+[35m|[m * [33mdac9b37[m trail test #1
+[35m|[m[35m/[m  
+* [33m6c7b43f[m sprite trail removed
+* [33mf5641ac[m audio edit
+* [33m218c332[m menu music add
+* [33m9648f7f[m clean ui code
+* [33m9a51c83[m ui sfx test
+* [33m18a3b23[m sfx cleanup
+* [33mb84b97e[m sound samples removed
+* [33me4d3817[m misc assets upload_2026
+* [33md9367dd[m dash anim add
+* [33md013097[m wall anim polish
+* [33made9c65[m camera fix (bg removed)
+* [33m0a29c4c[m fix resolution mismatch
+* [33m28b3155[m resolution scale fix
+* [33m249dc0d[m new dev map
+* [33mbcaf2f1[m corner hbox stops moving
+* [33m3c339ed[m parry sfx reduce
+* [33m9b0cdaa[m parry hbox reduce
+* [33m9d6655c[m tileset collision fix
+* [33m28514c5[m tileset update
+* [33m3f5fe64[m tile variation test
+* [33mcf955a2[m refined parry sfx
+* [33m9ffa579[m parry direction fix
+* [33m93e0a77[m parry sfx adjust
+* [33me74d8f7[m parry default audio cahnge
+* [33m0831813[m audio manager (custom class)
+* [33mba0a2b9[m add parry audio
+* [33m8c3aef9[m manage input buffers
+* [33m77e7f9a[m parry hbox fix
+* [33m1717aad[m double jump fix
+* [33mdc15f28[m bug finding
+* [33mfa44144[m parry hbox tweak
+* [33me68f171[m jump anim fix
+* [33m28869f2[m bullet time fix
+* [33m3b929fe[m screen flash
+* [33mc2fd220[m parry frame freeze
+* [33m927d879[m parry reflect
+* [33md6bfb42[m refine dummy enemy
+* [33m6627a13[m sprite node connect fix
+* [33m676f8be[m parry hbox
+* [33m1e74bfc[m parry anim fix
+* [33m9b8d129[m jump anim fix
+* [33mfce1045[m prototype menu
+* [33mf9b72ae[m state machine test fail
+* [33m809addc[m sfx tests added
+* [33m0c9f272[m theme test
+* [33m2af82fe[m new fonts
+* [33mc61e377[m sprite trail fix
+* [33m494a805[m better tilemap and tileset
+* [33m3d5217a[m bg color change
+* [33m603d8c0[m hitbox shape change
+* [33m038cce5[m dev level add inspo
+* [33m60da666[m parallax bg apply
+* [33m696a0ee[m parallax placeholder sprites
+* [33m63601aa[m menu load fix
+* [33m0c5caa0[m util scene loading
+* [33ma23858e[m file sort redo
+* [33m8fbb6f6[m sort level assets
+* [33mfd15195[m smooth camera
+* [33m6c88c31[m bg placeholder
+* [33m322ac76[m fonts added
+* [33m49e28d0[m main menu
+* [33m7589ad2[m parry anim
+*   [33m30cf1ba[m Merge branch 'fix/player-movement'
+[1;31m|[m[1;32m\[m  
+[1;31m|[m * [33m232a32e[m[33m ([m[1;31morigin/fix/player-movement[m[33m)[m sprite templates
+[1;31m|[m * [33me8450c9[m movement finished 10/14
+[1;31m|[m * [33ma87c69f[m broken wall jump done
+[1;31m|[m * [33ma2e6830[m sprite trail
+[1;31m|[m * [33m2c24f86[m bullet time & dash
+[1;31m|[m * [33m0e127f8[m add fall accel and clamp
+[1;31m|[m * [33me29107b[m movement script refined
+[1;31m|[m * [33m81f76ef[m movement code revamp
+[1;31m|[m * [33m1e18700[m movement mechanics v2.0
+[1;31m|[m[1;31m/[m  
+* [33mf9a1867[m movement mechanics v1.0
+* [33m74a63c0[m basic platformer mechanics
+* [33m107aeb5[m initial commit

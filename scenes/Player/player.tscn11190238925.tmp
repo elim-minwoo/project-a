@@ -10,10 +10,10 @@
 [ext_resource type="PackedScene" uid="uid://cdnq0fo77nxp6" path="res://scenes/player/abilities/timeslow/stamina_bar.tscn" id="9_5gtgg"]
 [ext_resource type="AudioStream" uid="uid://b1c17jk6xle0f" path="res://assets/sounds/sfx/player/parry_default.ogg" id="10_h17s1"]
 [ext_resource type="Script" uid="uid://efxvw318bggg" path="res://scenes/player/player_audio.gd" id="10_je7p5"]
-[ext_resource type="AudioStream" uid="uid://b0ri0n4snjpek" path="res://assets/sounds/sfx/player/walking/walking_1.ogg" id="11_ugbui"]
-[ext_resource type="AudioStream" uid="uid://dfa6ak02eihoa" path="res://assets/sounds/sfx/player/walking/walking_2.ogg" id="12_fcs02"]
-[ext_resource type="AudioStream" uid="uid://clacatjxrrqw6" path="res://assets/sounds/sfx/player/walking/walking_3.ogg" id="13_myrg7"]
-[ext_resource type="AudioStream" uid="uid://bkwo82d5oxp7h" path="res://assets/sounds/sfx/player/walking/walking_4.ogg" id="14_kvlxm"]
+[ext_resource type="AudioStream" uid="uid://b402fmndy6x0f" path="res://assets/sounds/sfx/player/walking_1.ogg" id="11_ugbui"]
+[ext_resource type="AudioStream" uid="uid://dmq16dd0pqj7k" path="res://assets/sounds/sfx/player/walking_2.ogg" id="12_fcs02"]
+[ext_resource type="AudioStream" uid="uid://bjeh44nhhaoc0" path="res://assets/sounds/sfx/player/walking_3.ogg" id="13_myrg7"]
+[ext_resource type="AudioStream" uid="uid://43nrfjsc7arf" path="res://assets/sounds/sfx/player/walking_4.ogg" id="14_kvlxm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lvxji"]
 size = Vector2(8, 22)
@@ -696,23 +696,6 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
-}
-tracks/3/type = "method"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("..")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0.2, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"values": [{
-"args": [],
-"method": &"footstep_play"
-}, {
-"args": [],
-"method": &"footstep_play"
-}]
 }
 
 [sub_resource type="Animation" id="Animation_h17s1"]
