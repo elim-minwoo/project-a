@@ -7,7 +7,7 @@ var s_timer = 0 # stamina timer
 var time_to_wait = 0.5 # time to wait till regen
 
 var regen_speed := 40.0 # regen ammount
-var drain_speed := 80.0 # drain ammount
+var drain_speed := 120.0 # drain ammount
 
 var tween : Tween
 

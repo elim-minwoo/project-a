@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://dvpx2n88sf8na"]
+[gd_scene format=3 uid="uid://dvpx2n88sf8na"]
 
 [ext_resource type="Script" uid="uid://til1c0o1mm6b" path="res://scenes/player/abilities/dash/dash.gd" id="1_avqmg"]
 [ext_resource type="Script" uid="uid://hsp2icyagaic" path="res://utils/frame_timer.gd" id="2_mdhjh"]

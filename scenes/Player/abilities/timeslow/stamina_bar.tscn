@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cdnq0fo77nxp6"]
+[gd_scene format=3 uid="uid://cdnq0fo77nxp6"]
 
 [ext_resource type="Script" uid="uid://bqc1sokvbvyni" path="res://scenes/player/abilities/timeslow/stamina_bar.gd" id="1_l08y3"]
 [ext_resource type="Texture2D" uid="uid://v37tiryxaoab" path="res://assets/sprites/player/stamina_bar/empty_bar.png" id="2_3prlv"]

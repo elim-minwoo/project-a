@@ -9,11 +9,10 @@
 [ext_resource type="AudioStream" uid="uid://d3tf5sqjb6n68" path="res://assets/sounds/sfx/player/parry_hit2.ogg" id="7_je7p5"]
 [ext_resource type="PackedScene" uid="uid://cdnq0fo77nxp6" path="res://scenes/player/abilities/timeslow/stamina_bar.tscn" id="9_5gtgg"]
 [ext_resource type="AudioStream" uid="uid://b1c17jk6xle0f" path="res://assets/sounds/sfx/player/parry_default.ogg" id="10_h17s1"]
-[ext_resource type="Script" uid="uid://efxvw318bggg" path="res://scenes/player/player_audio.gd" id="10_je7p5"]
-[ext_resource type="AudioStream" uid="uid://b0ri0n4snjpek" path="res://assets/sounds/sfx/player/walking/walking_1.ogg" id="11_ugbui"]
-[ext_resource type="AudioStream" uid="uid://dfa6ak02eihoa" path="res://assets/sounds/sfx/player/walking/walking_2.ogg" id="12_fcs02"]
-[ext_resource type="AudioStream" uid="uid://clacatjxrrqw6" path="res://assets/sounds/sfx/player/walking/walking_3.ogg" id="13_myrg7"]
-[ext_resource type="AudioStream" uid="uid://bkwo82d5oxp7h" path="res://assets/sounds/sfx/player/walking/walking_4.ogg" id="14_kvlxm"]
+[ext_resource type="Script" uid="uid://efxvw318bggg" path="res://scenes/player/player_audio_player.gd" id="10_je7p5"]
+[ext_resource type="AudioStream" uid="uid://chssmx5difwe2" path="res://assets/sounds/sfx/player/walking/walking_1.ogg" id="11_ugbui"]
+[ext_resource type="AudioStream" uid="uid://bk653aq8npoin" path="res://assets/sounds/sfx/player/walking/walking_2.ogg" id="12_fcs02"]
+[ext_resource type="AudioStream" uid="uid://btx3jn5x581p8" path="res://assets/sounds/sfx/player/player_dash.ogg" id="13_gx1jg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lvxji"]
 size = Vector2(8, 22)
@@ -798,9 +797,9 @@ root_node = NodePath("../PlayerHitbox")
 libraries/ = SubResource("AnimationLibrary_hvfru")
 
 [node name="PlayerAudio" type="AudioStreamPlayer" parent="." unique_id=441191316]
-volume_db = -2.0
+volume_db = -5.0
 script = ExtResource("10_je7p5")
-sounds = Array[AudioStream]([ExtResource("11_ugbui"), ExtResource("12_fcs02"), ExtResource("13_myrg7"), ExtResource("14_kvlxm")])
+sounds = Array[AudioStream]([ExtResource("11_ugbui"), ExtResource("12_fcs02"), ExtResource("13_gx1jg")])
 
 [node name="Label" type="Label" parent="." unique_id=1243610844]
 offset_left = -18.0

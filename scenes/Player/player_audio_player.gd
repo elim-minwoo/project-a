@@ -1,5 +1,5 @@
 extends AudioStreamPlayer
-class_name MultiAudioStreamer
+class_name PlayerAudioStreamer
 
 @export var sounds: Array[AudioStream]
 

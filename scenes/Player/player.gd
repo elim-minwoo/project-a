@@ -260,7 +260,9 @@ func manage_abilities():
 		
 		if dash_dir == 0:
 			dash_dir = Global.player_dir
-			
+		
+		player_audio.pitch_scale = 1.0
+		player_audio.play_sound_index(2)
 		dash.start_dash(sprite, dash_duration)
 		
 	player_speed = dash_speed if dash.is_dashing() else move_speed
@@ -340,5 +342,6 @@ func update_animations():
 
 
 func footstep_play():
-	player_audio.pitch_scale = randf_range(.8, 1.2)
-	player_audio.random_play()
+	player_audio.pitch_scale = randf_range(.8, 1.3)
+	if is_dashing == false:
+		player_audio.cycle_play_range(0, 1)
