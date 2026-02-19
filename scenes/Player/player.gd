@@ -262,7 +262,7 @@ func manage_abilities():
 			dash_dir = Global.player_dir
 		
 		player_audio.pitch_scale = 1.0
-		player_audio.play_sound_index(2)
+		player_audio.play_sound_index(0)
 		dash.start_dash(sprite, dash_duration)
 		
 	player_speed = dash_speed if dash.is_dashing() else move_speed
