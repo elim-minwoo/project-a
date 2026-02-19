@@ -339,9 +339,3 @@ func update_animations():
 				hbox_adjust(0.0, 5.0)
 				player_anim.play("idle")
 #endregion
-
-
-func footstep_play():
-	player_audio.pitch_scale = randf_range(.8, 1.3)
-	if is_dashing == false:
-		player_audio.cycle_play_range(0, 1)

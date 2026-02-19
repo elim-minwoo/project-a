@@ -9,10 +9,11 @@
 [ext_resource type="AudioStream" uid="uid://d3tf5sqjb6n68" path="res://assets/sounds/sfx/player/parry_hit2.ogg" id="7_je7p5"]
 [ext_resource type="PackedScene" uid="uid://cdnq0fo77nxp6" path="res://scenes/player/abilities/timeslow/stamina_bar.tscn" id="9_5gtgg"]
 [ext_resource type="AudioStream" uid="uid://b1c17jk6xle0f" path="res://assets/sounds/sfx/player/parry_default.ogg" id="10_h17s1"]
-[ext_resource type="Script" uid="uid://efxvw318bggg" path="res://scenes/player/player_audio_player.gd" id="10_je7p5"]
+[ext_resource type="Script" uid="uid://efxvw318bggg" path="res://scenes/player/audio/player_audio_player.gd" id="10_je7p5"]
 [ext_resource type="AudioStream" uid="uid://chssmx5difwe2" path="res://assets/sounds/sfx/player/walking/walking_1.ogg" id="11_ugbui"]
 [ext_resource type="AudioStream" uid="uid://bk653aq8npoin" path="res://assets/sounds/sfx/player/walking/walking_2.ogg" id="12_fcs02"]
-[ext_resource type="AudioStream" uid="uid://btx3jn5x581p8" path="res://assets/sounds/sfx/player/player_dash.ogg" id="13_gx1jg"]
+[ext_resource type="AudioStream" uid="uid://cen7l2mj0w0cd" path="res://assets/sounds/sfx/player/player_dash.ogg" id="13_gx1jg"]
+[ext_resource type="Script" uid="uid://ch2wes6yb4e2o" path="res://scenes/player/audio/audio_manage.gd" id="14_ugbui"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lvxji"]
 size = Vector2(8, 22)
@@ -696,23 +697,6 @@ tracks/2/keys = {
 "update": 1,
 "values": [true]
 }
-tracks/3/type = "method"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("..")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0.2, 0.5),
-"transitions": PackedFloat32Array(1, 1),
-"values": [{
-"args": [],
-"method": &"footstep_play"
-}, {
-"args": [],
-"method": &"footstep_play"
-}]
-}
 
 [sub_resource type="Animation" id="Animation_h17s1"]
 resource_name = "wall"
@@ -797,9 +781,11 @@ root_node = NodePath("../PlayerHitbox")
 libraries/ = SubResource("AnimationLibrary_hvfru")
 
 [node name="PlayerAudio" type="AudioStreamPlayer" parent="." unique_id=441191316]
-volume_db = -5.0
 script = ExtResource("10_je7p5")
 sounds = Array[AudioStream]([ExtResource("11_ugbui"), ExtResource("12_fcs02"), ExtResource("13_gx1jg")])
+
+[node name="AudioManage" type="Node" parent="." unique_id=1139693811]
+script = ExtResource("14_ugbui")
 
 [node name="Label" type="Label" parent="." unique_id=1243610844]
 offset_left = -18.0
