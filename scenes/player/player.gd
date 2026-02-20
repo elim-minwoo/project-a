@@ -8,6 +8,7 @@ extends CharacterBody2D
 @onready var player_hitbox: CollisionShape2D = $PlayerHitbox
 @onready var parry_hitbox: CollisionShape2D = $Parry/ParryHitbox
 @onready var player_audio: AudioStreamPlayer = $PlayerAudio
+@onready var stamina_ui: Control = $TimeSlowBar
 
 # refer abilities
 @onready var dash: Node2D = $Dash
@@ -45,13 +46,15 @@ var is_wall_sliding = false
 
 # ability variables
 var is_dashing := false
-var dash_speed := 2000.0
-var dash_duration := 0.1
 var can_dash = true
 var has_dashed = false
 var dash_dir := 0
 
-@onready var stamina_ui: Control = $TimeSlowBar
+# state variables
+var is_attacking := false
+var is_parrying := false
+var is_jumping := false
+var is_wall_jumping := false
 #endregion
 
 
@@ -68,11 +71,9 @@ var dash_dir := 0
 @export var wall_y_force = 1200.0
 @export var wall_slide_speed: float = 30.0
 
-# state variables
-@export var is_attacking := false
-@export var is_parrying := false
-@export var is_jumping := false
-@export var is_wall_jumping := false
+@export_category("Wall Logic Variables")
+@export var dash_speed := 2000.0
+@export var dash_duration := 0.1
 #endregion
 
 
@@ -253,7 +254,7 @@ func manage_abilities():
 			and velocity.x != 0
 	)
 	
-	if can_dash: # if can dash, is dashing, has dashed, and then dash towards dash_direction
+	if can_dash == true: # if can dash, is dashing, has dashed, and then dash towards dash_direction
 		is_dashing = true
 		has_dashed = true
 		dash_dir = sign(direction)

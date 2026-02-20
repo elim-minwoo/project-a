@@ -816,7 +816,6 @@ script = ExtResource("4_75vfm")
 [node name="ParryHitbox" type="CollisionShape2D" parent="Parry" unique_id=346217497]
 position = Vector2(26, -1)
 shape = SubResource("RectangleShape2D_p47bc")
-disabled = true
 
 [node name="MultiAudioStreamer" type="AudioStreamPlayer" parent="Parry" unique_id=254272643]
 volume_db = -4.5
