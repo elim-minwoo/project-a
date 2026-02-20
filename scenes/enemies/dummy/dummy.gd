@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@onready var dummy_sprite: Sprite2D = $Sprite2D
+
 const DUMMY_PROJECTILE = preload("uid://coednfjc0rx2q")
 
 func _physics_process(delta: float) -> void:
@@ -7,3 +9,10 @@ func _physics_process(delta: float) -> void:
 		var projectile_temp = DUMMY_PROJECTILE.instantiate()
 		projectile_temp.direction = -1
 		add_child(projectile_temp)
+
+
+func _on_mouse_entered() -> void:
+	pass
+
+func _on_mouse_exited() -> void:
+	pass
