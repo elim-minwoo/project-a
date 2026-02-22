@@ -5,11 +5,14 @@ class_name PlayerAudioStreamer
 
 var current_index: int = 0
 
-func play_sound_index(index):
-	stream = sounds[index]
-	play()
 
-
+func play_sound_index(index, min_pitch, max_pitch):
+	var poly_sfx = AudioStreamPlayer.new()
+	poly_sfx.stream = sounds[index]
+	poly_sfx.finished.connect(poly_sfx.queue_free)
+	add_child(poly_sfx)
+	poly_sfx.pitch_scale = randf_range(min_pitch, max_pitch)
+	poly_sfx.play()
 
 func random_play():
 	stream = sounds.pick_random()

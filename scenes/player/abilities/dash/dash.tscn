@@ -17,7 +17,7 @@ script = ExtResource("2_mdhjh")
 metadata/_custom_type_script = "uid://hsp2icyagaic"
 
 [node name="DashDelay" type="Timer" parent="." unique_id=273217614]
-wait_time = 0.35
+wait_time = 0.6
 
 [connection signal="timeout" from="DashDuration" to="." method="_on_dash_duration_timeout"]
 [connection signal="timeout" from="GhostTimer" to="." method="_on_ghost_timer_timeout"]

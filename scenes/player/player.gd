@@ -7,8 +7,10 @@ extends CharacterBody2D
 @onready var player_anim = get_node("PlayerAnim")
 @onready var player_hitbox: CollisionShape2D = $PlayerHitbox
 @onready var parry_hitbox: CollisionShape2D = $Parry/ParryHitbox
-@onready var player_audio: AudioStreamPlayer = $PlayerAudio
 @onready var stamina_ui: Control = $TimeSlowBar
+
+@onready var player_audio: AudioStreamPlayer = $PlayerAudio
+@onready var audio_manage: Node = $AudioManage
 
 # refer abilities
 @onready var dash: Node2D = $Dash
@@ -262,8 +264,7 @@ func manage_abilities():
 		if dash_dir == 0:
 			dash_dir = Global.player_dir
 		
-		player_audio.pitch_scale = 1.0
-		player_audio.play_sound_index(0)
+		audio_manage.dash_play()
 		dash.start_dash(sprite, dash_duration)
 		
 	player_speed = dash_speed if dash.is_dashing() else move_speed
