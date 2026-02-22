@@ -6,7 +6,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jfabm"]
 shader = ExtResource("1_jfabm")
-shader_parameter/thickness = 0.800000038
+shader_parameter/thickness = 0.630000029925
 shader_parameter/ring_count = 20
 shader_parameter/ring_offset = 0.0
 shader_parameter/outline_color = Color(1, 0.30005082, 0.23680523, 1)
@@ -20,16 +20,13 @@ shader_parameter/max_or_add = false
 radius = 7.0
 height = 28.0
 
-[node name="Dummy" type="CharacterBody2D" unique_id=1688726895]
+[node name="Dummy" type="Area2D" unique_id=632383582]
 script = ExtResource("1_005t2")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2042487847]
+[node name="DummySprite" type="Sprite2D" parent="." unique_id=2042487847]
 material = SubResource("ShaderMaterial_jfabm")
 texture = ExtResource("1_0gs5x")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2123525022]
+[node name="DummyHitbox" type="CollisionShape2D" parent="." unique_id=2123525022]
 position = Vector2(1, 1)
 shape = SubResource("CapsuleShape2D_005t2")
-
-[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
