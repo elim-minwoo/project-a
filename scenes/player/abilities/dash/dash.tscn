@@ -19,5 +19,10 @@ metadata/_custom_type_script = "uid://hsp2icyagaic"
 [node name="DashDelay" type="Timer" parent="." unique_id=273217614]
 wait_time = 0.6
 
+[node name="OutlineFrameTimer" type="Node" parent="." unique_id=1327919676]
+script = ExtResource("2_mdhjh")
+frames = 10
+metadata/_custom_type_script = "uid://hsp2icyagaic"
+
 [connection signal="timeout" from="DashDuration" to="." method="_on_dash_duration_timeout"]
 [connection signal="timeout" from="GhostTimer" to="." method="_on_ghost_timer_timeout"]

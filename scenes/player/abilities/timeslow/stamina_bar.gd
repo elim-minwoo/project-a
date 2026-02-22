@@ -3,6 +3,10 @@ extends Control
 @onready var stamina: TextureProgressBar = $Stamina
 @onready var key_press_delay: Timer = $KeyPressDelay
 
+@onready var player: CharacterBody2D = $".."
+@onready var player_sprite: AnimatedSprite2D = $"../PlayerSprite"
+
+
 var s_timer = 0 # stamina timer
 var time_to_wait = 0.5 # time to wait till regen
 
@@ -29,6 +33,7 @@ func _process(delta: float) -> void:
 	# drain stamina
 	if Input.is_action_pressed("timeslow"):
 		show_bar()
+		player_sprite.material.set_shader_parameter("outline_color", Color(0.902, 0.098, 0.063, 1.0))
 		stamina.value -= drain_speed * delta
 		s_timer = 0.0
 		key_press_delay.stop()
@@ -38,6 +43,9 @@ func _process(delta: float) -> void:
 		s_timer += delta
 		if s_timer >= time_to_wait: # if timer larger than time to wait, regen stamina
 			stamina.value += regen_speed * delta
+			
+	else:
+		player_sprite.material.set_shader_parameter("outline_color", Color(0.0, 0.0, 0.0, 1.0))
 			
 	# clamp so stamina stays within 0 and max value
 	stamina.value = clamp(stamina.value, 0, stamina.max_value)

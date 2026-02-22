@@ -19,6 +19,8 @@ func footstep_play():
 		pitch_randomize(0.8, 1.2)
 		player_audio.cycle_play_range(2, 7)
 
+
+
 # player_audio.play_sound_index(index, min_pitch, max_pitch)
 
 func dash_play():

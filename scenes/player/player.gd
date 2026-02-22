@@ -180,6 +180,7 @@ func manage_buffer(delta):
 
 #region state functions
 func floor_process():
+	
 	if not is_on_floor():
 		return
 	
@@ -199,6 +200,7 @@ func floor_process():
 
 
 func wall_process():
+	
 	if velocity.y <= wall_slide_speed:
 		return
 		
@@ -266,7 +268,7 @@ func manage_abilities():
 		
 		audio_manage.dash_play()
 		dash.start_dash(sprite, dash_duration)
-		
+	
 	player_speed = dash_speed if dash.is_dashing() else move_speed
 
 
