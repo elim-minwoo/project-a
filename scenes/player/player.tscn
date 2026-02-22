@@ -19,6 +19,7 @@
 [ext_resource type="AudioStream" uid="uid://bv2ljyk7ccj8f" path="res://assets/sounds/sfx/player/player_footsteps_4.ogg" id="15_3j4b4"]
 [ext_resource type="AudioStream" uid="uid://6551xw14iwr6" path="res://assets/sounds/sfx/player/player_footsteps_5.ogg" id="16_yj68g"]
 [ext_resource type="AudioStream" uid="uid://qwhpsxwiy8j" path="res://assets/sounds/sfx/player/player_footsteps_6.ogg" id="17_ioxgp"]
+[ext_resource type="AudioStream" uid="uid://bybl0odj8x1r2" path="res://assets/sounds/sfx/player/player_walljump.ogg" id="20_8ydkj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lvxji"]
 size = Vector2(8, 22)
@@ -822,7 +823,7 @@ script = ExtResource("14_ugbui")
 [node name="PlayerAudio" type="AudioStreamPlayer" parent="." unique_id=441191316]
 max_polyphony = 8
 script = ExtResource("10_je7p5")
-sounds = Array[AudioStream]([ExtResource("13_gx1jg"), ExtResource("12_lgqa7"), ExtResource("12_uf5tr"), ExtResource("13_lgqa7"), ExtResource("14_8ydkj"), ExtResource("15_3j4b4"), ExtResource("16_yj68g"), ExtResource("17_ioxgp")])
+sounds = Array[AudioStream]([ExtResource("13_gx1jg"), ExtResource("12_lgqa7"), ExtResource("12_uf5tr"), ExtResource("13_lgqa7"), ExtResource("14_8ydkj"), ExtResource("15_3j4b4"), ExtResource("16_yj68g"), ExtResource("17_ioxgp"), ExtResource("20_8ydkj")])
 
 [node name="Label" type="Label" parent="." unique_id=1243610844]
 offset_left = -18.0
