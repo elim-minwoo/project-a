@@ -233,7 +233,7 @@ func wall_process():
 #region abilities
 func manage_abilities():
 	
-	if Input.is_action_pressed("timeslow") and stamina_ui.has_stamina():
+	if Input.is_action_pressed("timeslow") and stamina_ui.has_stamina() and not is_dashing:
 		debug_label.text = "on"
 		Engine.time_scale = 0.3
 	else:

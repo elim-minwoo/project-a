@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://2t33ax3als6d"]
 
-[ext_resource type="Shader" uid="uid://3ggf4x33mtk4" path="res://shaders/trail_shader.gdshader" id="1_dftkd"]
+[ext_resource type="Shader" uid="uid://3ggf4x33mtk4" path="res://shaders/color_mask.gdshader" id="1_dftkd"]
 [ext_resource type="Texture2D" uid="uid://bi7a2jtja3qpl" path="res://icon.svg" id="1_rm1np"]
 [ext_resource type="Script" uid="uid://b710dgaply7hl" path="res://scenes/player/abilities/dash/dash_ghost.gd" id="2_dftkd"]
 
@@ -9,7 +9,7 @@ shader = ExtResource("1_dftkd")
 shader_parameter/custom_color = Color(1, 1, 1, 1)
 shader_parameter/glow_color = Color(0, 0, 0, 1)
 
-[node name="DashGhost" type="Sprite2D"]
+[node name="DashGhost" type="Sprite2D" unique_id=1363767350]
 modulate = Color(1.8247963, 1.8247963, 1.8247963, 1)
 material = SubResource("ShaderMaterial_nhtew")
 texture = ExtResource("1_rm1np")
