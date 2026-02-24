@@ -810,7 +810,7 @@ animation = &"wall"
 script = SubResource("GDScript_qek5x")
 
 [node name="PlayerHitbox" type="CollisionShape2D" parent="." unique_id=1412226293]
-position = Vector2(0, 6)
+position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_lvxji")
 
 [node name="Parry" type="Area2D" parent="." unique_id=291229829]

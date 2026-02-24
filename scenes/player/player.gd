@@ -233,7 +233,7 @@ func wall_process():
 #region abilities
 func manage_abilities():
 	
-	if Input.is_action_pressed("timeslow") and stamina_ui.has_stamina() and not is_dashing:
+	if Input.is_action_pressed("timeslow") and stamina_ui.has_stamina():
 		debug_label.text = "on"
 		Engine.time_scale = 0.3
 	else:
@@ -340,6 +340,6 @@ func update_animations():
 			
 			# idle anim
 			else:
-				hbox_adjust(0.0, 5.0)
+				hbox_adjust(0.0, 5.2)
 				player_anim.play("idle")
 #endregion
