@@ -10,6 +10,7 @@ uniform float aspect_ratio : hint_range(0.1, 10.0, 0.01) = 1.0;
 uniform bool square_border = false;
 uniform vec2 offset;
 uniform bool max_or_add = false;
+uniform float sprite_darkness : hint_range(0.0, 1.0, 0.01) = 1.0;
 
 void vertex(){
 	if (border_clipping_fix){
@@ -29,9 +30,11 @@ vec2 square(float i){ // samples a square pattern
 
 vec4 tex(sampler2D sampler, vec2 uv){
 	vec4 clr;
-	if (uv.x > 0.0 && uv.y > 0.0 && uv.x < 1.0 && uv.y < 1.0){ // bleeding texture sampling fix
+	if (uv.x > 0.0 && uv.y > 0.0 && uv.x < 1.0 && uv.y < 1.0){
 		clr = texture(sampler, uv);
-	}else{clr = vec4(0.0);}
+	}else{
+		clr = vec4(0.0);
+	}
 	return clr;
 }
 
@@ -39,31 +42,47 @@ void fragment(){
 	vec2 o = offset / vec2(textureSize(TEXTURE, 0));
 	vec2 uv = UV;
 	uv -= vec2(0.5);
+
 	if (border_clipping_fix){
 		uv.x *= 1.0 + (aspect_ratio-1.0) * thickness * TEXTURE_PIXEL_SIZE.x * 2.0;
 		uv *= (1.0 + (thickness * TEXTURE_PIXEL_SIZE * 2.0));
 		uv -= o;
-		}
+	}
+
 	uv += vec2(0.5);
 	vec2 size = vec2(thickness) / vec2(textureSize(TEXTURE, 0));
 	
 	vec4 sprite_color = tex(TEXTURE, uv);
-	
 	float alpha = sprite_color.a;
+	
 	if (square_border){
 		for(int i=0;i<ring_count;++i){
 			float r = float(i) / float(ring_count) + ring_offset;
-			alpha = max(alpha,texture(TEXTURE, uv + o + size * square(r) * vec2(aspect_ratio,1.0)).a * outline_color.a);}// texture sampling fix is disabled because both with and without give the same result
+			alpha = max(alpha,
+				texture(TEXTURE, uv + o + size * square(r) * vec2(aspect_ratio,1.0)).a
+				* outline_color.a);
+		}
 	}else{
 		for(int i=0;i<ring_count;++i){
 			float r = float(i) * 3.14159 / float(ring_count) * 2.0 + ring_offset;
 			if (max_or_add){
-				alpha = alpha+tex(TEXTURE, uv + o +  vec2(size.x * sin(r) * aspect_ratio, size.y * cos(r))).a * outline_color.a;
+				alpha += tex(TEXTURE,
+					uv + o + vec2(size.x * sin(r) * aspect_ratio,
+					size.y * cos(r))).a * outline_color.a;
 			}else{
-				alpha = max(alpha,tex(TEXTURE, uv + o +  vec2(size.x * sin(r) * aspect_ratio, size.y * cos(r))).a * outline_color.a);
+				alpha = max(alpha,
+					tex(TEXTURE,
+					uv + o + vec2(size.x * sin(r) * aspect_ratio,
+					size.y * cos(r))).a * outline_color.a);
 			}
 		}
 	}
-    vec3 final_color = mix(outline_color.rgb, sprite_color.rgb, sprite_color.a);
-    COLOR = vec4(final_color, clamp(alpha, 0.0, 1.0));
+
+	vec3 final_color = mix(
+		outline_color.rgb,
+		sprite_color.rgb * sprite_darkness,
+		sprite_color.a
+	);
+
+	COLOR = vec4(final_color, clamp(alpha, 0.0, 1.0));
 }

@@ -1,7 +1,5 @@
 extends CharacterBody2D
 
-@onready var debug_label: Label = $Label
-
 # refer nodes
 @onready var sprite: AnimatedSprite2D = $PlayerSprite
 @onready var player_anim = get_node("PlayerAnim")
@@ -14,6 +12,7 @@ extends CharacterBody2D
 
 # refer abilities
 @onready var dash: Node2D = $Dash
+@onready var is_timeslow = false
 
 # manual signals
 signal wall_touching # manual signal for wall touch
@@ -234,11 +233,18 @@ func wall_process():
 func manage_abilities():
 	
 	if Input.is_action_pressed("timeslow") and stamina_ui.has_stamina():
-		debug_label.text = "on"
-		Engine.time_scale = 0.3
+		is_timeslow = true
 	else:
-		debug_label.text = "off"
+		is_timeslow = false
+	
+	if is_timeslow:
+		sprite.material.set_shader_parameter("outline_color", Color(1.0, 0.0, 0.0, 1.0))
+		Engine.time_scale = 0.3
+		sprite.material.set_shader_parameter("sprite_darkness", 0.0)
+	else:
+		sprite.material.set_shader_parameter("outline_color", Color(0.0, 0.0, 0.0, 1.0))
 		Engine.time_scale = 1.0
+		sprite.material.set_shader_parameter("sprite_darkness", 1.0)
 	
 	
 	

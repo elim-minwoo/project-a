@@ -33,7 +33,6 @@ shader_parameter/aspect_ratio = 1.0
 shader_parameter/square_border = false
 shader_parameter/offset = Vector2(0, 0)
 shader_parameter/max_or_add = false
-shader_parameter/sprite_darkness = 1.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3j4b4"]
 atlas = ExtResource("1_cyojo")
@@ -385,6 +384,18 @@ animations = [{
 "name": &"wall",
 "speed": 5.0
 }]
+
+[sub_resource type="GDScript" id="GDScript_qek5x"]
+script/source = "extends AnimatedSprite2D
+
+func UpdateAlpha(newValue: float):
+	modulate = Color(0.008, 0.708, 1.0, 1.0)
+	modulate.a = newValue
+	
+func StartFading():
+	var newTween = get_tree().create_tween()
+	newTween.tween_method(UpdateAlpha, 0.8, 0.0, 1.0)
+"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lvxji"]
 size = Vector2(8, 22)
@@ -796,6 +807,7 @@ scale = Vector2(0.38, 0.38)
 material = SubResource("ShaderMaterial_yj68g")
 sprite_frames = SubResource("SpriteFrames_cgmen")
 animation = &"wall"
+script = SubResource("GDScript_qek5x")
 
 [node name="PlayerHitbox" type="CollisionShape2D" parent="." unique_id=1412226293]
 position = Vector2(0, 6)
