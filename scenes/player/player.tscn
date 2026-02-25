@@ -390,7 +390,7 @@ animations = [{
 size = Vector2(8, 22)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p47bc"]
-size = Vector2(8, 8)
+size = Vector2(21, 11)
 
 [sub_resource type="Animation" id="Animation_je7p5"]
 length = 0.001
@@ -805,7 +805,7 @@ shape = SubResource("RectangleShape2D_lvxji")
 script = ExtResource("4_75vfm")
 
 [node name="ParryHitbox" type="CollisionShape2D" parent="Parry" unique_id=346217497]
-position = Vector2(26, -1)
+position = Vector2(32.5, 0.5)
 shape = SubResource("RectangleShape2D_p47bc")
 disabled = true
 

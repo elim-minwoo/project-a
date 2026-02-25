@@ -11,10 +11,9 @@ var s_timer = 0 # stamina timer
 var time_to_wait = 0.5 # time to wait till regen
 
 var regen_speed := 100.0 # regen ammount
-var drain_speed := 120.0 # drain ammount
+var drain_speed := 80.0 # drain ammount
 
 var tween : Tween
-
 
 
 # Called when the node enters the scene tree for the first time.
@@ -30,11 +29,13 @@ func has_stamina() -> bool:
 
 func _process(delta: float) -> void:
 	
+	var true_delta = delta / Engine.time_scale
+	
 	# drain stamina
 	if Input.is_action_pressed("timeslow"):
 		show_bar()
 		
-		stamina.value -= drain_speed * delta
+		stamina.value -= drain_speed * true_delta
 		s_timer = 0.0
 		key_press_delay.stop()
 		

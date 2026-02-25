@@ -10,6 +10,8 @@ extends CharacterBody2D
 @onready var player_audio: AudioStreamPlayer = $PlayerAudio
 @onready var audio_manage: Node = $AudioManage
 
+@onready var screen_rect: ScreenFlash = $"../Camera2D/ColorRect"
+
 # refer abilities
 @onready var dash: Node2D = $Dash
 @onready var is_timeslow = false
@@ -56,6 +58,8 @@ var is_attacking := false
 var is_parrying := false
 var is_jumping := false
 var is_wall_jumping := false
+
+var transition_flash := 0.0
 #endregion
 
 
@@ -151,7 +155,7 @@ func _physics_process(delta: float) -> void: # loads every physics tick
 
 
 	manage_buffer(delta)
-	manage_abilities()
+	manage_abilities(delta)
 	
 	update_animations()
 	move_and_slide()
@@ -230,7 +234,12 @@ func wall_process():
 
 
 #region abilities
-func manage_abilities():
+
+func transition_screen(target_flash, flash_speed, delta):
+	transition_flash = lerp(transition_flash, target_flash, flash_speed * delta)
+	Global.flash_visible.set_flash(transition_flash)
+
+func manage_abilities(delta):
 	
 	if Input.is_action_pressed("timeslow") and stamina_ui.has_stamina():
 		is_timeslow = true
@@ -238,14 +247,15 @@ func manage_abilities():
 		is_timeslow = false
 	
 	if is_timeslow:
+		transition_screen(-0.5, 8.0, delta)
 		sprite.material.set_shader_parameter("outline_color", Color(1.0, 0.0, 0.0, 1.0))
 		Engine.time_scale = 0.3
 		sprite.material.set_shader_parameter("sprite_darkness", 0.0)
 	else:
-		sprite.material.set_shader_parameter("outline_color", Color(0.0, 0.0, 0.0, 1.0))
+		transition_screen(0.0, 30.0, delta)
 		Engine.time_scale = 1.0
+		sprite.material.set_shader_parameter("outline_color", Color(0.0, 0.0, 0.0, 1.0))
 		sprite.material.set_shader_parameter("sprite_darkness", 1.0)
-	
 	
 	
 	is_dashing = dash.is_dashing()

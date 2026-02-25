@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://42gd7farliby" path="res://assets/sprites/world/world_tileset.png" id="2_on0lb"]
 [ext_resource type="Script" uid="uid://cddetjchfebqs" path="res://scenes/levels/camera.gd" id="2_rmyai"]
 [ext_resource type="PackedScene" uid="uid://ktg27xjj1v6m" path="res://scenes/player/player.tscn" id="3_fwncx"]
-[ext_resource type="Shader" uid="uid://yhwf7f8ggklt" path="res://shaders/screen_flash.gdshader" id="4_fwncx"]
+[ext_resource type="Shader" uid="uid://yhwf7f8ggklt" path="res://shaders/screen_mask.gdshader" id="4_fwncx"]
 [ext_resource type="PackedScene" uid="uid://8iiys5wrfwql" path="res://scenes/enemies/dummy/dummy.tscn" id="4_on0lb"]
 [ext_resource type="Script" uid="uid://c4ltmgi154dnl" path="res://scenes/player/abilities/parry/flash_rect.gd" id="5_fcomi"]
 
@@ -520,10 +520,10 @@ script = ExtResource("2_rmyai")
 [node name="ColorRect" type="ColorRect" parent="Camera2D" unique_id=25429083]
 top_level = true
 material = SubResource("ShaderMaterial_fcomi")
-offset_left = -605.0
-offset_top = -376.0
-offset_right = 2082.0
-offset_bottom = 1144.0
+offset_left = -4920.0
+offset_top = -3945.0
+offset_right = 4049.0
+offset_bottom = 5792.0
 script = ExtResource("5_fcomi")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=751852520]

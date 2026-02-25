@@ -1,7 +1,7 @@
 extends Area2D
 class_name ParryableProjectile
 
-var speed : float = 150.0
+var speed : float = 300.0
 var is_parrying := false
 var been_parried : bool = false
 @export var direction: int = 1 : set = set_direction
@@ -24,7 +24,7 @@ func reflect(reflector: Node2D):
 	if not been_parried:
 		been_parried = true
 		direction *= -(Global.player_dir)
-		speed *= 2
+		speed *= 1.8
 	set_direction(direction)
 
 
