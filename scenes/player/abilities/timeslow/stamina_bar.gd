@@ -11,7 +11,7 @@ var s_timer = 0 # stamina timer
 var time_to_wait = 0.5 # time to wait till regen
 
 var regen_speed := 100.0 # regen ammount
-var drain_speed := 80.0 # drain ammount
+var drain_speed := 60.0 # drain ammount
 
 var tween : Tween
 
@@ -29,7 +29,7 @@ func has_stamina() -> bool:
 
 func _process(delta: float) -> void:
 	
-	var true_delta = delta / Engine.time_scale
+	var true_delta = get_process_delta_time() / Engine.time_scale
 	
 	# drain stamina
 	if Input.is_action_pressed("timeslow"):
@@ -41,9 +41,9 @@ func _process(delta: float) -> void:
 		
 	# regen delay
 	elif stamina.value < stamina.max_value:
-		s_timer += delta
+		s_timer += true_delta
 		if s_timer >= time_to_wait: # if timer larger than time to wait, regen stamina
-			stamina.value += regen_speed * delta
+			stamina.value += regen_speed * true_delta
 		
 	# clamp so stamina stays within 0 and max value
 	stamina.value = clamp(stamina.value, 0, stamina.max_value)
