@@ -6,7 +6,6 @@ extends Control
 @onready var player: CharacterBody2D = $".."
 @onready var player_sprite: AnimatedSprite2D = $"../PlayerSprite"
 
-
 var s_timer = 0 # stamina timer
 var time_to_wait = 0.5 # time to wait till regen
 

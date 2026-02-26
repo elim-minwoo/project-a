@@ -15,6 +15,7 @@ shader_parameter/aspect_ratio = 1.0
 shader_parameter/square_border = false
 shader_parameter/offset = Vector2(0, 0)
 shader_parameter/max_or_add = false
+shader_parameter/sprite_darkness = 1.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_005t2"]
 radius = 7.0

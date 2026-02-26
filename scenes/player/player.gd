@@ -247,7 +247,7 @@ func manage_abilities(delta):
 		is_timeslow = false
 	
 	if is_timeslow:
-		transition_screen(-0.5, 8.0, delta)
+		transition_screen(-0.5, 10.0, delta)
 		sprite.material.set_shader_parameter("outline_color", Color(1.0, 0.0, 0.0, 1.0))
 		Engine.time_scale = 0.3
 		sprite.material.set_shader_parameter("sprite_darkness", 0.0)
@@ -333,7 +333,7 @@ func update_animations():
 		#wall jump anim
 		if is_on_wall_only() and not direction == 0:
 			if not wall_anim_played:
-				hbox_adjust((direction * 1.0), 5.0)
+				hbox_adjust((direction * 1.5), 5.0)
 				player_anim.play("wall")
 				wall_anim_played = true
 		else:

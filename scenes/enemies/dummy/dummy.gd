@@ -1,7 +1,5 @@
 extends Area2D
 
-@onready var dummy_sprite: Sprite2D = $Sprite2D
-
 const DUMMY_PROJECTILE = preload("uid://coednfjc0rx2q")
 
 func _physics_process(delta: float) -> void:

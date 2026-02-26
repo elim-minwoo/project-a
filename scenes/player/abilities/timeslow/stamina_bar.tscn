@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cdnq0fo77nxp6"]
 
 [ext_resource type="Script" uid="uid://bqc1sokvbvyni" path="res://scenes/player/abilities/timeslow/stamina_bar.gd" id="1_l08y3"]
-[ext_resource type="Texture2D" uid="uid://v37tiryxaoab" path="res://assets/sprites/player/stamina_bar/empty_bar.png" id="2_3prlv"]
+[ext_resource type="Texture2D" uid="uid://c3fw6p2seply0" path="res://assets/sprites/player/stamina_bar/base_bar.png" id="2_vndky"]
 [ext_resource type="Texture2D" uid="uid://bse4ewviqu6pj" path="res://assets/sprites/player/stamina_bar/full_bar.png" id="3_0prfh"]
 
 [node name="TimeSlowBar" type="Control" unique_id=1112806517]
@@ -22,7 +22,7 @@ offset_bottom = 800.0
 scale = Vector2(0.07, 0.07)
 value = 100.0
 fill_mode = 4
-texture_under = ExtResource("2_3prlv")
+texture_under = ExtResource("2_vndky")
 texture_progress = ExtResource("3_0prfh")
 
 [node name="KeyPressDelay" type="Timer" parent="." unique_id=198100223]
