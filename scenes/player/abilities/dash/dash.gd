@@ -26,6 +26,8 @@ func _process(delta: float) -> void:
 		await outline_frame_timer.timeout
 		player_sprite.material.set_shader_parameter("outline_color", Color(0.0, 0.0, 0.0, 1.0))
 
+
+
 func start_dash(sprite, duration: float) -> void:
 	self.sprite = sprite
 	

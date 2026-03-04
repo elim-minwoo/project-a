@@ -2,6 +2,7 @@ extends Control
 
 @onready var stamina: TextureProgressBar = $Stamina
 @onready var key_press_delay: Timer = $KeyPressDelay
+@onready var frame_timer: FrameTimer = $Stamina/FrameTimer
 
 @onready var player: CharacterBody2D = $".."
 @onready var player_sprite: AnimatedSprite2D = $"../PlayerSprite"
@@ -11,13 +12,20 @@ var time_to_wait = 0.5 # time to wait till regen
 
 var regen_speed := 100.0 # regen ammount
 var drain_speed := 60.0 # drain ammount
+var prev_stamina := 0.0 # previous stamina to detect if value regernates after reducing
 
-var tween : Tween
+var tween: Tween
+var current_color: Color
+
+func _change_bar_color(current_color: Color):
+	stamina.material.set_shader_parameter("custom_color", current_color)
+
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	stamina.value = stamina.max_value # set stamina to max value (100)
+	prev_stamina = stamina.value
 	modulate.a = 0.0
 	key_press_delay.timeout.connect(_on_key_delay_timeout)
 
@@ -32,8 +40,8 @@ func _process(delta: float) -> void:
 	
 	# drain stamina
 	if Input.is_action_pressed("timeslow"):
+		_change_bar_color(Color(1.0, 0.0, 0.0, 1.0))
 		show_bar()
-		
 		stamina.value -= drain_speed * true_delta
 		s_timer = 0.0
 		key_press_delay.stop()
@@ -47,12 +55,20 @@ func _process(delta: float) -> void:
 	# clamp so stamina stays within 0 and max value
 	stamina.value = clamp(stamina.value, 0, stamina.max_value)
 	
+	if prev_stamina < stamina.max_value and stamina.value >= stamina.max_value:
+		_on_stamina_fully_regen(delta)
+	
 	# fade out when max stamina
 	if stamina.value >= stamina.max_value and key_press_delay.is_stopped():
 		key_press_delay.start()
+		
+	prev_stamina = stamina.value
 
 
 
+func _on_stamina_fully_regen(delta):
+	pass # when i need to detect the bar being filled up after a drain
+	
 func _on_key_delay_timeout() -> void:
 	if stamina.value >= stamina.max_value:
 		fade_out()

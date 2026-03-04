@@ -10,3 +10,4 @@ void fragment() {
 	vec4 final = mix(color, flash_color, flash);
 	COLOR = final;
 }
+	

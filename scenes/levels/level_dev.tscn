@@ -517,7 +517,7 @@ script = ExtResource("1_io14e")
 process_callback = 0
 script = ExtResource("2_rmyai")
 
-[node name="ColorRect" type="ColorRect" parent="Camera2D" unique_id=25429083]
+[node name="ScreenBrightness" type="ColorRect" parent="Camera2D" unique_id=25429083]
 top_level = true
 material = SubResource("ShaderMaterial_fcomi")
 offset_left = -4920.0
@@ -538,6 +538,14 @@ tile_set = SubResource("TileSet_qh453")
 [node name="Player" parent="." unique_id=1106226778 instance=ExtResource("3_fwncx")]
 self_modulate = Color(1, 1, 1, 1)
 safe_margin = 0.14
+player_speed = null
+move_speed = null
+wall_x_force = null
+wall_y_force = null
+wall_slide_speed = null
+dash_speed = null
+dash_duration = null
+is_parrying = false
 
 [node name="Dummy" parent="." unique_id=2112518819 instance=ExtResource("4_on0lb")]
 position = Vector2(1029, 16)

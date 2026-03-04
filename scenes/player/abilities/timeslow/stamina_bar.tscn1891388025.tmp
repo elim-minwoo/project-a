@@ -35,6 +35,7 @@ texture_progress = ExtResource("3_0prfh")
 
 [node name="FrameTimer" type="Node" parent="Stamina" unique_id=192212873]
 script = ExtResource("5_e87ob")
+frames = 10
 metadata/_custom_type_script = "uid://hsp2icyagaic"
 
 [node name="KeyPressDelay" type="Timer" parent="." unique_id=198100223]
