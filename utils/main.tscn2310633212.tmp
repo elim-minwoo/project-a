@@ -4,10 +4,23 @@
 [ext_resource type="Script" uid="uid://bfdc1dg7nw368" path="res://utils/ui_canvas_layer.gd" id="2_ug6pa"]
 [ext_resource type="Script" uid="uid://1h4u0r32nwo7" path="res://utils/game_canvas_layer.gd" id="3_fg24f"]
 [ext_resource type="Shader" uid="uid://b70v6ibqvkuux" path="res://shaders/subpixel.gdshader" id="3_ur1xi"]
+[ext_resource type="Script" uid="uid://dnceuitkwncy3" path="res://label.gd" id="4_01jsn"]
+[ext_resource type="Shader" uid="uid://8oio33o25cb0" path="res://shockwave.gdshader" id="4_c2y40"]
+[ext_resource type="Script" uid="uid://bu8arebkpdo40" path="res://shockwave.gd" id="5_rb1tx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c2y40"]
 shader = ExtResource("3_ur1xi")
 shader_parameter/cam_offset = Vector2(0, 0)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rb1tx"]
+shader = ExtResource("4_c2y40")
+shader_parameter/progress = 0.0
+shader_parameter/strength = 0.08
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/max_radius = 1.5
+shader_parameter/aberration = 0.425
+shader_parameter/width = 0.010000000475
+shader_parameter/feather = 0.135
 
 [node name="Main" type="Node" unique_id=174726013]
 script = ExtResource("1_28upj")
@@ -33,6 +46,25 @@ render_target_update_mode = 4
 handle_input_locally = false
 size = Vector2i(962, 542)
 render_target_update_mode = 4
+
+[node name="Label" type="Label" parent="GameCanvasLayer" unique_id=1721624185]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "test"
+script = ExtResource("4_01jsn")
+
+[node name="ColorRect" type="ColorRect" parent="GameCanvasLayer" unique_id=1799548877]
+material = SubResource("ShaderMaterial_rb1tx")
+offset_left = -2.0
+offset_top = -2.0
+offset_right = 1918.0
+offset_bottom = 1081.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("5_rb1tx")
+metadata/_edit_use_anchors_ = true
+
+[node name="ShockwaveTimer" type="Timer" parent="GameCanvasLayer/ColorRect" unique_id=620217144]
 
 [node name="UICanvasLayer" type="CanvasLayer" parent="." unique_id=685331929]
 script = ExtResource("2_ug6pa")

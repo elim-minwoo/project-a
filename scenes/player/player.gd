@@ -26,6 +26,15 @@ signal wall_touching # manual signal for wall touch
 
 
 #region variables
+
+# triggers shockwave effect
+#Global.screen_shock.emit(screen_pos)
+
+var screen_pos: Vector2:
+	get():
+		return (global_position - Global.camera.global_position + Vector2(962, 542)) / 2.0
+	
+
 # jump
 var jump_velocity: float = -500.0
 var gravity
@@ -244,6 +253,7 @@ func transition_screen(target_flash, flash_speed, delta):
 func manage_abilities(delta):
 	
 	if Input.is_action_pressed("timeslow") and stamina_ui.has_stamina():
+		Global.screen_shock.emit(screen_pos)
 		is_timeslow = true
 	else:
 		is_timeslow = false
@@ -280,7 +290,6 @@ func manage_abilities(delta):
 		is_dashing = true
 		has_dashed = true
 		dash_dir = sign(direction)
-		Global.screen_shock.emit(player.global_position)
 		
 		if dash_dir == 0:
 			dash_dir = Global.player_dir

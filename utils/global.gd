@@ -14,4 +14,4 @@ var is_parrying : bool = false
 
 var camera: Camera2D
 
-signal screen_shock(position: Vector2)
+signal screen_shock(screen_size: Vector2)
