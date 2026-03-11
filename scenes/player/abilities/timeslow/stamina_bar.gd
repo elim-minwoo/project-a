@@ -31,6 +31,12 @@ func _ready() -> void:
 	key_press_delay.timeout.connect(_on_key_delay_timeout)
 
 
+func _physics_process(delta: float) -> void:
+	if Global.konami_on:
+		drain_speed = 0.0
+	else:
+		drain_speed = 50.0
+
 
 func has_stamina() -> bool:
 	return stamina.value > 0

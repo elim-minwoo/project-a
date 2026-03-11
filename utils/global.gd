@@ -14,5 +14,8 @@ var is_parrying : bool = false
 
 var camera: Camera2D
 
+var konami_on := false
+
 signal screen_shock(screen_size: Vector2)
 signal shockwave_finish
+signal code_completed

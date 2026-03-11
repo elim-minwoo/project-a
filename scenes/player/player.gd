@@ -12,6 +12,8 @@ extends CharacterBody2D
 @onready var player_audio: AudioStreamPlayer = $PlayerAudio
 @onready var audio_manage: Node = $AudioManage
 
+@onready var konami_code: KonamiCode = $KonamiCode
+
 # refer abilities
 @onready var dash: Node2D = $Dash
 @onready var is_timeslow = false
@@ -34,7 +36,6 @@ var screen_pos: Vector2:
 	
 
 # jump
-var jump_velocity: float = -500.0
 var gravity
 
 # direction
@@ -79,6 +80,7 @@ var transition_flash := 0.0
 @export_category("Velocity Variables")
 @export var player_speed: float = 330.0
 @export var move_speed: float = 330.0
+@export var jump_velocity: float = -500.0
 
 @export_category("Wall Logic Variables")
 @export var wall_x_force =  300.0
@@ -94,11 +96,13 @@ var transition_flash := 0.0
 
 
 
+func _ready() -> void:
+	Global.code_completed.connect(_on_konami_code)
+
 func _process(_delta: float) -> void: # load all the time
 	# debug tp to spawn
 	if Input.is_action_just_pressed("debug_tp"): # backslash
 		global_position = Vector2(0, 0)
-
 
 
 
@@ -129,6 +133,7 @@ func _physics_process(delta: float) -> void: # loads every physics tick
 	elif is_on_floor():
 		coyote_timer = COYOTE_TIME # coyote time
 		floor_process()
+#endregion
 
 
 
@@ -146,7 +151,7 @@ func _physics_process(delta: float) -> void: # loads every physics tick
 
 
 	# handle jump
-	if jump_buffer_timer > 0 and (is_on_floor() or coyote_timer > 0):
+	if jump_buffer_timer > 0 and(Global.konami_on or is_on_floor() or coyote_timer > 0):
 		coyote_timer = 0.0
 		velocity.y = jump_velocity
 		is_jumping = true
@@ -247,6 +252,7 @@ func wall_process():
 func transition_screen(target_flash, flash_speed, delta):
 	transition_flash = lerp(transition_flash, target_flash, flash_speed * delta)
 	Global.flash_visible.set_flash(transition_flash)
+	print(typeof(dash_duration))
 
 func manage_abilities(delta):
 	
@@ -272,7 +278,7 @@ func manage_abilities(delta):
 	
 	var can_dash = ( # the requirents to be able to dash
 			Input.is_action_just_pressed("dash") 
-			and not has_dashed 
+			and (Global.konami_on or not has_dashed)
 			and dash.can_dash 
 			and not dash.is_dashing() 
 			and not is_parrying
@@ -307,6 +313,9 @@ func parry(): # parry function
 
 
 #region misc functions
+func _on_konami_code() -> void:
+	Global.konami_on = !Global.konami_on
+
 func hbox_adjust(hbox_x, hbox_y):
 	player_hitbox.position = Vector2(hbox_x, hbox_y)
 

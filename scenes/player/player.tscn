@@ -21,6 +21,7 @@
 [ext_resource type="AudioStream" uid="uid://6551xw14iwr6" path="res://assets/sounds/sfx/player/player_footsteps_5.ogg" id="16_yj68g"]
 [ext_resource type="AudioStream" uid="uid://qwhpsxwiy8j" path="res://assets/sounds/sfx/player/player_footsteps_6.ogg" id="17_ioxgp"]
 [ext_resource type="AudioStream" uid="uid://bybl0odj8x1r2" path="res://assets/sounds/sfx/player/player_walljump.ogg" id="20_8ydkj"]
+[ext_resource type="Script" uid="uid://bna87pioufs5a" path="res://misc/konami_code.gd" id="22_yj68g"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yj68g"]
 shader = ExtResource("8_3j4b4")
@@ -818,6 +819,12 @@ metadata/_custom_type_script = "uid://byhjiso0pemc3"
 [node name="PlayerAnim" type="AnimationPlayer" parent="." unique_id=989114800]
 root_node = NodePath("../PlayerHitbox")
 libraries/ = SubResource("AnimationLibrary_hvfru")
+
+[node name="KonamiCode" type="Node" parent="." unique_id=443435772]
+script = ExtResource("22_yj68g")
+metadata/_custom_type_script = "uid://bna87pioufs5a"
+
+[node name="InputTimer" type="Timer" parent="KonamiCode" unique_id=986877698]
 
 [node name="AudioManage" type="Node" parent="." unique_id=1139693811]
 script = ExtResource("14_ugbui")
