@@ -253,10 +253,14 @@ func transition_screen(target_flash, flash_speed, delta):
 func manage_abilities(delta):
 	
 	if Input.is_action_pressed("timeslow") and stamina_ui.has_stamina():
-		Global.screen_shock.emit(screen_pos)
+		Global.screen_shock.emit(screen_pos, false)
 		is_timeslow = true
+	elif Input.is_action_just_released("timeslow") and stamina_ui.has_stamina() or stamina_ui.ran_out():
+		Global.screen_shock.emit(screen_pos, true)
+		is_timeslow = false
 	else:
 		is_timeslow = false
+	
 	
 	if is_timeslow:
 		transition_screen(-0.5, 10.0, delta)
