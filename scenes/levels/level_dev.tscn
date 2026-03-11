@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://ktg27xjj1v6m" path="res://scenes/player/player.tscn" id="3_fwncx"]
 [ext_resource type="PackedScene" uid="uid://8iiys5wrfwql" path="res://scenes/enemies/dummy/dummy.tscn" id="4_on0lb"]
 [ext_resource type="Shader" uid="uid://8oio33o25cb0" path="res://shaders/shockwave.gdshader" id="5_k8nxw"]
-[ext_resource type="Texture2D" uid="uid://dh0wfdpkb2k44" path="res://bg.png" id="5_lyr85"]
+[ext_resource type="Texture2D" uid="uid://br2kphnxjij0n" path="res://bg.png" id="5_lyr85"]
 [ext_resource type="Texture2D" uid="uid://bi7a2jtja3qpl" path="res://icon.svg" id="5_smlyx"]
 [ext_resource type="Script" uid="uid://bu8arebkpdo40" path="res://scenes/levels/shockwave.gd" id="6_k8nxw"]
 
@@ -526,11 +526,12 @@ script = ExtResource("2_rmyai")
 
 [node name="bgPlaceholder" type="Sprite2D" parent="Camera2D" unique_id=675558150]
 z_index = -10
-position = Vector2(2.5, 0)
-scale = Vector2(1.2659999, 1)
+position = Vector2(4.80198, -48.718742)
+scale = Vector2(0.6249438, 0.6476273)
 texture = ExtResource("5_lyr85")
 
 [node name="Shockwave" type="Sprite2D" parent="Camera2D" unique_id=1618012266]
+visible = false
 z_index = 10
 material = SubResource("ShaderMaterial_2rvdb")
 position = Vector2(-7.750061, 10.7499695)
