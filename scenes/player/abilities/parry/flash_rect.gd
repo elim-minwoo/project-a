@@ -17,3 +17,4 @@ func set_flash(flash_amm):
 	#
 #func transition_flash(current_flash, target_flash, flash_speed, delta):
 	#lerp(current_flash, target_flash, flash_speed * delta)
+	  

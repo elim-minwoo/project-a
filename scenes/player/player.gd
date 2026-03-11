@@ -12,8 +12,6 @@ extends CharacterBody2D
 @onready var player_audio: AudioStreamPlayer = $PlayerAudio
 @onready var audio_manage: Node = $AudioManage
 
-@onready var screen_rect: ScreenFlash = $"../Camera2D/ColorRect"
-
 # refer abilities
 @onready var dash: Node2D = $Dash
 @onready var is_timeslow = false
@@ -255,23 +253,15 @@ func manage_abilities(delta):
 	if Input.is_action_pressed("timeslow") and stamina_ui.has_stamina():
 		Global.screen_shock.emit(screen_pos, false)
 		is_timeslow = true
-	elif Input.is_action_just_released("timeslow") and stamina_ui.has_stamina() or stamina_ui.ran_out():
-		Global.screen_shock.emit(screen_pos, true)
-		is_timeslow = false
 	else:
+		Global.screen_shock.emit(screen_pos, true)
 		is_timeslow = false
 	
 	
 	if is_timeslow:
-		transition_screen(-0.5, 10.0, delta)
-		sprite.material.set_shader_parameter("outline_color", Color(1.0, 0.0, 0.0, 1.0))
 		Engine.time_scale = 0.3
-		sprite.material.set_shader_parameter("sprite_darkness", 0.0)
 	else:
-		transition_screen(0.0, 30.0, delta)
 		Engine.time_scale = 1.0
-		sprite.material.set_shader_parameter("outline_color", Color(0.0, 0.0, 0.0, 1.0))
-		sprite.material.set_shader_parameter("sprite_darkness", 1.0)
 	
 	
 	is_dashing = dash.is_dashing()

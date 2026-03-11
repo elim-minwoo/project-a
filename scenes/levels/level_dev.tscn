@@ -4,28 +4,21 @@
 [ext_resource type="Texture2D" uid="uid://42gd7farliby" path="res://assets/sprites/world/world_tileset.png" id="2_on0lb"]
 [ext_resource type="Script" uid="uid://cddetjchfebqs" path="res://scenes/levels/camera.gd" id="2_rmyai"]
 [ext_resource type="PackedScene" uid="uid://ktg27xjj1v6m" path="res://scenes/player/player.tscn" id="3_fwncx"]
-[ext_resource type="Shader" uid="uid://yhwf7f8ggklt" path="res://shaders/screen_mask.gdshader" id="4_fwncx"]
 [ext_resource type="PackedScene" uid="uid://8iiys5wrfwql" path="res://scenes/enemies/dummy/dummy.tscn" id="4_on0lb"]
-[ext_resource type="Script" uid="uid://c4ltmgi154dnl" path="res://scenes/player/abilities/parry/flash_rect.gd" id="5_fcomi"]
-[ext_resource type="Shader" uid="uid://8oio33o25cb0" path="res://shockwave.gdshader" id="5_k8nxw"]
+[ext_resource type="Shader" uid="uid://8oio33o25cb0" path="res://shaders/shockwave.gdshader" id="5_k8nxw"]
 [ext_resource type="Texture2D" uid="uid://dh0wfdpkb2k44" path="res://bg.png" id="5_lyr85"]
 [ext_resource type="Texture2D" uid="uid://bi7a2jtja3qpl" path="res://icon.svg" id="5_smlyx"]
-[ext_resource type="Script" uid="uid://bu8arebkpdo40" path="res://shockwave.gd" id="6_k8nxw"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fcomi"]
-shader = ExtResource("4_fwncx")
-shader_parameter/flash = 0.0
-shader_parameter/flash_color = Color(1, 1, 1, 1)
+[ext_resource type="Script" uid="uid://bu8arebkpdo40" path="res://scenes/levels/shockwave.gd" id="6_k8nxw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2rvdb"]
 shader = ExtResource("5_k8nxw")
 shader_parameter/progress = 0.0
-shader_parameter/strength = 0.0010000000475
+shader_parameter/strength = 0.030000001425
 shader_parameter/center = Vector2(0.5, 0.5)
 shader_parameter/max_radius = 0.8
 shader_parameter/aberration = 0.425
 shader_parameter/width = 0.04
-shader_parameter/feather = 0.135
+shader_parameter/feather = 0.090000004275
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fcomi"]
 texture = ExtResource("2_on0lb")
@@ -537,25 +530,13 @@ position = Vector2(2.5, 0)
 scale = Vector2(1.2659999, 1)
 texture = ExtResource("5_lyr85")
 
-[node name="ScreenFlash" type="ColorRect" parent="Camera2D" unique_id=25429083]
-top_level = true
-z_index = 1
-material = SubResource("ShaderMaterial_fcomi")
-offset_left = -4558.0
-offset_top = -4321.0
-offset_right = 6213.0
-offset_bottom = 6844.0
-color = Color(1, 1, 1, 0)
-script = ExtResource("5_fcomi")
-
 [node name="Shockwave" type="Sprite2D" parent="Camera2D" unique_id=1618012266]
-z_index = 100
+z_index = 10
 material = SubResource("ShaderMaterial_2rvdb")
 position = Vector2(-7.750061, 10.7499695)
 scale = Vector2(16.214846, 9.386718)
 texture = ExtResource("5_smlyx")
 script = ExtResource("6_k8nxw")
-shockwave_duration = 0.8
 
 [node name="ShockwaveTimer" type="Timer" parent="Camera2D/Shockwave" unique_id=33191674]
 

@@ -1,4 +1,4 @@
-shader_type canvas_item;
+	shader_type canvas_item;
 
 uniform float progress : hint_range(0.0, 1.0) = 0.0;
 
@@ -27,8 +27,12 @@ void fragment() {
 
 	float dist = length(dist_center);
 
-	float mask = (1.0 - smoothstep(radius-feather, radius, dist)) *
-				 smoothstep(radius-width-feather, radius-width, dist);
+	float mask = (1.0 - smoothstep(radius - feather, radius, dist)) *
+				 smoothstep(radius - width - feather, radius - width, dist);
+
+	// prevent ring appearing when progress = 0
+	float activation = smoothstep(0.001, 0.02, progress);
+	mask *= activation;
 
 	vec2 offset = normalize(dist_center) * strength * mask;
 
@@ -36,11 +40,18 @@ void fragment() {
 
 	vec2 abber_vec = offset * aberration * mask;
 
-	vec2 final_st = st*(1.0-mask) + biased_st*mask;
+	vec2 final_st = st * (1.0 - mask) + biased_st * mask;
 
 	vec4 red = texture(SCREEN_TEXTURE, final_st + abber_vec);
 	vec4 blue = texture(SCREEN_TEXTURE, final_st - abber_vec);
 	vec4 ori = texture(SCREEN_TEXTURE, final_st);
 
-	COLOR = vec4(red.r, ori.g, blue.b, 1.0);
+	vec4 distorted = vec4(red.r, ori.g, blue.b, 1.0);
+
+	// inner invert mask
+	float inner_mask = (1.0 - smoothstep(radius, radius + feather, dist)) * activation;
+
+	vec4 inverted = vec4(1.0 - ori.rgb, 1.0);
+
+	COLOR = mix(distorted, inverted, inner_mask);
 }

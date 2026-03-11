@@ -24,6 +24,7 @@ func _change_bar_color(current_color: Color):
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	Global.shockwave_finish.connect(_invertsbar)
 	stamina.value = stamina.max_value # set stamina to max value (100)
 	prev_stamina = stamina.value
 	modulate.a = 0.0
@@ -38,6 +39,9 @@ func ran_out() -> bool:
 	return prev_stamina > 0 and stamina.value <= 0
 
 
+# option: make bar appear only when button pressed
+func _invertsbar():
+	_change_bar_color(Color(18.892, 0.0, 0.0, 0.0))
 
 func _process(delta: float) -> void:
 	
@@ -45,13 +49,13 @@ func _process(delta: float) -> void:
 	
 	# drain stamina
 	if Input.is_action_pressed("timeslow"):
-		_change_bar_color(Color(1.0, 0.0, 0.0, 1.0))
 		show_bar()
 		stamina.value -= drain_speed * true_delta
 		s_timer = 0.0
 		key_press_delay.stop()
-		
-		
+		if has_stamina():
+			_change_bar_color(Color(0.0, 18.892, 18.892, 1.0))
+	
 	# regen delay
 	elif stamina.value < stamina.max_value:
 		s_timer += true_delta
@@ -71,7 +75,6 @@ func _process(delta: float) -> void:
 		key_press_delay.start()
 		
 	prev_stamina = stamina.value
-
 
 
 func _on_stamina_fully_regen(delta):
