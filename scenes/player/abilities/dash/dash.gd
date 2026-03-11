@@ -19,9 +19,7 @@ func _ready() -> void:
 	player.wall_touching.connect(_on_player_touching_wall)
 
 func _process(delta: float) -> void:
-	if player.is_dashing == true and player.is_timeslow == false:
-		player_sprite.material.set_shader_parameter("outline_color", Color(1.0, 1.0, 1.0, 1.0))
-	elif player.is_dashing == false and player.is_timeslow == false:
+	if player.is_dashing == false and player.is_timeslow == false:
 		outline_frame_timer.start()
 		await outline_frame_timer.timeout
 		player_sprite.material.set_shader_parameter("outline_color", Color(0.0, 0.0, 0.0, 1.0))

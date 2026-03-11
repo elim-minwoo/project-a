@@ -4,7 +4,7 @@ var actual_cam_pos : Vector2
 
 
 func _ready() -> void:
-	pass
+	Global.camera = self
 
 
 

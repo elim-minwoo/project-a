@@ -1,6 +1,8 @@
 extends CharacterBody2D
 
 # refer nodes
+@onready var player: CharacterBody2D = $"."
+
 @onready var sprite: AnimatedSprite2D = $PlayerSprite
 @onready var player_anim = get_node("PlayerAnim")
 @onready var player_hitbox: CollisionShape2D = $PlayerHitbox
@@ -278,6 +280,7 @@ func manage_abilities(delta):
 		is_dashing = true
 		has_dashed = true
 		dash_dir = sign(direction)
+		Global.screen_shock.emit(player.global_position)
 		
 		if dash_dir == 0:
 			dash_dir = Global.player_dir

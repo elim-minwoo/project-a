@@ -7,6 +7,7 @@ var flash: float
 func _ready() -> void:
 	Global.flash_visible = self
 	
+	
 func _process(delta: float) -> void:
 	pass
 	

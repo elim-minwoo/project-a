@@ -7,12 +7,23 @@
 [ext_resource type="Shader" uid="uid://yhwf7f8ggklt" path="res://shaders/screen_mask.gdshader" id="4_fwncx"]
 [ext_resource type="PackedScene" uid="uid://8iiys5wrfwql" path="res://scenes/enemies/dummy/dummy.tscn" id="4_on0lb"]
 [ext_resource type="Script" uid="uid://c4ltmgi154dnl" path="res://scenes/player/abilities/parry/flash_rect.gd" id="5_fcomi"]
-[ext_resource type="Texture2D" uid="uid://dh0wfdpkb2k44" path="res://bg.png" id="5_lyr85"]
+[ext_resource type="Script" uid="uid://bu8arebkpdo40" path="res://shockwave.gd" id="5_lyr85"]
+[ext_resource type="Shader" uid="uid://dpa61odvu2nq7" path="res://shockwave.gdshader" id="5_smlyx"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fcomi"]
 shader = ExtResource("4_fwncx")
 shader_parameter/flash = 0.0
 shader_parameter/flash_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k8nxw"]
+shader = ExtResource("5_smlyx")
+shader_parameter/progress = 0.0
+shader_parameter/strength = 0.08
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/max_radius = 1.5
+shader_parameter/aberration = 0.425
+shader_parameter/width = 0.04
+shader_parameter/feather = 0.135
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fcomi"]
 texture = ExtResource("2_on0lb")
@@ -521,17 +532,18 @@ script = ExtResource("2_rmyai")
 [node name="ScreenFlash" type="ColorRect" parent="Camera2D" unique_id=25429083]
 top_level = true
 material = SubResource("ShaderMaterial_fcomi")
-offset_left = -4492.0
-offset_top = -4761.0
-offset_right = 6279.0
-offset_bottom = 6404.0
+offset_left = -4920.0
+offset_top = -5373.0
+offset_right = 5851.0
+offset_bottom = 5792.0
 color = Color(1, 1, 1, 0)
 script = ExtResource("5_fcomi")
 
-[node name="Sprite2D" type="Sprite2D" parent="Camera2D" unique_id=1618012266]
-position = Vector2(631, 89)
-scale = Vector2(2.0356667, 1.1355555)
-texture = ExtResource("5_lyr85")
+[node name="Shockwave" type="ColorRect" parent="Camera2D" unique_id=235379677]
+material = SubResource("ShaderMaterial_k8nxw")
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("5_lyr85")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=751852520]
 

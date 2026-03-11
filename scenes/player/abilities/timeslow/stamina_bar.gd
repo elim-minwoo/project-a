@@ -10,8 +10,8 @@ extends Control
 var s_timer = 0 # stamina timer
 var time_to_wait = 0.5 # time to wait till regen
 
-var regen_speed := 100.0 # regen ammount
-var drain_speed := 60.0 # drain ammount
+var regen_speed := 150.0 # regen ammount
+var drain_speed := 50.0 # drain ammount
 var prev_stamina := 0.0 # previous stamina to detect if value regernates after reducing
 
 var tween: Tween
