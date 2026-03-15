@@ -87,7 +87,7 @@ var transition_flash := 0.0
 @export var jump_velocity: float = -480.0
 
 @export_category("Wall Logic Variables")
-@export var wall_x_force =  300.0
+@export var wall_x_force =  310.0
 @export var wall_y_force = 1200.0
 @export var wall_slide_speed: float = 30.0
 
@@ -124,22 +124,24 @@ func _physics_process(delta: float) -> void: # loads every physics delta
 		Global.player_dir = int(direction) # update global player's direction when not still
 	
 	
-	# get and apply gravity
+	# get and apply gravity (reduced to 980.0 * 0.8)
 	gravity = get_gravity().y
 	velocity.y += gravity * delta
 	
 
 	
-	# recognise if on wall
+	# on wall variable to identify wall state
 	on_wall = is_on_wall_only() and not direction == 0
 	
 	
 	## state machine
-	if on_wall:
+	if on_wall: # if on wall
 		wall_process()
-	elif is_on_floor():
+	elif is_on_floor(): # if on floor
 		coyote_timer = COYOTE_TIME # coyote time
 		floor_process()
+	#else: # if any air state code is needed
+		#air_process()
 #endregion
 
 
@@ -155,18 +157,19 @@ func _physics_process(delta: float) -> void: # loads every physics delta
 	else:
 		if abs(velocity.x) < player_speed:
 			velocity.x += direction * player_speed * 0.09
-		
-	handle_jump()
+	
+	handle_jump_buffer()
+
 
 
 	# jump cut
 	if Input.is_action_just_released("jump") and is_jumping and velocity.y < 0:
 		velocity.y *= 0.3
 
-
 	# set max falling speed
 	var max_fall_speed: float = 1000.0
 	velocity.y = clamp(velocity.y, float(-INF), max_fall_speed)
+
 
 
 	manage_buffer(delta)
@@ -186,19 +189,18 @@ func manage_buffer(delta):
 		wall_jump_timer -= delta
 	else:
 		is_wall_jumping = false
-	
-	
-	
-func handle_jump():
+
+
+
+func handle_jump_buffer():
 	# jump buffer reset
 	if Input.is_action_just_pressed("jump"):
 		jump_buffer_timer = JUMP_BUFFER_TIME
-		
 	if jump_buffer_timer <= 0:
 		return
-	
+		
 	# wall jump
-	if on_wall and not is_on_floor():
+	if on_wall and not is_wall_jumping:
 		
 		var wall_dir = get_wall_normal().x
 		
@@ -219,7 +221,6 @@ func handle_jump():
 		velocity.y = jump_velocity
 		is_jumping = true
 		jump_buffer_timer = 0.0
-	
 #endregion
 
 
@@ -236,11 +237,7 @@ func floor_process():
 	if velocity.y == 0:
 		is_jumping = false
 		is_wall_jumping = false
-	
-	# reset jump buffer only when on floor
-	#if Input.is_action_just_pressed("jump"):
-		#jump_buffer_timer = JUMP_BUFFER_TIME
-	
+
 	# only allow parry when on floor
 	if Input.is_action_just_pressed("parry"):
 		parry()
@@ -267,7 +264,6 @@ func wall_process():
 
 
 #region abilities
-
 func transition_screen(target_flash, flash_speed, delta):
 	transition_flash = lerp(transition_flash, target_flash, flash_speed * delta)
 	Global.flash_visible.set_flash(transition_flash)
@@ -324,7 +320,6 @@ func parry(): # parry function
 	if is_on_floor_only():
 		is_parrying = true
 		player_anim.play("parry")
-
 #endregion
 
 
