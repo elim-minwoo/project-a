@@ -80,7 +80,7 @@ var transition_flash := 0.0
 @export_category("Velocity Variables")
 @export var player_speed: float = 330.0
 @export var move_speed: float = 330.0
-@export var jump_velocity: float = -500.0
+@export var jump_velocity: float = -480.0
 
 @export_category("Wall Logic Variables")
 @export var wall_x_force =  300.0
@@ -89,7 +89,7 @@ var transition_flash := 0.0
 
 @export_category("Wall Logic Variables")
 @export var dash_speed := 2000.0
-@export var dash_duration := 0.1
+@export var dash_duration := 0.1 
 #endregion
 
 
@@ -121,7 +121,12 @@ func _physics_process(delta: float) -> void: # loads every physics tick
 	
 	# get and apply gravity
 	gravity = get_gravity().y
-	velocity.y += gravity * delta
+	if Input.is_action_pressed("movedown"):
+		velocity.y += (gravity * 2) * delta
+	else:
+		velocity.y += gravity * delta
+	
+
 	
 	# recognise if on wall
 	on_wall = is_on_wall_only() and not direction == 0
@@ -148,14 +153,8 @@ func _physics_process(delta: float) -> void: # loads every physics tick
 	else:
 		if abs(velocity.x) < player_speed:
 			velocity.x += direction * player_speed * 0.09
-
-
-	# handle jump
-	if jump_buffer_timer > 0 and(Global.konami_on or is_on_floor() or coyote_timer > 0):
-		coyote_timer = 0.0
-		velocity.y = jump_velocity
-		is_jumping = true
-		jump_buffer_timer = 0.0
+		
+	handle_jump()
 
 
 	# jump cut
@@ -186,9 +185,39 @@ func manage_buffer(delta):
 	else:
 		is_wall_jumping = false
 	
+	
+	
+func handle_jump():
 	# jump buffer reset
 	if Input.is_action_just_pressed("jump"):
 		jump_buffer_timer = JUMP_BUFFER_TIME
+		
+	if jump_buffer_timer <= 0:
+		return
+	
+	# wall jump
+	if on_wall and not is_on_floor():
+		
+		var wall_dir = get_wall_normal().x
+		
+		is_jumping = true
+		is_wall_jumping = true
+		wall_jump_timer = WALL_JUMP_TIME
+		
+		# get wall direction and apply force to jump diagonally
+		velocity.x = wall_dir * wall_x_force
+		velocity.y  = jump_velocity
+		
+		jump_buffer_timer = 0
+		return
+		
+	## handle jump
+	if Global.konami_on or is_on_floor() or coyote_timer > 0:
+		coyote_timer = 0.0
+		velocity.y = jump_velocity
+		is_jumping = true
+		jump_buffer_timer = 0.0
+	
 #endregion
 
 
@@ -207,8 +236,8 @@ func floor_process():
 		is_wall_jumping = false
 	
 	# reset jump buffer only when on floor
-	if Input.is_action_just_pressed("jump"):
-		jump_buffer_timer = JUMP_BUFFER_TIME
+	#if Input.is_action_just_pressed("jump"):
+		#jump_buffer_timer = JUMP_BUFFER_TIME
 	
 	# only allow parry when on floor
 	if Input.is_action_just_pressed("parry"):
@@ -229,18 +258,6 @@ func wall_process():
 	# wall slide
 	if not is_wall_jumping:
 		velocity.y =  lerp(velocity.y, wall_slide_speed, 0.3)
-	
-	
-	# wall jump
-	if Input.is_action_just_pressed("jump"):
-		is_jumping = true
-		is_wall_jumping = true
-		wall_jump_timer = WALL_JUMP_TIME
-		
-		# get wall direction and apply force to jump diagonally
-		var wall_dir = get_wall_normal().x
-		velocity.x = wall_dir * wall_x_force
-		velocity.y  = jump_velocity
 #endregion
 
 

@@ -8,14 +8,14 @@
 [ext_resource type="Shader" uid="uid://8oio33o25cb0" path="res://shaders/shockwave_invert.gdshader" id="4_smlyx"]
 [ext_resource type="Texture2D" uid="uid://br2kphnxjij0n" path="res://bg.png" id="5_lyr85"]
 [ext_resource type="Texture2D" uid="uid://bi7a2jtja3qpl" path="res://icon.svg" id="5_smlyx"]
-[ext_resource type="Script" path="res://scenes/levels/shockwave.gd" id="6_k8nxw"]
+[ext_resource type="Script" uid="uid://bu8arebkpdo40" path="res://scenes/levels/shockwave.gd" id="6_k8nxw"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2rvdb"]
 shader = ExtResource("4_smlyx")
 shader_parameter/progress = 0.0
 shader_parameter/strength = 0.030000001425
 shader_parameter/center = Vector2(0.5, 0.5)
-shader_parameter/max_radius = 0.8
+shader_parameter/max_radius = 1.0
 shader_parameter/aberration = 0.425
 shader_parameter/width = 0.04
 shader_parameter/feather = 0.090000004275
