@@ -25,16 +25,19 @@ signal wall_touching # manual signal for wall touch
 
 
 
-#region variables
-
 # triggers shockwave effect
 #Global.screen_shock.emit(screen_pos)
 
+# actual player's position
 var screen_pos: Vector2:
 	get():
 		return (global_position - Global.camera.global_position + Vector2(962, 542)) / 2.0
-	
 
+
+
+
+
+#region variables
 # jump
 var gravity
 
@@ -69,6 +72,7 @@ var is_parrying := false
 var is_jumping := false
 var is_wall_jumping := false
 
+# misc
 var transition_flash := 0.0
 #endregion
 
@@ -96,19 +100,19 @@ var transition_flash := 0.0
 
 
 
-func _ready() -> void:
+func _ready() -> void: # load on start
+	# connect to konami code signal
 	Global.code_completed.connect(_on_konami_code)
 
-func _process(_delta: float) -> void: # load all the time
+func _process(_delta: float) -> void: # load every frame
 	# debug tp to spawn
-	if Input.is_action_just_pressed("debug_tp"): # backslash
+	if Input.is_action_just_pressed("debug_tp"): # backslash (\)
 		global_position = Vector2(0, 0)
 
 
 
-
 #region physics and movement
-func _physics_process(delta: float) -> void: # loads every physics tick
+func _physics_process(delta: float) -> void: # loads every physics delta
 	
 	if is_on_wall(): # emit signal when wall touched
 		wall_touching.emit()
@@ -117,14 +121,12 @@ func _physics_process(delta: float) -> void: # loads every physics tick
 	# player direction (from left right input)
 	direction = Input.get_axis("moveleft", "moveright")
 	if direction != 0:
-		Global.player_dir = int(direction)
+		Global.player_dir = int(direction) # update global player's direction when not still
+	
 	
 	# get and apply gravity
 	gravity = get_gravity().y
-	if Input.is_action_pressed("movedown"):
-		velocity.y += (gravity * 2) * delta
-	else:
-		velocity.y += gravity * delta
+	velocity.y += gravity * delta
 	
 
 	
