@@ -61,6 +61,9 @@ var on_wall = false
 var is_wall_sliding = false
 
 # ability variables
+var dash_speed := 2000.0
+var dash_duration := 0.1
+
 var is_dashing := false
 var can_dash = true
 var has_dashed = false
@@ -90,10 +93,6 @@ var transition_flash := 0.0
 @export var wall_x_force =  310.0
 @export var wall_y_force = 1200.0
 @export var wall_slide_speed: float = 30.0
-
-@export_category("Wall Logic Variables")
-@export var dash_speed := 2000.0
-@export var dash_duration := 0.1 
 #endregion
 
 
@@ -298,16 +297,17 @@ func manage_abilities(delta):
 			and not dash.is_dashing() 
 			and not is_parrying
 			and not is_on_wall()
-			and velocity.x != 0
 	)
 	
 	if can_dash == true: # if can dash, is dashing, has dashed, and then dash towards dash_direction
 		is_dashing = true
 		has_dashed = true
-		dash_dir = sign(direction)
 		
-		if dash_dir == 0:
-			dash_dir = Global.player_dir
+		
+		if direction != 0:
+			dash_dir = sign(direction)
+		else:
+			dash_dir = -1 if sprite.flip_h else 1
 		
 		audio_manage.dash_play()
 		dash.start_dash(sprite, dash_duration)
