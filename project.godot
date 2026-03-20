@@ -45,7 +45,7 @@ gdscript/warnings/shadowed_variable=0
 window/size/viewport_width=1920
 window/size/viewport_height=1080
 window/size/mode=3
-window/stretch/mode="canvas_items"
+window/stretch/mode="viewport"
 window/stretch/scale_mode="integer"
 
 [dotnet]
@@ -177,3 +177,4 @@ input_start={
 
 textures/canvas_textures/default_texture_filter=0
 viewport/hdr_2d=true
+2d/snap/snap_2d_transforms_to_pixel=true
