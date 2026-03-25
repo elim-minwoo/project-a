@@ -24,6 +24,12 @@ func _process(delta: float) -> void:
 	else:
 		infinite_dash = false
 		
+	if player.is_timeslow:
+		start_trail(player_sprite)
+	else:
+		if not is_dashing():
+			ghost_timer.stop()
+		
 	
 	if player.is_dashing == false and player.is_timeslow == false:
 		outline_frame_timer.start()
@@ -32,17 +38,24 @@ func _process(delta: float) -> void:
 
 
 
+func start_trail(sprite):
+	self.sprite = sprite
+		
+	if ghost_timer.is_stopped():
+		ghost_timer.start()
+		instance_ghost()
+
 func start_dash(sprite, duration: float) -> void:
 	self.sprite = sprite
 	
 	if not can_dash:
 		return
+		
 	can_dash = false
 	duration_timer.wait_time = duration
 	duration_timer.start()
-	ghost_timer.start()
 	
-	instance_ghost()
+	start_trail(sprite)
 
 
 
@@ -50,8 +63,9 @@ func instance_ghost():
 	var ghost:= dash_ghost.instantiate() as Sprite2D
 	get_parent().get_parent().add_child(ghost)
 	
+	var player_anim = sprite.animation
 	var current_frame_index = sprite.frame
-	var frame = sprite.sprite_frames.get_frame_texture("dash", current_frame_index)
+	var frame = sprite.sprite_frames.get_frame_texture(player_anim, current_frame_index)
 	
 	ghost.texture = frame
 	ghost.z_index = -1

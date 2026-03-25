@@ -18,7 +18,7 @@ shader_parameter/center = Vector2(0.5, 0.5)
 shader_parameter/max_radius = 1.0
 shader_parameter/aberration = 0.425
 shader_parameter/width = 0.04
-shader_parameter/feather = 0.090000004275
+shader_parameter/feather = 0.135
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fcomi"]
 texture = ExtResource("2_on0lb")

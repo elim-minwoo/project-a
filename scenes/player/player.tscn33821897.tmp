@@ -606,6 +606,12 @@ _data = {
 [node name="Player" type="CharacterBody2D" unique_id=1614001740]
 self_modulate = Color(1.6294096, 1.6294096, 1.6294096, 1)
 script = ExtResource("1_p47bc")
+player_speed = null
+move_speed = null
+jump_velocity = null
+wall_x_force = null
+wall_y_force = null
+wall_slide_speed = null
 
 [node name="TimeSlowBar" parent="." unique_id=685653949 instance=ExtResource("9_5gtgg")]
 offset_left = 10.0

@@ -11,7 +11,7 @@ var s_timer = 0 # stamina timer
 var time_to_wait = 0.5 # time to wait till regen
 
 var regen_speed := 150.0 # regen ammount
-var drain_speed := 50.0 # drain ammount
+var drain_speed := 0.0 # drain ammount
 var prev_stamina := 0.0 # previous stamina to detect if value regernates after reducing
 
 var tween: Tween
@@ -24,7 +24,7 @@ func _change_bar_color(current_color: Color):
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	Global.shockwave_finish.connect(_invertsbar)
+	#Global.shockwave_finish.connect(_invertsbar)
 	stamina.value = stamina.max_value # set stamina to max value (100)
 	prev_stamina = stamina.value
 	modulate.a = 0.0
@@ -35,7 +35,7 @@ func _physics_process(delta: float) -> void:
 	if Global.konami_on:
 		drain_speed = 0.0
 	else:
-		drain_speed = 50.0
+		drain_speed = 80.0
 
 
 func has_stamina() -> bool:
@@ -59,8 +59,6 @@ func _process(delta: float) -> void:
 		stamina.value -= drain_speed * true_delta
 		s_timer = 0.0
 		key_press_delay.stop()
-		if has_stamina():
-			_change_bar_color(Color(0.0, 18.892, 18.892, 1.0))
 	
 	# regen delay
 	elif stamina.value < stamina.max_value:

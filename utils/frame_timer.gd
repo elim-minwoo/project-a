@@ -5,8 +5,16 @@ class_name FrameTimer
 
 signal timeout
 
+var running := false
+
 func start():
+	if running:
+		return
+		
+	running = true
+	
 	for i in range(frames):
 		await get_tree().process_frame
 	
+	running = false
 	timeout.emit()

@@ -27,20 +27,34 @@ void fragment() {
 
 	float dist = length(dist_center);
 
-	float mask = (1.0 - smoothstep(radius-feather, radius, dist)) *
-				 smoothstep(radius-width-feather, radius-width, dist);
+	float mask = (1.0 - smoothstep(radius - feather, radius, dist)) *
+				 smoothstep(radius - width - feather, radius - width, dist);
 
-	vec2 offset = normalize(dist_center) * strength * mask;
+	// prevent ring appearing when progress = 0
+	float activation = smoothstep(0.001, 0.02, progress);
+	mask *= activation;
+
+	// ⭐ NEW: fade-in factor (acts like alpha)
+	float fade = smoothstep(0.0, 0.2, progress); // tweak 0.2 for longer/shorter ramp
+
+	vec2 offset = normalize(dist_center) * strength * mask * fade;
 
 	vec2 biased_st = scaled_st - offset;
 
-	vec2 abber_vec = offset * aberration * mask;
+	vec2 abber_vec = offset * aberration * mask * fade;
 
-	vec2 final_st = st*(1.0-mask) + biased_st*mask;
+	vec2 final_st = st * (1.0 - mask) + biased_st * mask;
 
 	vec4 red = texture(SCREEN_TEXTURE, final_st + abber_vec);
 	vec4 blue = texture(SCREEN_TEXTURE, final_st - abber_vec);
 	vec4 ori = texture(SCREEN_TEXTURE, final_st);
 
-	COLOR = vec4(red.r, ori.g, blue.b, 1.0);
+	vec4 distorted = vec4(red.r, ori.g, blue.b, 1.0);
+
+	// inner invert mask
+	float inner_mask = (1.0 - smoothstep(radius, radius + feather, dist)) * activation * fade;
+
+	vec4 inverted = vec4(1.0 - ori.rgb, 1.0);
+
+	COLOR = mix(distorted, inverted, inner_mask);
 }

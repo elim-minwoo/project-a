@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ijpae0s2w7t8"
-path="res://.godot/imported/dummyknife.png-ceef08ceb27bed31dae3940165b028f5.ctex"
+uid="uid://blb1cwe5g40sm"
+path="res://.godot/imported/sprite.png-20864262c38610f3da4c683b657e17c6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/enemies/dummy/dummyknife.png"
-dest_files=["res://.godot/imported/dummyknife.png-ceef08ceb27bed31dae3940165b028f5.ctex"]
+source_file="res://sprite.png"
+dest_files=["res://.godot/imported/sprite.png-20864262c38610f3da4c683b657e17c6.ctex"]
 
 [params]
 

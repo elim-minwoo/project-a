@@ -6,12 +6,12 @@ extends CharacterBody2D
 @onready var sprite: AnimatedSprite2D = $PlayerSprite
 @onready var player_anim = get_node("PlayerAnim")
 @onready var player_hitbox: CollisionShape2D = $PlayerHitbox
-@onready var parry_hitbox: CollisionShape2D = $Parry/ParryHitbox
 @onready var stamina_ui: Control = $TimeSlowBar
 
 @onready var player_audio: AudioStreamPlayer = $PlayerAudio
 @onready var audio_manage: Node = $AudioManage
 
+@onready var frame_timer: FrameTimer = $FrameTimer
 @onready var konami_code: KonamiCode = $KonamiCode
 
 # refer abilities
@@ -71,7 +71,6 @@ var dash_dir := 0
 
 # state variables
 var is_attacking := false
-var is_parrying := false
 var is_jumping := false
 var is_wall_jumping := false
 
@@ -237,10 +236,6 @@ func floor_process():
 		is_jumping = false
 		is_wall_jumping = false
 
-	# only allow parry when on floor
-	if Input.is_action_just_pressed("parry"):
-		parry()
-
 
 
 func wall_process():
@@ -279,47 +274,47 @@ func manage_abilities(delta):
 	
 	
 	if is_timeslow:
-		Engine.time_scale = 0.3
+		Engine.time_scale = 0.5
 	else:
 		Engine.time_scale = 1.0
 	
 	
-	is_dashing = dash.is_dashing()
+	if dash.is_dashing():
+		is_dashing = true
+	elif is_dashing and not dash.is_dashing():
+		is_dashing = false
 	
-	# dash ability
+# dash ability
 	if is_on_floor() or is_on_wall():
 		has_dashed = false
-	
-	var can_dash = ( # the requirents to be able to dash
-			Input.is_action_just_pressed("dash") 
-			and (Global.konami_on or not has_dashed)
-			and dash.can_dash 
-			and not dash.is_dashing() 
-			and not is_parrying
-			and not is_on_wall()
+		
+	var dash_pressed := Input.is_action_just_pressed("dash")
+
+	var can_dash: bool = (
+		dash_pressed
+		and (Global.konami_on or not has_dashed)
+		and dash.can_dash
+		and not dash.is_dashing()
+		and not is_on_wall()
 	)
 	
-	if can_dash == true: # if can dash, is dashing, has dashed, and then dash towards dash_direction
-		is_dashing = true
+	if can_dash:
 		has_dashed = true
+		is_dashing = true
 		
-		
+		# get dash direction immediately
 		if direction != 0:
 			dash_dir = sign(direction)
 		else:
 			dash_dir = -1 if sprite.flip_h else 1
-		
+			
+		player_anim.play("dash")
 		audio_manage.dash_play()
+		
 		dash.start_dash(sprite, dash_duration)
 	
 	player_speed = dash_speed if dash.is_dashing() else move_speed
 
-
-
-func parry(): # parry function
-	if is_on_floor_only():
-		is_parrying = true
-		player_anim.play("parry")
 #endregion
 
 
@@ -339,8 +334,6 @@ func manage_flip(direction):
 	if direction == 0:
 		return
 	
-	parry_hitbox.position = Vector2(direction * 18.5, -1.0)
-	
 	# flip sprite
 	if direction == -1.0:
 		sprite.flip_h = true
@@ -356,8 +349,12 @@ var wall_anim_played := false
 
 func update_animations():
 	manage_flip(Input.get_axis("moveleft", "moveright"))
+		
+	if frame_timer.running or dash.is_dashing():
+		player_anim.play("dash")
+		return
 	
-	if not is_attacking and not is_parrying:
+	if not is_attacking:
 		
 		#wall jump anim
 		if is_on_wall_only() and not direction == 0:
@@ -379,9 +376,6 @@ func update_animations():
 			# run anim
 			elif not is_dashing and velocity.x != 0 and is_on_floor():
 				player_anim.play("run")
-			
-			elif is_dashing:
-				player_anim.play("dash")
 			
 			# idle anim
 			else:

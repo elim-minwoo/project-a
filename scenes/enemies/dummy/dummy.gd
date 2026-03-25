@@ -1,10 +1,11 @@
 extends Area2D
 
-const DUMMY_PROJECTILE = preload("uid://coednfjc0rx2q")
 
-func _physics_process(delta: float) -> void:
-	if Input.is_action_just_pressed("debug_input"):
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
 
-		var projectile_temp = DUMMY_PROJECTILE.instantiate()
-		projectile_temp.direction = -1
-		add_child(projectile_temp)
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass

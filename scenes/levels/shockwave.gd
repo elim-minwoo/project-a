@@ -4,8 +4,8 @@ extends Sprite2D
 
 var shockwave_tween: Tween
 
-func _ready() -> void:
-	Global.screen_shock.connect(trigger_shockwave)
+#func _ready() -> void:
+	#Global.screen_shock.connect(trigger_shockwave)
 
 func trigger_shockwave(pos: Vector2, shockwave_inverse) -> void:
 	var uv = pos / get_viewport_rect().size
